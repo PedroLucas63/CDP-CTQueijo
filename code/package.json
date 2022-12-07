@@ -1,0 +1,16 @@
+{
+  "name": "cdp-ctqueijo",
+  "version": "0.0.1",
+  "description": "Sistema de controle de pedidos do Centro Tecnológico do Queijo do IFRN - Currais Novos",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "ctqueijo",
+    "cdp",
+    "ifrn"
+  ],
+  "author": "Eyshila Buriti, Fernanda Dantas, Jônatas Felipe, Pedro Lucas",
+  "license": "MIT"
+}
