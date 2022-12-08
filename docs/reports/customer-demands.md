@@ -1,0 +1,9 @@
+# Necessidades do Cliente
+
+## Contexto: Controle de Pedidos do CT do Queijo
+
+O CT do Queijo é uma área vinculada ao IFRN campus Currais Novos que possui como finalidade gerir atividades práticas do curso de alimentos. Sendo assim, ele é responsável por produzir determinados alimentos derivados do leite, como queijo, iogurte e doce de leite. A partir do seu desenvolvimento gradual, percebeu-se uma recorrência de alta demanda de pedidos para exportação de merendas para instituições e comunidades, por isso, verificou-se a necessidade de ter uma ferramenta que melhor organizasse a sua produção. Para tal fim, essa aplicação precisa acolher o cliente e coletar informações acerca do pedido, bem como informá-lo acerca da possibilidade de suprir determinada demanda. Portanto, será uma espécie de agendamento que permitirá ao CT do queijo uma melhor organização do prosseguimento, ou não, dos pedidos.
+
+## Acerca do Pedido
+
+O usuário deve acessar a seção de solicitação de pedidos e informar os dados necessários para que o CT do queijo avalie a disponibilidade para a realização. Primeiramente, ele deve selecionar o(s) produto(s) de seu interesse com base nas opções disponíveis no ambiente digital, especificando ainda o(s) tipo(s) e o(s) sabor(es), caso necessário. Posteriormente, o cliente deve informar a quantidade desejada com base nas escolhas anteriores. Após isso, deve haver a definição do prazo almejado pelo solicitante e, também, a especificação, após concluído, se o pedido será retirado diretamente do CT do queijo ou, então, se será necessário a entrega ao destino. A partir disso, caso necessário, deve haver a especificação do endereço que receberá a produção. Adicionalmente, deve ser especificado o horário previsto, pelo cliente, para o usufruto da produção, evitando atrasos no recebimento. Finalizado isso, o usuário deve confirmar a solicitação e aguardar a resposta do sistema.
