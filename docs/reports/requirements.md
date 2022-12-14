@@ -2,7 +2,7 @@
 
 Os requisitos levantados concordam com as intenções da organização do Centro Tecnológico do Queijo do IFRN, Campus Currais Novos, que visa aumentar a agilidade no monitoramento dos pedidos realizados. Com isso, a organização terá mais capacidade de atendimento e um conjunto de dados mais robusto para suportar as decisões de produção da instituição. Esses requisitos estão classificados por relevância, com prioridades que variam entre “Desejável” (o sistema funciona de maneira satisfatória sem o requisito específico), “Importante” (o sistema funciona, mas de forma não satisfatória, sem o determinado requisito) e “Essencial” (o sistema necessita de tal requisito para funcionar).
 
-## Requisitos Funcionais
+## Requisitos Funcionais✍
 
 Os seguintes requisitos funcionais foram selecionados para o sistema: 
 
@@ -60,7 +60,7 @@ Os seguintes requisitos funcionais foram selecionados para o sistema:
 
 **Prioridade:** Desejável.
 
-## Requisitos Não Funcionais
+## Requisitos Não Funcionais 🖥
 
 Os seguintes requisitos não-funcionais foram selecionados para o sistema: 
 
