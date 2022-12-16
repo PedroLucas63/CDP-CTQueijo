@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Sistema de controle de pedidos do Centro Tecnológico do Queijo do IFRN - Currais Novos",
   "main": "app.js",
+  "type": "module",
   "scripts": {
     "test": "jest"
   },
