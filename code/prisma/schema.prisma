@@ -1,0 +1,11 @@
+//! Configurações do Prisma:
+//* Gerador do cliente prisma:
+generator client {
+  provider = "prisma-client-js"
+}
+
+//* Definição do Banco de Dados com o prisma:
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}

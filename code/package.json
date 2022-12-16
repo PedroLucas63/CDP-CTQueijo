@@ -12,5 +12,15 @@
     "ifrn"
   ],
   "author": "Eyshila Buriti, Fernanda Dantas, Jônatas Felipe, Pedro Lucas",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3"
+  },
+  "devDependencies": {
+    "jest": "^29.3.1",
+    "prisma": "^4.7.1"
+  }
 }
