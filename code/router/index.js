@@ -7,8 +7,9 @@ import { Router } from "express";
 const routers = new Router();
 
 //* Definição das rotas:
+//? Rota inicial:
 routers.get("/", (req, res) => {
-    res.json({ message: "Servidor iniciado!" });
+    res.render("index");
 });
 
 //! Exportação dos módulos:

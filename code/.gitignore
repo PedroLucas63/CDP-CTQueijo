@@ -105,3 +105,6 @@ dist
 
 # PNPM
 pnpm-lock.yaml
+
+# Tailwind CSS
+tailwind.config.js
