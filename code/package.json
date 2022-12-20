@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "jest",
-    "watch-css": "tailwindcss -i ./public/css/input.css -o ./public/css/style.css --watch"
+    "watch-css": "tailwindcss -i ./public/css/input.css -o ./public/css/style.css --watch",
+    "migrate-db": "prisma migrate dev --name init --skip-generate"
   },
   "keywords": [
     "ctqueijo",
