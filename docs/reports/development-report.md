@@ -188,19 +188,19 @@ A partir do estudo dedicado aos requerimentos, foi possível separá-los por sem
 
 Na diagramação da seção de produtos, temos que o cliente (usuário) se relaciona apenas com a possibilidade de visualizar os produtos, tendo o administrador a função de cadastrar, alterar e remover.
 
-![Diagramação de casos de uso dos requisitos relacionados com produtos](..\images\products.png)
+![Diagramação de casos de uso dos requisitos relacionados com produtos](/docs/images/products.png)
 
 #### Pedidos
 
 Na diagramação da seção de pedidos, temos que o cliente realiza o cadastro de um pedido e possui a permissão de visualizar a situação e a resposta do mesmo, tendo o administrador a função de cadastrar essa situação e essa resposta.
 
-![Diagramação de casos de uso dos requisitos relacionados com pedidos](..\images\orders.png)
+![Diagramação de casos de uso dos requisitos relacionados com pedidos](/docs/images/orders.png)
 
 ### Banco de dados
 
 Ainda de acordo com o estudo presente com os requisitos funcionais, foi necessário o desenvolvimento da estruturação do banco de dados da plataforma. Nela, para fins de facilitação e potencialidade, foram criados cinco tabelas que se relacionam e juntas compõe uma venda. Dessa forma, temos:
 
-![Diagramação do banco de dados com suas relações ](..\images\database.png)
+![Diagramação do banco de dados com suas relações](/docs/images/database.png)
 
 ## Referências
 
