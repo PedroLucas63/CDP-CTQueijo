@@ -7,7 +7,7 @@ import session from "express-session";
 import dotenv from "dotenv";
 
 //* Importação de módulos locais:
-import routers from "./router/index.js";
+import router from "./routers/router.js";
 
 //! Configurações do dotenv:
 //* Definição da configuração:
@@ -43,7 +43,7 @@ app.use(
 );
 
 //* Define o uso das rotas:
-app.use(routers);
+app.use(router);
 
 //! Iniciação do servidor:
 //* Definindo dados do servidor:

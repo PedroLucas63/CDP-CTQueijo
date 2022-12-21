@@ -4,14 +4,14 @@ import { Router } from "express";
 
 //! Configuração do Router:
 //* Construção do objeto Router:
-const routers = new Router();
+const router = new Router();
 
 //* Definição das rotas:
 //? Rota inicial:
-routers.get("/", (req, res) => {
+router.get("/", (req, res) => {
     res.render("index");
 });
 
 //! Exportação dos módulos:
 //* Exportação das rotas:
-export default routers;
+export default router;
