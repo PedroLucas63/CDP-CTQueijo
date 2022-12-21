@@ -20,13 +20,14 @@ As tecnologias empregadas no seguinte software se baseiam principalmente em mód
 
 | Sistema         | Descrição                                                                |
 |-----------------|--------------------------------------------------------------------------|
-| [express](https://expressjs.com/pt-br/)      | Framework para a construção de sistemas de internet                      |
-| [express-session](https://www.npmjs.com/package/express-session) | Mediador de sessões para o express                                       |
-| [ejs](https://ejs.co/)             | Uma linguagem de modelagem incorporada com o JavaScript                  |
 | [dotenv](https://www.npmjs.com/package/dotenv)          | Sistema que carrega variáveis de arquivos .env                           |
-| [tailwindcss](https://tailwindcss.com/)     | Framework do CSS para personalização por meio de classes pré-construídas |
-| [prisma](https://www.prisma.io/)          | Sistema de gerenciamento de conexões com banco de dados                  |
+| [ejs](https://ejs.co/)             | Uma linguagem de modelagem incorporada com o JavaScript                  |
+| [express-session](https://www.npmjs.com/package/express-session) | Mediador de sessões para o express                                       |
+| [express](https://expressjs.com/pt-br/)      | Framework para a construção de sistemas de internet                      |
 | [jest](https://jestjs.io/pt-BR/)            | Framework de testes do JavaScript                                        |
+| [multer](https://www.npmjs.com/package/multer) | Mediador para o Upload de arquivos no sistema |
+| [prisma](https://www.prisma.io/)          | Sistema de gerenciamento de conexões com banco de dados                  |
+| [tailwindcss](https://tailwindcss.com/)     | Framework do CSS para personalização por meio de classes pré-construídas |
 
 ## Fase de Desenvolvimento
 
