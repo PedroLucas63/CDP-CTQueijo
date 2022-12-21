@@ -19,7 +19,7 @@ const app = express();
 
 //* Definição da engine do projeto:
 app.set("view engine", "ejs");
-app.set("views", "./view");
+app.set("views", "./views");
 
 //* Define a pasta public para conteúdo estático:
 app.use(express.static("./public"));
