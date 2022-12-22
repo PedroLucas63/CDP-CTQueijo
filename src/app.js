@@ -7,7 +7,7 @@ import session from "express-session";
 import dotenv from "dotenv";
 
 //* Importação de módulos locais:
-import router from "./routers/router.js";
+import router from "./routes/router.js";
 
 //! Configurações do dotenv:
 //* Definição da configuração:
@@ -54,5 +54,5 @@ const port = 3000;
 //* Abertura do servidor:
 app.listen(port, () => {
     console.log("Completed server opening!");
-    console.log(`Access in ${hostname}:${port}`);
+    console.log(`Access in http://${hostname}:${port}`);
 });
