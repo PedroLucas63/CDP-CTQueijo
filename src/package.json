@@ -18,6 +18,7 @@
   "author": "Eyshila Buriti, Fernanda Dantas, Jônatas Felipe, Pedro Lucas",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "dotenv": "^16.0.3",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
