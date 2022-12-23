@@ -99,6 +99,15 @@ class EmployeeController {
         //? Retorna o resultado:
         return res.json(result);
     }
+
+    //* Método de visualizar todos os funcionários:
+    async viewAll(req, res){
+        //? Faz a requisição dos dados de todos os funcionários:
+        const result = await EmployeeService.viewAll();
+
+        //? Retorna os dados encontrados:
+        return res.json(result);
+    }
 }
 
 export default new EmployeeController();

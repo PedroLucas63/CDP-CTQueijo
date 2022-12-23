@@ -51,7 +51,7 @@ class EmployeeService {
         return result;
     }
 
-    //* Método de visualizar um funcionário por meio de chave unica:
+    //* Método de receber dados de um funcionário por meio de chave unica:
     async view(uniqueValues) {
         //? Objeto com o resultado da pesquisa:
         let result = {
@@ -66,24 +66,55 @@ class EmployeeService {
             const employee = await this.prisma.employee.findFirst({
                 where: uniqueValues,
             });
-    
+
             // Verifica se não foi encontrado um funcionário:
             if (employee === null) {
                 // Define a mensagem que não foi encontrado:
                 result.message = "No employees found";
-            }
-            else{
+            } else {
                 // Define a mensagem e os dados que foram encontrados:
                 result.message = "Employee found";
                 result.data = employee;
             }
-    
         } catch (e) {
             // Define a mensagem e o erro:
             result.message = "Database connection error";
             result.error = e.code;
         }
-        
+
+        //? Retorna o resultado da pesquisa:
+        return result;
+    }
+
+    //* Método de receber dados de todos os funcionários:
+    async viewAll() {
+        //? Objeto com o resultado da pesquisa:
+        let result = {
+            message: null,
+            error: null,
+            data: null,
+        };
+
+        //? Tenta fazer a pesquisa por meio do prisma:
+        try {
+            // Recebe os dados de todos os funcionários:
+            const employees = await this.prisma.employee.findMany();
+
+            // Verifica se a lista não está vazia:
+            if (employees.length === 0) {
+                // Define a mensagem que não foi encontrado:
+                result.message = "No registered employee";
+            } else {
+                // Define a mensagem e os dados que foram encontrados:
+                result.message = "Employees found";
+                result.data = employees;
+            }
+        } catch (e) {
+            // Define a mensagem e o erro:
+            result.message = "Database connection error";
+            result.error = e.code;
+        }
+
         //? Retorna o resultado da pesquisa:
         return result;
     }
