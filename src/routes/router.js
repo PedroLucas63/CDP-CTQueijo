@@ -6,10 +6,10 @@ import { Router } from "express";
 import AuthMiddleware from "../middlewares/AuthMiddleware.js";
 
 //* Importação do módulo de rotas dos funcionários:
-import EmployeeRouter from "./EmployeeRouter.js";
+import EmployeeRouter from "./employee.routes.js";
 
 //* Importação do módulo de rotas de Login:
-import LoginRouter from "./LoginRouter.js";
+import LoginRouter from "./login.routes.js";
 
 //! Configuração do Router:
 //* Construção do objeto Router:
