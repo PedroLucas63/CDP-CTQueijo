@@ -26,7 +26,7 @@ model Flavor {
   productId Int
   name      String
   price     Decimal @db.Decimal(12, 2)
-  image     String @default("./images/products/default.png")
+  image     String  @default("./images/products/default.png")
   orders    Order[]
 }
 
@@ -82,7 +82,7 @@ model Sale {
 model Employee {
   id        Int      @id @default(autoincrement())
   name      String
-  email     String
+  email     String   @unique
   password  String
   role      String
   image     String   @default("./images/profiles/default.png")
