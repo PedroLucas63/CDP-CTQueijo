@@ -2,8 +2,14 @@
 //* Importação do módulo de Router:
 import { Router } from "express";
 
+//* Importação do módulo mediador de sessão logado:
+import AuthMiddleware from "../middlewares/AuthMiddleware.js";
+
 //* Importação do módulo de rotas dos funcionários:
 import EmployeeRouter from "./EmployeeRouter.js";
+
+//* Importação do módulo de rotas de Login:
+import LoginRouter from "./LoginRouter.js";
 
 //! Configuração do Router:
 //* Construção do objeto Router:
@@ -16,13 +22,15 @@ router.get("/", (req, res) => {
 });
 
 //? Uso das rotas dos funcionários:
-router.use("/employee", EmployeeRouter);
+router.use("/employee", AuthMiddleware, EmployeeRouter);
+
+//? Uso das rotas de login:
+router.use("/", LoginRouter);
 
 //? Rota de erro 404:
 router.use(function (req, res, next) {
     res.status(404).render("pages/404");
 });
 
-//! Exportação dos módulos:
-//* Exportação das rotas:
+//! Exportação das rotas:
 export default router;
