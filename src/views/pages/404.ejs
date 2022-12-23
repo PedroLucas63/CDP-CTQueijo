@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <!--! Importação dos elementos do head -->
+        <%- include("../partials/head.ejs") %>
+
+        <!--! Definição do título da página -->
+        <title>Página não encontrada</title>
+    </head>
+    <body class="h-screen">
+        <section
+            class="flex items-center p-16 h-full dark:bg-gray-900 dark:text-gray-100"
+        >
+            <div
+                class="container flex flex-col justify-center items-center px-5 mx-auto my-8"
+            >
+                <div class="max-w-md text-center">
+                    <h2 class="mb-8 text-9xl font-extrabold dark:text-gray-600">
+                        <span class="sr-only">Erro</span>404
+                    </h2>
+                    <p class="text-2xl font-semibold md:text-3xl">
+                        Desculpe, nós não encontramos essa página.
+                    </p>
+                    <p class="mt-4 mb-8 dark:text-gray-400">
+                        Mas não se preocupe, você pode encontrar muitas outras
+                        coisas em nossa página inicial.
+                    </p>
+                    <a
+                        rel="noopener noreferrer"
+                        href="/"
+                        class="px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-gray-900"
+                        >Voltar para a página inicial</a
+                    >
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

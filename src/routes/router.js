@@ -12,6 +12,11 @@ router.get("/", (req, res) => {
     res.render("index");
 });
 
+//? Rota de erro 404:
+router.use(function (req, res, next) {
+    res.status(404).render("pages/404");
+});
+
 //! Exportação dos módulos:
 //* Exportação das rotas:
 export default router;
