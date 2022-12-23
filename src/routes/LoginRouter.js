@@ -13,5 +13,8 @@ const router = new Router();
 //? Rota de login:
 router.post("/login", LoginController.login);
 
+//? Rota de logout:
+router.get("/logout", LoginController.logout);
+
 //! Exportação das rotas:
 export default router;

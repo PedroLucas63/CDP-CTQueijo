@@ -10,7 +10,7 @@ import EmployeeService from "../services/EmployeeService.js";
 
 //! Criação da classe de controle dos dados do login:
 class LoginController {
-    //* Método de realizar login como funcionário:
+    //* Método de realizar login no servidor:
     async login(req, res) {
         //? Recebe o corpo da página:
         const body = req.body;
@@ -61,6 +61,22 @@ class LoginController {
         }
 
         //? Retorna o resultado com erro:
+        return res.json(result);
+    }
+
+    //* Método de fazer o logout no servidor:
+    async logout(req, res) {
+        //? Determina o logged como falso:
+        req.session.logged = false;
+
+        //? Determina o resultado:
+        const result = {
+            message: "Logged out successfully",
+            error: null,
+            data: null,
+        };
+
+        //? Faz o retorno do resultado:
         return res.json(result);
     }
 }
