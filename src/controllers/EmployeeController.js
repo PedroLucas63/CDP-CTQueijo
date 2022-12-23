@@ -110,4 +110,5 @@ class EmployeeController {
     }
 }
 
+//! Exporta o controlador dos funcionários:
 export default new EmployeeController();
