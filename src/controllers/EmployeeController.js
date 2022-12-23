@@ -19,6 +19,7 @@ class EmployeeController {
         const password = body.password;
         const role = body.role;
         const image = "./images/profiles/default.png";
+        const createdAt = null;
 
         //? Verificação de erros:
         // JSON com erros:
@@ -70,10 +71,33 @@ class EmployeeController {
         }
 
         //? Cria o funcionário caso não tenham acontecido erros:
-        const employee = new Employee(id, name, email, password, role, image);
-        
+        const employee = new Employee(id, name, email, password, role, image, createdAt);
+
         //? Cria o funcionário e retorna as mensagens do serviço:
         return res.json(await EmployeeService.create(employee));
+    }
+
+    //* Método de visualizar um funcionário pelo id ou email:
+    async view(req, res) {
+        //? Recebe o corpo da página:
+        const body = req.body;
+
+        //? Recebimento dos dados em um JSON:
+        const values = {
+            id: body.id,
+            email: body.email,
+        };
+
+        //? Gera o JSON que possui valores que foram definidos:
+        const uniqueValues = JSON.parse(JSON.stringify(values), (key, value) =>
+            value === undefined ? undefined : value
+        );
+
+        //? Faz o pedido do resultado da pesquisa:
+        const result = await EmployeeService.view(uniqueValues);
+
+        //? Retorna o resultado:
+        return res.json(result);
     }
 }
 

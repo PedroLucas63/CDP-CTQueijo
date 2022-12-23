@@ -20,24 +20,24 @@ class EmployeeService {
     async create(employee) {
         //? Realização da criptografia da senha:
         employee.password = bcrypt.hashSync(employee.password, this.salts);
-        
+
         //? Recebe os dados importantes do empregado:
         let data = employee.partialData();
 
         //? Objeto JSON com dados do resultado:
         let result = {
             message: null,
-            error: null
+            error: null,
+            data: null,
         };
 
         //? Testa a criação do funcionário:
         try {
             // Executa o comando de criação o funcionario:
-            await this.prisma.employee.create({ data: data });
+            result.user = await this.prisma.employee.create({ data: data });
 
-            // Dá a mensagem e o erro da execução:
+            // Dá a mensagem da execução:
             result.message = "Successfully created";
-            result.error = null;
         } catch (e) {
             // Verifica se é um tipo de erro conhecido:
             if (e.code === "P2002") {
@@ -47,9 +47,47 @@ class EmployeeService {
             }
         }
 
-        // Retorna o resultado:
+        //? Retorna o resultado:
+        return result;
+    }
+
+    //* Método de visualizar um funcionário por meio de chave unica:
+    async view(uniqueValues) {
+        //? Objeto com o resultado da pesquisa:
+        let result = {
+            message: null,
+            error: null,
+            data: null,
+        };
+
+        //? Tenta fazer a visualização do funcionário:
+        try {
+            // Executa a visualização do funcionário
+            const employee = await this.prisma.employee.findFirst({
+                where: uniqueValues,
+            });
+    
+            // Verifica se não foi encontrado um funcionário:
+            if (employee === null) {
+                // Define a mensagem que não foi encontrado:
+                result.message = "No employees found";
+            }
+            else{
+                // Define a mensagem e os dados que foram encontrados:
+                result.message = "Employee found";
+                result.data = employee;
+            }
+    
+        } catch (e) {
+            // Define a mensagem e o erro:
+            result.message = "Database connection error";
+            result.error = e.code;
+        }
+        
+        //? Retorna o resultado da pesquisa:
         return result;
     }
 }
 
+//! Exporta a classe instanciada de serviços:
 export default new EmployeeService();

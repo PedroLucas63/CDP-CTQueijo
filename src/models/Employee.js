@@ -1,7 +1,7 @@
 //! Criação da classe de empregado:
 class Employee {
     //* Método de construção da classe:
-    constructor(id, name, email, password, role, image) {
+    constructor(id, name, email, password, role, image, createdAt) {
         this.data = {
             id: id,
             name: name,
@@ -9,6 +9,7 @@ class Employee {
             password: password,
             role: role,
             image: image,
+            createdAt: createdAt,
         };
     }
 
@@ -38,6 +39,11 @@ class Employee {
         this.data.image = image;
     }
 
+    //? Método de definir a data de criação:
+    set createdAt(createdAt) {
+        this.data.createdAt = createdAt;
+    }
+
     //* Métodos Get:
     //? Método de receber o nome:
     get name() {
@@ -64,11 +70,21 @@ class Employee {
         return this.data.image;
     }
 
+    //? Método de definir a data de criação:
+    get createdAt() {
+        return this.data.createdAt;
+    }
+
     //* Método de receber os dados não vazios e diferentes de ID:
     partialData() {
         //? Remove os dados que estão vazios e o de ID:
         const newData = JSON.parse(JSON.stringify(this.data), (key, value) =>
-            value === null || value === "" || key === "id" ? undefined : value
+            value === null ||
+            value === "" ||
+            key === "id" ||
+            key === "createdAt"
+                ? undefined
+                : value
         );
 
         //? Retorna os dados:

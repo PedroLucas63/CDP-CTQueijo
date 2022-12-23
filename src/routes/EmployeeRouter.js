@@ -13,5 +13,8 @@ const router = new Router();
 //? Rota de criação:
 router.post("/create", EmployeeController.create);
 
+//? Rota de visualização por chave unica:
+router.get("/view", EmployeeController.view);
+
 //! Exportação das rotas:
 export default router;
