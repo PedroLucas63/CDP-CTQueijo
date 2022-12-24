@@ -1,7 +1,15 @@
 //! Criação da classe de empregado:
 class Employee {
     //* Método de construção da classe:
-    constructor(id, name, email, password, role, image, createdAt) {
+    constructor(
+        id = null,
+        name = null,
+        email = null,
+        password = null,
+        role = null,
+        image = null,
+        createdAt = null
+    ) {
         this.data = {
             id: id,
             name: name,
@@ -45,6 +53,11 @@ class Employee {
     }
 
     //* Métodos Get:
+    //? Método de receber o id:
+    get id(){
+        return this.data.id;
+    }
+    
     //? Método de receber o nome:
     get name() {
         return this.data.name;
@@ -80,6 +93,7 @@ class Employee {
         //? Remove os dados que estão vazios e o de ID:
         const newData = JSON.parse(JSON.stringify(this.data), (key, value) =>
             value === null ||
+            value === undefined ||
             value === "" ||
             key === "id" ||
             key === "createdAt"
