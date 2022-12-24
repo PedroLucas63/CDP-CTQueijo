@@ -34,10 +34,13 @@ class EmployeeService {
         //? Testa a criação do funcionário:
         try {
             // Executa o comando de criação o funcionario:
-            result.data = await this.prisma.employee.create({ data: data });
+            let createEmployee = await this.prisma.employee.create({
+                data: data,
+            });
 
-            // Dá a mensagem da execução:
+            // Dá a mensagem da execução e os dados:
             result.message = "Successfully created";
+            result.data = createEmployee;
         } catch (e) {
             // Verifica se é um tipo de erro conhecido:
             if (e.code === "P2002") {
@@ -140,13 +143,14 @@ class EmployeeService {
         //? Testa a atualização do funcionário:
         try {
             // Executa o comando de atualizar o funcionario:
-            result.data = await this.prisma.employee.update({
+            let updateEmployee = await this.prisma.employee.update({
                 data: data,
                 where: { id: employee.id },
             });
 
-            // Dá a mensagem da execução:
+            // Dá a mensagem da execução e os dados atualizados:
             result.message = "Successfully update";
+            result.data = updateEmployee;
         } catch (e) {
             // Verifica se é um tipo de erro conhecido:
             if (e.code === "P2002") {
@@ -157,6 +161,35 @@ class EmployeeService {
         }
 
         //? Retorna o resultado:
+        return result;
+    }
+
+    //* Método de deletar um funcionário do banco de dados:
+    async delete(uniqueValues) {
+        //? Objeto com o resultado da pesquisa:
+        let result = {
+            message: null,
+            error: null,
+            data: null,
+        };
+
+        //? Tenta fazer a deletação do funcionário:
+        try {
+            // Executa a deletação do funcionário
+            const deleteEmployee = await this.prisma.employee.delete({
+                where: uniqueValues,
+            });
+
+            // Define a mensagem que foi deletado e os dados:
+            result.message = "Employee delete";
+            result.data = deleteEmployee;
+        } catch (e) {
+            // Define a mensagem e o erro:
+            result.message = "Database connection error";
+            result.error = e.code;
+        }
+
+        //? Retorna o resultado da pesquisa:
         return result;
     }
 }

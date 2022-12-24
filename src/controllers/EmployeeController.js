@@ -10,15 +10,6 @@ import Validation from "../utils/ValidationUtils.js";
 
 //! Criação da classe de controle dos dados do funcionário:
 class EmployeeController {
-    //* Método de construção da classe:
-    constructor() {
-        //? Tamanho do nome:
-         this.nameLenght = 10;
-
-        //? Cargos conhecidos:
-        this.roles = ["Manager", "Manufacturer", "Deliveryman"];
-    }
-
     //* Método de criação do funcionário:
     async create(req, res) {
         //? Recebe o corpo da página:
@@ -45,8 +36,11 @@ class EmployeeController {
         };
 
         //? Verificação de erros:
+        // Tamanho mínimo do nome:
+        const nameLenght = 10;
+
         // Erro de nome curto:
-        if (!Validation.name(employee.name, this.nameLenght)) {
+        if (!Validation.name(employee.name, nameLenght)) {
             result.error["name"] = "The name is too short";
         }
 
@@ -72,8 +66,11 @@ class EmployeeController {
             }
         }
 
+        // Cargos conhecidos:
+        const roles = ["Manager", "Manufacturer", "Deliveryman"];
+
         // Erro de cargo desconhecido:
-        if (!Validation.role(employee.role, this.roles)) {
+        if (!Validation.role(employee.role, roles)) {
             result.error["role"] = "This role does not exist";
         }
 
@@ -127,6 +124,9 @@ class EmployeeController {
         //? Recebe o corpo da página:
         const body = req.body;
 
+        //? Recebe a senha de verificação:
+        const repeatPassword = body.repeatPassword;
+
         //? Cria o funcionário com os dados:
         let employee = new Employee(
             Number(body.id),
@@ -138,10 +138,7 @@ class EmployeeController {
         );
 
         //? Faz o pedido do resultado da pesquisa:
-        let result = await EmployeeService.view(
-            { id: employee.id },
-            { id: true }
-        );
+        let result = await EmployeeService.view({ id: employee.id }, {});
 
         //? Verifica se o funcionário foi encontrado:
         if (result.message === "No employees found") {
@@ -154,8 +151,12 @@ class EmployeeController {
         result.error = {};
 
         // Elemento de nome:
+        // Tamanho mínimo do nome:
+        const nameLenght = 10;
+
+        // Verificação do nome pequeno:
         if (!(employee.name === "")) {
-            if (!Validation.name(employee.name, this.nameLenght)) {
+            if (!Validation.name(employee.name, nameLenght)) {
                 result.error["name"] = "The name is too short";
             }
         }
@@ -189,8 +190,12 @@ class EmployeeController {
         }
 
         // Elemento de cargo:
+        // Cargos conhecidos:
+        const roles = ["Manager", "Manufacturer", "Deliveryman"];
+
+        // Verificação do nome fora dos conhecidos:
         if (!(employee.role === "")) {
-            if (!Validation.role(employee.role, this.roles)) {
+            if (!Validation.role(employee.role, roles)) {
                 result.error["role"] = "This role does not exist";
             }
         }
@@ -207,7 +212,29 @@ class EmployeeController {
         //? Retorna o resultado:
         return res.json(result);
     }
+
+    //* Método de deletar um funcionário:
+    async delete(req, res) {
+        //? Recebe o corpo da página:
+        const body = req.body;
+
+        //? Recebe o identificador do usuário e o nome para o e-mail para verificação:
+        const id = body.id;
+        const email = body.email;
+
+        //? Busca o funcionário no banco de dados:
+        let result = EmployeeService.view({ id: id, email: email }, {});
+
+        //? Verifica se o funcionário foi encontrado:
+        if (result.message === "No employees found") {
+            // Retorna o resultado da pesquisa:
+            return res.json(result);
+        }
+
+        //? Se tiver encontrado, remove o funcionário:
+        result = EmployeeService.delete({id: id, email: email});
+    }
 }
 
 //! Exporta o controlador dos funcionários:
-export default new EmployeeController;
+export default new EmployeeController();
