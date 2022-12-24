@@ -19,5 +19,8 @@ router.post("/view", EmployeeController.view);
 //? Rota de visualização de todos os funcionários:
 router.get("/viewAll", EmployeeController.viewAll);
 
+//? Rota de atualizar um funcionário:
+router.put("/update", EmployeeController.update);
+
 //! Exportação das rotas:
 export default router;

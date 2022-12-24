@@ -1,80 +1,79 @@
 //! Importação dos módulos:
 //* Módulo base do funcionário:
-import Employee from "../models/Employee.js";
+import Employee from "../entities/Employee.js";
 
 //* Módulo de serviço do funcionário:
 import EmployeeService from "../services/EmployeeService.js";
 
+//* Módulo de validação de dados:
+import ValidationUtils from "../utils/ValidationUtils.js";
+
 //! Criação da classe de controle dos dados do funcionário:
 class EmployeeController {
+    //* Método de construção da classe:
+    constructor() {
+        //? Tamanho do nome:
+        this.nameLenght = 10;
+
+        //? Cargos conhecidos:
+        this.roles = ["Manager", "Manufacturer", "Deliveryman"];
+    }
     //* Método de criação do funcionário:
     async create(req, res) {
         //? Recebe o corpo da página:
         const body = req.body;
 
+        //? Cria o funcionário:
+        let employee = new Employee();
+
         //? Recebimento dos dados:
-        const id = null;
-        const name = `${body.firstName} ${body.lastName}`.trim();
-        const email = body.email;
-        const password = body.password;
-        const role = body.role;
-        const image = "./images/profiles/default.png";
-        const createdAt = null;
+        employee.name = `${body.firstName} ${body.lastName}`.trim();
+        employee.email = body.email;
+        employee.password = body.password;
+        employee.role = body.role;
+        employee.image = "./images/profiles/default.png";
+
+        //? Objeto JSON com dados:
+        let result = {
+            message: null,
+            error: {},
+            data: null,
+        };
 
         //? Verificação de erros:
-        // JSON com erros:
-        let errors = {};
-
         // Erro de nome curto:
-        if (name.length < 6) {
-            errors["name"] = "The name is too short";
+        if (!ValidationUtils.name(employee.name, this.nameLenght)) {
+            result.error["name"] = "The name is too short";
         }
 
         // Erro de e-mail fora do padrão:
-        // Regex com modelo de e-mail:
-        let reEmail = /\S+@\S+\.\S+/;
-
-        // Verifica se o o e-mail corresponde ao modelo:
-        if (!reEmail.test(email)) {
-            errors["email"] = "Email is not in default";
+        if (!ValidationUtils.email(employee.email)) {
+            result.error["email"] = "Email is not in default";
         }
 
         // Erro de senha fraca:
-        // Regex com modelo de senha forte:
-        /* Exigências da senha:
-           - Mínimo de 8 caracteres
-           - Mínimo de 1 letra maiúscula
-           - Mínimo de 1 número
-           - Mínimo de 1 símbolo: $*&@#
-           - Sem a presença de sequências com caracteres iguais
-        */
-        let rePassword =
-            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])(?:([0-9a-zA-Z$*&@#])(?!\1)){8,}$/;
-
-        // Verifica se a senha corresponde ao modelo:
-        if (!rePassword.test(password)) {
-            errors["password"] = "The password is too weak";
+        if (!ValidationUtils.password(employee.password)) {
+            result.error["password"] = "The password is too weak";
         }
 
         // Erro de cargo desconhecido:
-        // Cargos conhecidos:
-        let roles = ["Manager", "Manufacturer", "Deliveryman"];
 
         // Informa se o cargo está entre os listados:
-        if (roles.indexOf(role) === -1) {
-            errors["role"] = "This role does not exist";
+        if (!ValidationUtils.role(employee.role, this.roles)) {
+            result.error["role"] = "This role does not exist";
         }
 
         //? Verifica se ocorreram erros e os retorna se for o caso:
-        if (Object.keys(errors).length != 0) {
-            return res.json({ message: "Data with errors", error: errors });
+        if (Object.keys(result.error).length != 0) {
+            result.message = "Data error";
+            return res.json(result);
         }
 
-        //? Cria o funcionário caso não tenham acontecido erros:
-        const employee = new Employee(id, name, email, password, role, image, createdAt);
+        //? Cria o funcionário e verifica as mensagens do serviço:
+        result = await EmployeeService.create(employee);
 
-        //? Cria o funcionário e retorna as mensagens do serviço:
-        return res.json(await EmployeeService.create(employee));
+        //? Retorna o resultado:
+        return res.json(result);
     }
 
     //* Método de visualizar um funcionário pelo id ou email:
@@ -94,18 +93,90 @@ class EmployeeController {
         );
 
         //? Faz o pedido do resultado da pesquisa:
-        const result = await EmployeeService.view(uniqueValues);
+        const result = await EmployeeService.view(uniqueValues, {});
 
         //? Retorna o resultado:
         return res.json(result);
     }
 
     //* Método de visualizar todos os funcionários:
-    async viewAll(req, res){
+    async viewAll(req, res) {
         //? Faz a requisição dos dados de todos os funcionários:
         const result = await EmployeeService.viewAll();
 
         //? Retorna os dados encontrados:
+        return res.json(result);
+    }
+
+    //* Método de atualizar um funcionário:
+    async update(req, res) {
+        //? Recebe o corpo da página:
+        const body = req.body;
+
+        //? Cria o funcionário com os dados:
+        let employee = new Employee(
+            Number(body.id),
+            `${body.firstName} ${body.lastName}`.trim(),
+            body.email,
+            body.password,
+            body.role,
+            body.image
+        );
+
+        //? Faz o pedido do resultado da pesquisa:
+        let result = await EmployeeService.view(
+            { id: employee.id },
+            { id: true }
+        );
+
+        //? Verifica se o funcionário foi encontrado:
+        if (result.message === "No employees found") {
+            // Retorna o resultado da pesquisa:
+            return res.json(result);
+        }
+
+        //? Verificação dos erros nos dados:
+        // Define os erros como um JSON:
+        result.error = {};
+
+        // Elemento de nome:
+        if (!(employee.name === "")) {
+            if (!ValidationUtils.name(employee.name, this.nameLenght)) {
+                result.error["name"] = "The name is too short";
+            }
+        }
+
+        // Elemento de e-mail:
+        if (!(employee.email === "")) {
+            if (!ValidationUtils.email(employee.email)) {
+                result.error["email"] = "Email is not in default";
+            }
+        }
+
+        // Elemento de senha:
+        if (!(employee.password === "")) {
+            if (!ValidationUtils.password(employee.password)) {
+                result.error["password"] = "The password is too weak";
+            }
+        }
+
+        // Elemento de cargo:
+        if (!(employee.role === "")) {
+            if (!ValidationUtils.role(employee.role, roles)) {
+                result.error["role"] = "This role does not exist";
+            }
+        }
+
+        //? Verifica se ocorreram erros e os retorna se for o caso:
+        if (Object.keys(result.error).length != 0) {
+            result.message = "Data error";
+            return res.json(result);
+        }
+
+        //? Atualiza o funcionário e verifica as mensagens do serviço:
+        result = await EmployeeService.update(employee);
+
+        //? Retorna o resultado:
         return res.json(result);
     }
 }

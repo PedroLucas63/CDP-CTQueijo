@@ -34,7 +34,7 @@ class EmployeeService {
         //? Testa a criação do funcionário:
         try {
             // Executa o comando de criação o funcionario:
-            result.user = await this.prisma.employee.create({ data: data });
+            result.data = await this.prisma.employee.create({ data: data });
 
             // Dá a mensagem da execução:
             result.message = "Successfully created";
@@ -52,7 +52,7 @@ class EmployeeService {
     }
 
     //* Método de receber dados de um funcionário por meio de chave unica:
-    async view(uniqueValues) {
+    async view(uniqueValues, selectValues) {
         //? Objeto com o resultado da pesquisa:
         let result = {
             message: null,
@@ -65,6 +65,7 @@ class EmployeeService {
             // Executa a visualização do funcionário
             const employee = await this.prisma.employee.findFirst({
                 where: uniqueValues,
+                select: selectValues,
             });
 
             // Verifica se não foi encontrado um funcionário:
@@ -116,6 +117,46 @@ class EmployeeService {
         }
 
         //? Retorna o resultado da pesquisa:
+        return result;
+    }
+
+    //* Método de atualizar um funcionário no banco de dados:
+    async update(employee) {
+        //? Verifica se a senha foi modificada e faz a criptografia:
+        if (!(employee.password === "")) {
+            employee.password = bcrypt.hashSync(employee.password, this.salts);
+        }
+
+        //? Recebe os dados que foram modificados:
+        let data = employee.partialData();
+
+        //? Objeto JSON com dados do resultado:
+        let result = {
+            message: null,
+            error: null,
+            data: null,
+        };
+
+        //? Testa a atualização do funcionário:
+        try {
+            // Executa o comando de atualizar o funcionario:
+            result.data = await this.prisma.employee.update({
+                data: data,
+                where: { id: employee.id },
+            });
+
+            // Dá a mensagem da execução:
+            result.message = "Successfully update";
+        } catch (e) {
+            // Verifica se é um tipo de erro conhecido:
+            if (e.code === "P2002") {
+                // Dá a mensagem e o erro da execução:
+                result.message = "Update failure";
+                result.error = "Unique key in use";
+            }
+        }
+
+        //? Retorna o resultado:
         return result;
     }
 }
