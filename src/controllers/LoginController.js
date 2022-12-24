@@ -3,7 +3,7 @@
 import bcrypt from "bcrypt";
 
 //* Módulo base do funcionário:
-import Employee from "../models/Employee.js";
+import Employee from "../entities/Employee.js";
 
 //* Módulo de serviço do funcionário:
 import EmployeeService from "../services/EmployeeService.js";
@@ -66,8 +66,8 @@ class LoginController {
 
     //* Método de fazer o logout no servidor:
     async logout(req, res) {
-        //? Determina o logged como falso:
-        req.session.logged = false;
+        //? Determina o usuário logado como vazio:
+        req.session.user = null;
 
         //? Determina o resultado:
         const result = {
