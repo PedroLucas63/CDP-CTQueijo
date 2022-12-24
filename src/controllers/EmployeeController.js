@@ -6,18 +6,19 @@ import Employee from "../entities/Employee.js";
 import EmployeeService from "../services/EmployeeService.js";
 
 //* Módulo de validação de dados:
-import ValidationUtils from "../utils/ValidationUtils.js";
+import Validation from "../utils/ValidationUtils.js";
 
 //! Criação da classe de controle dos dados do funcionário:
 class EmployeeController {
     //* Método de construção da classe:
     constructor() {
         //? Tamanho do nome:
-        this.nameLenght = 10;
+         this.nameLenght = 10;
 
         //? Cargos conhecidos:
         this.roles = ["Manager", "Manufacturer", "Deliveryman"];
     }
+
     //* Método de criação do funcionário:
     async create(req, res) {
         //? Recebe o corpo da página:
@@ -33,6 +34,9 @@ class EmployeeController {
         employee.role = body.role;
         employee.image = "./images/profiles/default.png";
 
+        //? Senha de verificação:
+        const repeatPassword = body.repeatPassword;
+
         //? Objeto JSON com dados:
         let result = {
             message: null,
@@ -42,24 +46,34 @@ class EmployeeController {
 
         //? Verificação de erros:
         // Erro de nome curto:
-        if (!ValidationUtils.name(employee.name, this.nameLenght)) {
+        if (!Validation.name(employee.name, this.nameLenght)) {
             result.error["name"] = "The name is too short";
         }
 
         // Erro de e-mail fora do padrão:
-        if (!ValidationUtils.email(employee.email)) {
+        if (!Validation.email(employee.email)) {
             result.error["email"] = "Email is not in default";
         }
 
-        // Erro de senha fraca:
-        if (!ValidationUtils.password(employee.password)) {
-            result.error["password"] = "The password is too weak";
+        // Erro de senha:
+        if (
+            !Validation.password(employee.password) ||
+            !(employee.password === repeatPassword)
+        ) {
+            result.error["password"] = [];
+            // Erro de senha fraca:
+            if (!Validation.password(employee.password)) {
+                result.error["password"].push("The password is too weak");
+            }
+
+            // Erro de senhas diferentes:
+            if (!(employee.password === repeatPassword)) {
+                result.error["password"].push("The passwords are different");
+            }
         }
 
         // Erro de cargo desconhecido:
-
-        // Informa se o cargo está entre os listados:
-        if (!ValidationUtils.role(employee.role, this.roles)) {
+        if (!Validation.role(employee.role, this.roles)) {
             result.error["role"] = "This role does not exist";
         }
 
@@ -141,28 +155,42 @@ class EmployeeController {
 
         // Elemento de nome:
         if (!(employee.name === "")) {
-            if (!ValidationUtils.name(employee.name, this.nameLenght)) {
+            if (!Validation.name(employee.name, this.nameLenght)) {
                 result.error["name"] = "The name is too short";
             }
         }
 
         // Elemento de e-mail:
         if (!(employee.email === "")) {
-            if (!ValidationUtils.email(employee.email)) {
+            if (!Validation.email(employee.email)) {
                 result.error["email"] = "Email is not in default";
             }
         }
 
         // Elemento de senha:
         if (!(employee.password === "")) {
-            if (!ValidationUtils.password(employee.password)) {
-                result.error["password"] = "The password is too weak";
+            if (
+                !Validation.password(employee.password) ||
+                !(employee.password === repeatPassword)
+            ) {
+                result.error["password"] = [];
+                // Erro de senha fraca:
+                if (!Validation.password(employee.password)) {
+                    result.error["password"].push("The password is too weak");
+                }
+
+                // Erro de senhas diferentes:
+                if (!(employee.password === repeatPassword)) {
+                    result.error["password"].push(
+                        "The passwords are different"
+                    );
+                }
             }
         }
 
         // Elemento de cargo:
         if (!(employee.role === "")) {
-            if (!ValidationUtils.role(employee.role, roles)) {
+            if (!Validation.role(employee.role, this.roles)) {
                 result.error["role"] = "This role does not exist";
             }
         }
@@ -182,4 +210,4 @@ class EmployeeController {
 }
 
 //! Exporta o controlador dos funcionários:
-export default new EmployeeController();
+export default new EmployeeController;
