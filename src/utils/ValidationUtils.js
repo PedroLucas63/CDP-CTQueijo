@@ -9,8 +9,8 @@ class Validation {
     //* Método de validação de e-mail:
     email(email) {
         //? Define o regex do modelo de e-mail esperado:
-        let reEmail = /\S+@\S+\.\S+/;
-
+        let reEmail =
+            /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/gi;
         //? Verifica se o e-mail corresponde ao modelo e retorna o resultado:
         return reEmail.test(email);
     }
@@ -33,7 +33,7 @@ class Validation {
     }
 
     //* Método de validação do cargo:
-    role(role, roles){
+    role(role, roles) {
         //? Retorna se o cargo se encontra no array de cargos:
         return roles.indexOf(role) != -1;
     }
