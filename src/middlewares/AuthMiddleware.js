@@ -6,7 +6,7 @@ function AuthMiddleware(req, res, next) {
         next();
     } else {
         //? Redireciona para a página principal:
-        return res.redirect("/");
+        return res.status(401).redirect('/');
     }
 }
 
