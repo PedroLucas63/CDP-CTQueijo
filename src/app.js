@@ -3,6 +3,9 @@
 import express from "express";
 import session from "express-session";
 
+//* Importação da função de interfaces da rede:
+import { networkInterfaces } from "os";
+
 //* Importação do módulo dotenv:
 import dotenv from "dotenv";
 
@@ -46,10 +49,12 @@ app.use(
 app.use(router);
 
 //! Iniciação do servidor:
+//* Recebe as informações da rede:
+const networkInfo = networkInterfaces();
+
 //* Definindo dados do servidor:
-const hostname = "127.0.0.1";
-const port = 3000;
-7;
+const hostname = networkInfo["Wi-Fi"][1].address;
+const port = process.env.PORT || 3000;
 
 //* Abertura do servidor:
 app.listen(port, () => {
