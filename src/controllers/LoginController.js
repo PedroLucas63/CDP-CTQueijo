@@ -49,7 +49,7 @@ class LoginController {
         //? Verifica se as senhas são iguais:
         if (bcrypt.compareSync(password, employee.password)) {
             // Salva o login na sessão:
-            req.session.logged = true;
+            req.session.user = employee.id;
 
             // Modifica os dados do resultado:
             result.message = "Login executed successfully";
@@ -57,11 +57,11 @@ class LoginController {
             result.data = data;
 
             // Retorna o resultado com o sucesso:
-            return res.json(result);
+            return res.status(200).json(result);
         }
 
         //? Retorna o resultado com erro:
-        return res.json(result);
+        return res.status(400).json(result);
     }
 
     //* Método de fazer o logout no servidor:

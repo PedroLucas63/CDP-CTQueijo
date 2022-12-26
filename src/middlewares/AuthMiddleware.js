@@ -1,12 +1,24 @@
+//! Importação de módulos:
+//* Importação da função de procura dos serviços do funcionário:
+import EmployeeService from "../services/EmployeeService.js";
+
 //! Função mediadora de verificar se o funcionário está logado:
-function AuthMiddleware(req, res, next) {
+async function AuthMiddleware(req, res, next) {
     //* Verifica se o funcionário se encontra logado:
-    if (req.session.logged) {
+    if (req.session.user !== null) {
+        //? Procura o funcionário no banco de dados:
+        const result = await EmployeeService.view({id: req.session.user});
+
+        //? Verifica se o usuário não se encontra no banco de dados:
+        if(result.message !== "Funcionário encontrado"){
+            return res.status(401).redirect("/logout");
+        }
+
         //? Continua a execução:
         next();
     } else {
         //? Redireciona para a página principal:
-        return res.status(401).redirect('/');
+        return res.status(401).redirect("/");
     }
 }
 
