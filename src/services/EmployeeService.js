@@ -39,14 +39,14 @@ class EmployeeService {
             });
 
             // Dá a mensagem da execução e os dados:
-            result.message = "Successfully created";
+            result.message = "Criado com sucesso";
             result.data = createEmployee;
         } catch (e) {
             // Verifica se é um tipo de erro conhecido:
             if (e.code === "P2002") {
                 // Dá a mensagem e o erro da execução:
-                result.message = "Creation failure";
-                result.error = "Unique key in use";
+                result.message = "Falha na criação";
+                result.error = "Chave única em uso";
             }
         }
 
@@ -55,7 +55,7 @@ class EmployeeService {
     }
 
     //* Método de receber dados de um funcionário por meio de chave unica:
-    async view(uniqueValues, selectValues) {
+    async view(uniqueValues) {
         //? Objeto com o resultado da pesquisa:
         let result = {
             message: null,
@@ -68,24 +68,22 @@ class EmployeeService {
             // Executa a visualização do funcionário
             const employee = await this.prisma.employee.findFirst({
                 where: uniqueValues,
-                select: selectValues,
             });
 
             // Verifica se não foi encontrado um funcionário:
             if (employee === null) {
                 // Define a mensagem que não foi encontrado:
-                result.message = "No employees found";
+                result.message = "Funcionário não encontrado";
             } else {
                 // Define a mensagem e os dados que foram encontrados:
-                result.message = "Employee found";
+                result.message = "Funcionário encontrado";
                 result.data = employee;
             }
         } catch (e) {
             // Define a mensagem e o erro:
-            result.message = "Database connection error";
-            result.error = e.code;
+            result.message = "Erro na conexão com o banco de dados";
+            result.error = e;
         }
-
         //? Retorna o resultado da pesquisa:
         return result;
     }
@@ -107,15 +105,15 @@ class EmployeeService {
             // Verifica se a lista não está vazia:
             if (employees.length === 0) {
                 // Define a mensagem que não foi encontrado:
-                result.message = "No registered employee";
+                result.message = "Nenhum funcionário encontrado";
             } else {
                 // Define a mensagem e os dados que foram encontrados:
-                result.message = "Employees found";
+                result.message = "Funcionários encontrados";
                 result.data = employees;
             }
         } catch (e) {
             // Define a mensagem e o erro:
-            result.message = "Database connection error";
+            result.message = "Erro na conexão com o banco de dados";
             result.error = e.code;
         }
 
@@ -149,15 +147,16 @@ class EmployeeService {
             });
 
             // Dá a mensagem da execução e os dados atualizados:
-            result.message = "Successfully update";
+            result.message = "Atualizado com sucesso";
             result.data = updateEmployee;
         } catch (e) {
             // Verifica se é um tipo de erro conhecido:
             if (e.code === "P2002") {
                 // Dá a mensagem e o erro da execução:
-                result.message = "Update failure";
-                result.error = "Unique key in use";
+                result.message = "Falha na atualização";
+                result.error = "Chave única em uso";
             }
+            console.log(e.code)
         }
 
         //? Retorna o resultado:
@@ -176,16 +175,16 @@ class EmployeeService {
         //? Tenta fazer a deletação do funcionário:
         try {
             // Executa a deletação do funcionário
-            const deleteEmployee = await this.prisma.employee.delete({
+            const deleteEmployee = await this.prisma.employee.deleteMany({
                 where: uniqueValues,
             });
-
+            
             // Define a mensagem que foi deletado e os dados:
-            result.message = "Employee delete";
+            result.message = "Deletado com sucesso";
             result.data = deleteEmployee;
         } catch (e) {
             // Define a mensagem e o erro:
-            result.message = "Database connection error";
+            result.message = "Erro na conexão com o banco de dados";
             result.error = e.code;
         }
 
