@@ -9,7 +9,12 @@ const router = new Router();
 //* Definição das rotas:
 //? Rota inicial:
 router.get("/", (req, res) => {
-    res.render("index");
+    res.render("pages/index");
+});
+
+//? Rota Produtos:
+router.get("/produtos", (req, res) => {
+    res.render("pages/produtos");
 });
 
 //? Rota de erro 404:
