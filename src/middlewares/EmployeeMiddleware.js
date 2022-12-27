@@ -25,9 +25,15 @@ class EmployeeMiddleware {
                 .isEmail()
                 .withMessage("Email inválido"),
             body("password")
-                .matches(
-                    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])(?:([0-9a-zA-Z$*&@#])(?!\1)){8,24}$/
-                )
+                .isStrongPassword({
+                    minLength: 8,
+                    maxLenght: 24,
+                    minLowercase: 1,
+                    minUppercase: 1,
+                    minNumbers: 1,
+                    minSymbols: 1,
+                    pointsPerUnique: 1,
+                })
                 .withMessage("Senha inválida"),
             body("confirmPassword").custom((value, { req }) => {
                 if (value !== req.body.password) {
