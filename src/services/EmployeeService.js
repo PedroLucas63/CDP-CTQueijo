@@ -18,18 +18,18 @@ class EmployeeService {
 
     //* Método de criar um novo funcionário no banco de dados:
     async create(employee) {
+        //? Objeto JSON com dados do resultado:
+        let result = {
+            message: "Criado com sucesso",
+            error: 0,
+            data: null,
+        };
+
         //? Realização da criptografia da senha:
         employee.password = bcrypt.hashSync(employee.password, this.salts);
 
         //? Recebe os dados importantes do empregado:
         let data = employee.partialData();
-
-        //? Objeto JSON com dados do resultado:
-        let result = {
-            message: null,
-            error: null,
-            data: null,
-        };
 
         //? Testa a criação do funcionário:
         try {
@@ -38,15 +38,18 @@ class EmployeeService {
                 data: data,
             });
 
-            // Dá a mensagem da execução e os dados:
-            result.message = "Criado com sucesso";
+            // Dá os dados da criação:
             result.data = createEmployee;
         } catch (e) {
             // Verifica se é um tipo de erro conhecido:
             if (e.code === "P2002") {
-                // Dá a mensagem e o erro da execução:
+                // Define a mensagem e o erro conhecido:
                 result.message = "Falha na criação";
-                result.error = "Chave única em uso";
+                result.error = 43;
+            } else {
+                // Define a mensagem e o erro de conexão:
+                result.message = "Erro na conexão com o banco de dados";
+                result.error = 4;
             }
         }
 
@@ -58,8 +61,8 @@ class EmployeeService {
     async view(uniqueValues) {
         //? Objeto com o resultado da pesquisa:
         let result = {
-            message: null,
-            error: null,
+            message: "Funcionário encontrado",
+            error: 0,
             data: null,
         };
 
@@ -74,16 +77,17 @@ class EmployeeService {
             if (employee === null) {
                 // Define a mensagem que não foi encontrado:
                 result.message = "Funcionário não encontrado";
+                result.error = 14;
             } else {
                 // Define a mensagem e os dados que foram encontrados:
-                result.message = "Funcionário encontrado";
                 result.data = employee;
             }
         } catch (e) {
             // Define a mensagem e o erro:
             result.message = "Erro na conexão com o banco de dados";
-            result.error = e;
+            result.error = 4;
         }
+
         //? Retorna o resultado da pesquisa:
         return result;
     }
@@ -92,8 +96,8 @@ class EmployeeService {
     async viewAll() {
         //? Objeto com o resultado da pesquisa:
         let result = {
-            message: null,
-            error: null,
+            message: "Funcionários encontrados",
+            error: 0,
             data: null,
         };
 
@@ -102,19 +106,12 @@ class EmployeeService {
             // Recebe os dados de todos os funcionários:
             const employees = await this.prisma.employee.findMany();
 
-            // Verifica se a lista não está vazia:
-            if (employees.length === 0) {
-                // Define a mensagem que não foi encontrado:
-                result.message = "Nenhum funcionário encontrado";
-            } else {
-                // Define a mensagem e os dados que foram encontrados:
-                result.message = "Funcionários encontrados";
-                result.data = employees;
-            }
+            // Salva os funcionários nos dados do resultado:
+            result.data = employees;
         } catch (e) {
             // Define a mensagem e o erro:
             result.message = "Erro na conexão com o banco de dados";
-            result.error = e.code;
+            result.error = 4;
         }
 
         //? Retorna o resultado da pesquisa:
@@ -123,6 +120,13 @@ class EmployeeService {
 
     //* Método de atualizar um funcionário no banco de dados:
     async update(employee) {
+        //? Objeto JSON com dados do resultado:
+        let result = {
+            message: "Atualizado com sucesso",
+            error: 0,
+            data: null,
+        };
+
         //? Verifica se a senha foi modificada e faz a criptografia:
         if (!(employee.password === "")) {
             employee.password = bcrypt.hashSync(employee.password, this.salts);
@@ -130,13 +134,6 @@ class EmployeeService {
 
         //? Recebe os dados que foram modificados:
         let data = employee.partialData();
-
-        //? Objeto JSON com dados do resultado:
-        let result = {
-            message: null,
-            error: null,
-            data: null,
-        };
 
         //? Testa a atualização do funcionário:
         try {
@@ -146,17 +143,19 @@ class EmployeeService {
                 where: { id: employee.id },
             });
 
-            // Dá a mensagem da execução e os dados atualizados:
-            result.message = "Atualizado com sucesso";
+            // Dá os dados atualizados:
             result.data = updateEmployee;
         } catch (e) {
             // Verifica se é um tipo de erro conhecido:
             if (e.code === "P2002") {
-                // Dá a mensagem e o erro da execução:
-                result.message = "Falha na atualização";
-                result.error = "Chave única em uso";
+                // Define a mensagem e o erro conhecido:
+                result.message = "Falha na criação";
+                result.error = 43;
+            } else {
+                // Define a mensagem e o erro de conexão:
+                result.message = "Erro na conexão com o banco de dados";
+                result.error = 4;
             }
-            console.log(e.code)
         }
 
         //? Retorna o resultado:
@@ -167,8 +166,8 @@ class EmployeeService {
     async delete(uniqueValues) {
         //? Objeto com o resultado da pesquisa:
         let result = {
-            message: null,
-            error: null,
+            message: "Deletado com sucesso",
+            error: 0,
             data: null,
         };
 
@@ -178,14 +177,13 @@ class EmployeeService {
             const deleteEmployee = await this.prisma.employee.deleteMany({
                 where: uniqueValues,
             });
-            
+
             // Define a mensagem que foi deletado e os dados:
-            result.message = "Deletado com sucesso";
             result.data = deleteEmployee;
         } catch (e) {
             // Define a mensagem e o erro:
             result.message = "Erro na conexão com o banco de dados";
-            result.error = e.code;
+            result.error = 4;
         }
 
         //? Retorna o resultado da pesquisa:

@@ -94,9 +94,7 @@ class Employee {
         const newData = JSON.parse(JSON.stringify(this.data), (key, value) =>
             value === null ||
             value === undefined ||
-            value === "" ||
-            key === "id" ||
-            key === "createdAt"
+            value === ""
                 ? undefined
                 : value
         );

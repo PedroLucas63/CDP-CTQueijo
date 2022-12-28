@@ -8,6 +8,9 @@ import EmployeeService from "../services/EmployeeService.js";
 //* Módulo que recebe o resultado da validação:
 import { validationResult } from "express-validator";
 
+//* Importa o módulo de arquivos do sistema:
+import fs from "fs";
+
 //! Criação da classe de controle dos dados do funcionário:
 class EmployeeController {
     //* Método de criação do funcionário:
@@ -34,6 +37,7 @@ class EmployeeController {
 
         //? Recebe o corpo da página:
         const body = req.body;
+
         //? Cria o funcionário:
         let employee = new Employee();
 
@@ -51,10 +55,11 @@ class EmployeeController {
         let status = 201;
 
         //? Verifica se o usuário não foi criado:
-        if (result.message === "Falha na criação") {
+        if (result.error !== 0) {
             // Modifica o status para conflito com recursos no servidor:
             status = 409;
         }
+
         //? Retorna o resultado:
         return res.status(status).json(result);
     }
@@ -78,8 +83,17 @@ class EmployeeController {
         //? Faz o pedido do resultado da pesquisa:
         const result = await EmployeeService.view(uniqueValues);
 
+        //? Define o status como sucesso:
+        let status = 200;
+
+        //? Verifica se o usuário não foi encontrado:
+        if (result.error !== 0) {
+            // Modifica o status para conflito com recursos no servidor:
+            status = 409;
+        }
+
         //? Retorna o resultado:
-        return res.status(200).json(result);
+        return res.status(status).json(result);
     }
 
     //* Método de visualizar todos os funcionários:
@@ -87,8 +101,17 @@ class EmployeeController {
         //? Faz a requisição dos dados de todos os funcionários:
         const result = await EmployeeService.viewAll();
 
-        //? Retorna os dados encontrados:
-        return res.status(200).json(result);
+        //? Define o status como sucesso:
+        let status = 200;
+
+        //? Verifica se o usuário não foi encontrado:
+        if (result.error !== 0) {
+            // Modifica o status para conflito com recursos no servidor:
+            status = 409;
+        }
+
+        //? Retorna o resultado:
+        return res.status(status).json(result);
     }
 
     //* Método de atualizar um funcionário:
@@ -113,6 +136,69 @@ class EmployeeController {
             return res.status(400).json(result);
         }
 
+        //? Recebe os arquivos enviados:
+        const files = req.files;
+
+        //? Determina o local de upload:
+        let localImage = "";
+
+        //? Verifica se foi enviado um arquivo com o name de image:
+        if (files.image) {
+            // Cria um array com os tipos de arquivos suportados:
+            const mimetypes = ["image/jpeg", "image/png"];
+
+            // Verifica se o arquivo enviado é uma imagem no formato aceito:
+            if (mimetypes.indexOf(files.image.mimetype) !== -1) {
+                // Define a imagem e o local:
+                const image = files.image;
+                const localFile =
+                    "./public/images/profiles/" + Date.now() + image.name;
+
+                // Faz o upload da imagem:
+                image.mv(localFile, function (e) {
+                    // Verifica se aconteceu um erro:
+                    if (e) {
+                        // Define a mensagem e o erro:
+                        result.message = "Falha no upload da imagem";
+                        result.error = 17;
+
+                        // Retorna o resultado com o status de falha:
+                        return res.status(400).json(result);
+                    }
+                });
+
+                // Determina o local da imagem:
+                localImage = localFile.replace("./public", ".");
+
+                // Recebe os dados  do usuário:
+                const { data } = await EmployeeService.view({
+                    id: Number(req.body.id),
+                });
+
+                // Recebe o local da imagem salva:
+                let imageSaved = data.image;
+
+                // Verifica se não é a imagem padrão:
+                if (imageSaved !== "./images/profiles/default.png") {
+                    // Edita o nome da imagem
+                    imageSaved = imageSaved.replace("./", "./public/");
+
+                    // Executa a função de deletar a imagem:
+                    fs.unlink(imageSaved, (e) => {
+                        // Verifica se aconteceu um erro:
+                        if (e) {
+                            // Define a mensagem e o erro:
+                            result.message = "Erro em deletar a imagem antiga";
+                            result.error = 16;
+
+                            // Retorna o resultado com o status de falha:
+                            return res.status(400).json(result);
+                        }
+                    });
+                }
+            }
+        }
+
         //? Recebe o corpo da página:
         const body = req.body;
 
@@ -123,7 +209,7 @@ class EmployeeController {
             body.email,
             body.password,
             body.role,
-            body.image
+            localImage
         );
 
         //? Atualiza o funcionário e verifica as mensagens do serviço:
@@ -132,17 +218,38 @@ class EmployeeController {
         //? Define o status como sucesso na atualização:
         let status = 201;
 
-        //? Verifica se o usuário não foi atualizado:
-        if (result.message === "Falha na atualização") {
+        //? Verifica se o usuário não foi encontrado:
+        if (result.error !== 0) {
             // Modifica o status para conflito com recursos no servidor:
             status = 409;
         }
+
         //? Retorna o resultado:
         return res.status(status).json(result);
     }
 
     //* Método de deletar um funcionário:
     async delete(req, res) {
+        //? Objeto JSON com o resultado:
+        let result = {
+            message: null,
+            error: null,
+            data: null,
+        };
+
+        //? Recebe o resultado da validação do express:
+        const errors = validationResult(req);
+
+        //? Verifica se ocorreram erros na validação:
+        if (!errors.isEmpty()) {
+            // Define uma mensagem e um erro:
+            result.message = "Erro nos dados passados";
+            result.error = errors.array();
+
+            // Retorna o resultado com o status de falha:
+            return res.status(400).json(result);
+        }
+
         //? Recebe o corpo da página:
         const body = req.body;
 
@@ -150,23 +257,14 @@ class EmployeeController {
         const id = body.id;
         const email = body.email;
 
-        //? Busca o funcionário no banco de dados:
-        let result = await EmployeeService.view({ id: id, email: email });
-
-        //? Verifica se o funcionário foi encontrado:
-        if (result.message === "Funcionário não encontrado") {
-            // Retorna o resultado da pesquisa:
-            return res.status(400).json(result);
-        }
-
         //? Se tiver encontrado, remove o funcionário:
         result = await EmployeeService.delete({ id: id, email: email });
 
         //? Define o status como sucesso na remoção:
         let status = 201;
 
-        //? Verifica se o usuário não foi removido:
-        if (result.message === "Erro na conexão com o banco de dados") {
+        //? Verifica se o usuário não foi encontrado:
+        if (result.error !== 0) {
             // Modifica o status para conflito com recursos no servidor:
             status = 409;
         }
