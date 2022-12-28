@@ -44,7 +44,7 @@ class FlavorController {
         //? Recebimento dos dados:
         flavor.productId = Number(body.productId);
         flavor.name = body.name.trim();
-        flavor.price = Float(body.price);
+        flavor.price = Number(body.price);
         flavor.image = "/images/products/default.png";
 
         //? Cria o sabor e verifica as mensagens do serviço:
@@ -193,7 +193,7 @@ class FlavorController {
             Number(body.id),
             body.productId,
             body.name.trim(),
-            Float(body.price),
+            Number(body.price),
             localImage
         );
 
