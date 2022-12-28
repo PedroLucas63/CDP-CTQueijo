@@ -1,32 +1,47 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-        <!--! Importação dos elementos do head -->
-        <%- include("../partials/head.ejs") %>
+
+<head>
+    <!--! Importação dos elementos do head -->
+    <%- include("../partials/head.ejs") %>
 
         <!--! Definição do título da página -->
         <title>Centro de Tecnologia do Queijo</title>
-    </head>
-    <body>
-        <!--! Header -->
-        <header>
-            <!--* Barra de Navegação -->
-            <%- include("../partials/navbar.ejs") %>
-        </header>
+</head>
 
-        <!--! Main -->
-        <main class="container p-60">
-            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Bem vindo ao nosso site</h1>
-        </main>
+<body>
+    <!--! Header -->
+    <header>
+        <!--* Barra de Navegação -->
+        <%- include("../partials/navbar.ejs") %>
+    </header>
 
-        <!--! Footer -->
-        <footer>
-            <!--* Rodapé -->
-            <%- include("../partials/footer.ejs") %>
-        </footer>
+    <main>
+        <div class="w-full bg-center bg-cover h-[38rem]" style="background-image: url('/assets/image-01.jpg');">
+            <div class="flex items-center justify-center w-full h-full bg-gray-900/40">
+                <div class="text-center">
+                    <h1 class="text-3xl font-semibold text-white lg:text-5xl">Variedades de Produtos</h1>
+                    <p class="text-3xl text-white lg:text-2xl">Conheça a nossa produção</p>
+                    <a href="/produtos">
+                        <button
+                            class="w-full px-4 py-2 mt-4 text-sm font-medium text-white capitalize transition-colors duration-300 transform bg-cyan-700 rounded-md lg:w-auto hover:bg-cyan-800 focus:outline-none">Ver
+                            Produtos
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
 
-        <!--! Scripts -->
-        <!--* Script da barra de navegação -->
-        <script src="./scripts/navbar.js"></script>
-    </body>
+    <!--! Footer -->
+    <footer>
+        <!--* Rodapé -->
+        <%- include("../partials/footer.ejs") %>
+    </footer>
+
+    <!--! Scripts -->
+    <!--* Script da barra de navegação -->
+    <script src="./scripts/navbar.js"></script>
+</body>
+
 </html>
