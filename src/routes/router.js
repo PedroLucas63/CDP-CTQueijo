@@ -22,6 +22,11 @@ router.get("/dashboard", (req, res) => {
     res.render("pages/dashboard");
 });
 
+//? Rota Pedidos:
+router.get("/pedidos", (req, res) => {
+    res.render("pages/pedidos");
+});
+
 //? Rota de erro 404:
 router.use(function (req, res, next) {
     res.status(404).render("pages/404");
