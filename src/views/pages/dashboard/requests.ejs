@@ -23,47 +23,47 @@
 
                 <!-- Filter Table -->
                 <div class="flex flex-col m-4">
-                  <h2 class="text-xl font-bold mb-4 text-stone-600">
-                    Pedidos
+                  <h2 class="text-xl font-bold mx-6 mt-2 text-gray-900">
+                    Controle de Pedidos
                   </h2>
                 
-                  <div class="bg-white p-6 rounded-xl shadow-lg">
+                  <div class="bg-white p-6 rounded-xl">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                       <div class="flex flex-col">
-                        <label for="name" class="font-medium text-sm text-stone-600">Nome</label>
+                        <label for="name" class="font-medium text-sm text-gray-600">Nome</label>
                         <input
                           type="text"
                           id="name"
-                          placeholder="john doe"
-                          class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50"
+                          placeholder="Nome"
+                          class="mt-2 block w-full rounded-md border-gray-300 shadow-sm p-1 focus:border-gray-800 focus:ring focus:ring-gray-200 focus:ring-opacity-50"
                         >
                       </div>
                 
                       <div class="flex flex-col">
-                        <label for="email" class="font-medium text-sm text-stone-600">Email</label>
+                        <label for="email" class="font-medium text-sm text-gray-600">Email</label>
                         <input
                           type="email"
                           id="email"
-                          placeholder="johndoe@example.com"
-                          class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50"
+                          placeholder="email@example.com"
+                          class="mt-2 block w-full rounded-md border-gray-300 shadow-sm p-1 focus:border-gray-800 focus:ring focus:ring-gray-200 focus:ring-opacity-50"
                         >
                       </div>
                 
                       <div class="flex flex-col">
-                        <label for="date" class="font-medium text-sm text-stone-600">Data do Pedido</label>
+                        <label for="date" class="font-medium text-sm text-gray-600">Data do Pedido</label>
                         <input
                           type="date"
                           id="date"
-                          class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50"
+                          class="mt-2 block w-full rounded-md border-gray-300 shadow-sm p-1 focus:border-gray-800 focus:ring focus:ring-gray-200 focus:ring-opacity-50"
                         >
                       </div>
                 
                       <div class="flex flex-col">
-                        <label for="status" class="font-medium text-sm text-stone-600">Status</label>
+                        <label for="status" class="font-medium text-sm text-gray-600">Status</label>
                 
                         <select
                           id="status"
-                          class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50"
+                          class="mt-2 block w-full rounded-md border-gray-300 shadow-sm p-1 focus:border-gray-800 focus:ring focus:ring-gray-200 focus:ring-opacity-50"
                         >
                           <option>Aprovado</option>
                           <option>Pendente</option>
@@ -72,7 +72,8 @@
                       </div>
                     </div>
                 
-                    <div class="grid md:flex grid-cols-2 justify-end space-x-2 w-full mt-6">
+                    <div class="flex justify-end space-x-2 w-full mt-6">
+                      
                       <button class="px-3 py-1 rounded-lg text-stone-50 bg-stone-400 hover:bg-stone-500 font-bold shadow-lg shadow-stone-200 transition ease-in-out duration-200 translate-10 ">
                         <img
                         src="\assets\reset.svg"
@@ -94,10 +95,19 @@
                 <!-- ./Filter Table -->
 
                 <!-- Client Table -->
-                <div class="mt-4 mx-4">
+                <div class="mx-4">
                   <div class="w-full overflow-hidden rounded-lg
                     shadow-xs">
                     <div class="w-full overflow-x-auto">
+                      <div class="grid md:flex grid-cols-1 justify-end space-x-2 w-full mt-2">
+                        <button class="px-2 py-1 rounded-lg hover:bg-gray-200">
+                          <img
+                          src="\assets\print.svg"
+                          class="h-6 mb-1"
+                          alt="Imprimir"
+                          />
+                        </button>
+                      </div>
                       <table class="w-full">
                         <thead>
                           <tr class="text-xs font-semibold
