@@ -117,11 +117,15 @@ class EmployeeMiddleware {
         //? Constante com a validação dos campos:
         const remove = [
             body("id").custom(async (value, { req }) => {
-                let result = await EmployeeService.view({ id: Number(value), email: req.body.email });
+                let result = await EmployeeService.view({
+                    id: Number(value),
+                    email: req.body.email,
+                });
                 if (result.error !== 0) {
                     throw new Error("Identificador desconhecido");
                 }
             }),
+            body("email").isEmail().withMessage("Email inválido"),
         ];
 
         //* Retorno da constante de validação:

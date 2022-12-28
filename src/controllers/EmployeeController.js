@@ -46,7 +46,7 @@ class EmployeeController {
         employee.email = body.email;
         employee.password = body.password;
         employee.role = body.role;
-        employee.image = "./images/profiles/default.png";
+        employee.image = "/images/profiles/default.png";
 
         //? Cria o funcionário e verifica as mensagens do serviço:
         result = await EmployeeService.create(employee);
@@ -71,7 +71,7 @@ class EmployeeController {
 
         //? Recebimento dos dados em um JSON:
         const values = {
-            id: body.id,
+            id: Number(body.id),
             email: body.email,
         };
 
@@ -168,7 +168,7 @@ class EmployeeController {
                 });
 
                 // Determina o local da imagem:
-                localImage = localFile.replace("./public", ".");
+                localImage = localFile.replace("./public", "");
 
                 // Recebe os dados  do usuário:
                 const { data } = await EmployeeService.view({
@@ -179,9 +179,9 @@ class EmployeeController {
                 let imageSaved = data.image;
 
                 // Verifica se não é a imagem padrão:
-                if (imageSaved !== "./images/profiles/default.png") {
+                if (imageSaved !== "/images/profiles/default.png") {
                     // Edita o nome da imagem
-                    imageSaved = imageSaved.replace("./", "./public/");
+                    imageSaved = imageSaved.replace("/", "./public/");
 
                     // Executa a função de deletar a imagem:
                     fs.unlink(imageSaved, (e) => {
@@ -254,7 +254,7 @@ class EmployeeController {
         const body = req.body;
 
         //? Recebe o identificador do usuário e o nome para o e-mail para verificação:
-        const id = body.id;
+        const id = Number(body.id);
         const email = body.email;
 
         //? Se tiver encontrado, remove o funcionário:
