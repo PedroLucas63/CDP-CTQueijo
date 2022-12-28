@@ -8,6 +8,9 @@ import AuthMiddleware from "../middlewares/AuthMiddleware.js";
 //* Importação do módulo de rotas dos funcionários:
 import EmployeeRouter from "./employee.routes.js";
 
+//* Importação do módulo de rotas dos produtos:
+import ProductRouter from "./product.routes.js";
+
 //* Importação do módulo de rotas de Login:
 import LoginRouter from "./login.routes.js";
 
@@ -23,6 +26,9 @@ router.get("/", (req, res) => {
 
 //? Uso das rotas dos funcionários:
 router.use("/employee", AuthMiddleware, EmployeeRouter);
+
+//? Uso das rotas dos produtos:
+router.use("/product", AuthMiddleware, ProductRouter);
 
 //? Uso das rotas de login:
 router.use("/", LoginRouter);
