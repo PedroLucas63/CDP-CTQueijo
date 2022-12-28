@@ -191,7 +191,7 @@ class FlavorController {
         //? Cria o sabor com os dados:
         let flavor = new Flavor(
             Number(body.id),
-            body.productId,
+            Number(body.productId),
             body.name.trim(),
             Number(body.price),
             localImage

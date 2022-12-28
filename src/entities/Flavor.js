@@ -68,7 +68,7 @@ class Flavor {
     partialData() {
         //? Remove os dados que estão vazios e o de ID:
         const newData = JSON.parse(JSON.stringify(this.data), (key, value) =>
-            value === null || value === undefined || value === ""
+            value === null || value === undefined || value === "" || value === 0
                 ? undefined
                 : value
         );
