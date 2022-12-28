@@ -54,7 +54,7 @@ class EmployeeController {
         //? Define o status como sucesso na criação:
         let status = 201;
 
-        //? Verifica se o usuário não foi criado:
+        //? Verifica se o funcionário não foi criado:
         if (result.error !== 0) {
             // Modifica o status para conflito com recursos no servidor:
             status = 409;
@@ -86,7 +86,7 @@ class EmployeeController {
         //? Define o status como sucesso:
         let status = 200;
 
-        //? Verifica se o usuário não foi encontrado:
+        //? Verifica se o funcionário não foi encontrado:
         if (result.error !== 0) {
             // Modifica o status para conflito com recursos no servidor:
             status = 409;
@@ -104,7 +104,7 @@ class EmployeeController {
         //? Define o status como sucesso:
         let status = 200;
 
-        //? Verifica se o usuário não foi encontrado:
+        //? Verifica se os funcionários não foram encontrados:
         if (result.error !== 0) {
             // Modifica o status para conflito com recursos no servidor:
             status = 409;
@@ -218,7 +218,7 @@ class EmployeeController {
         //? Define o status como sucesso na atualização:
         let status = 201;
 
-        //? Verifica se o usuário não foi encontrado:
+        //? Verifica se o funcionário não foi editado:
         if (result.error !== 0) {
             // Modifica o status para conflito com recursos no servidor:
             status = 409;
@@ -263,7 +263,7 @@ class EmployeeController {
         //? Define o status como sucesso na remoção:
         let status = 201;
 
-        //? Verifica se o usuário não foi encontrado:
+        //? Verifica se o funcionário não foi deletado:
         if (result.error !== 0) {
             // Modifica o status para conflito com recursos no servidor:
             status = 409;

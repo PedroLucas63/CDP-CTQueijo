@@ -88,7 +88,7 @@ class Employee {
         return this.data.createdAt;
     }
 
-    //* Método de receber os dados não vazios e diferentes de ID:
+    //* Método de receber os dados não vazios:
     partialData() {
         //? Remove os dados que estão vazios e o de ID:
         const newData = JSON.parse(JSON.stringify(this.data), (key, value) =>
