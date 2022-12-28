@@ -12,6 +12,18 @@ import EmployeeService from "../services/EmployeeService.js";
 class LoginController {
     //* Método de realizar login no servidor:
     async login(req, res) {
+        //? Verifica se já existe um funcionário logado na sessão:
+        if (req.session.user !== null && req.session.user !== undefined) {
+            return res.status(400).json("Já está logado!");
+        }
+
+        //? Cria o objeto de resultado:
+        let result = {
+            message: "Dados incorretos",
+            error: 3,
+            data: null,
+        };
+
         //? Recebe o corpo da página:
         const body = req.body;
 
@@ -21,13 +33,6 @@ class LoginController {
 
         //? Faz a pesquisa do funcionário por meio do email:
         const { data } = await EmployeeService.view({ email: email });
-
-        //? Cria o objeto de resultado:
-        let result = {
-            message: "Unknown data",
-            error: "Wrong email or password",
-            data: null,
-        };
 
         //? Verifica se não tiveram dados encontrados:
         if (data === null) {
@@ -52,8 +57,8 @@ class LoginController {
             req.session.user = employee.id;
 
             // Modifica os dados do resultado:
-            result.message = "Login executed successfully";
-            result.error = null;
+            result.message = "Login executado com sucesso";
+            result.error = 0;
             result.data = data;
 
             // Retorna o resultado com o sucesso:
@@ -71,8 +76,8 @@ class LoginController {
 
         //? Determina o resultado:
         const result = {
-            message: "Logged out successfully",
-            error: null,
+            message: "Deslogado com sucesso",
+            error: 0,
             data: null,
         };
 
