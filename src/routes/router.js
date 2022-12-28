@@ -14,17 +14,17 @@ router.get("/", (req, res) => {
 
 //? Rota Produtos:
 router.get("/produtos", (req, res) => {
-    res.render("pages/produtos");
+    res.render("pages/products");
 });
 
 //? Rota Dashboard:
 router.get("/dashboard", (req, res) => {
-    res.render("pages/dashboard");
+    res.render("pages/dashboard/index.ejs");
 });
 
-//? Rota Pedidos:
-router.get("/pedidos", (req, res) => {
-    res.render("pages/pedidos");
+//? Rota Pedidos do Dashboard:
+router.get("/dashboard/pedidos", (req, res) => {
+    res.render("pages/dashboard/requests.ejs");
 });
 
 //? Rota de erro 404:
