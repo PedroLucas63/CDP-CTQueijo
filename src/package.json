@@ -8,7 +8,7 @@
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "dev": "nodemon app.js",
     "watch-css": "tailwindcss -i ./public/css/input.css -o ./public/css/style.css --watch",
-    "migrate-db": "prisma migrate dev --name init --skip-generate"
+    "migrate-db": "prisma migrate dev --name init"
   },
   "keywords": [
     "ctqueijo",
