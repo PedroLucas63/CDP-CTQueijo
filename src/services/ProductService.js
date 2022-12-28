@@ -62,6 +62,9 @@ class ProductService {
             // Executa a visualização do produto
             const product = await this.prisma.product.findFirst({
                 where: { id: id },
+                include: {
+                    flavors: true,
+                },
             });
 
             // Verifica se não foi encontrado um produto:
@@ -95,7 +98,11 @@ class ProductService {
         //? Tenta fazer a pesquisa por meio do prisma:
         try {
             // Recebe os dados de todos os produtos:
-            const products = await this.prisma.product.findMany();
+            const products = await this.prisma.product.findMany({
+                include: {
+                    flavors: true,
+                },
+            });
 
             // Salva os produtos nos dados do resultado:
             result.data = products;
@@ -117,7 +124,6 @@ class ProductService {
             error: 0,
             data: null,
         };
-
 
         //? Recebe os dados que foram modificados:
         let data = product.partialData();
