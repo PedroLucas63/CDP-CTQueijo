@@ -26,7 +26,7 @@ class EmployeeMiddleware {
                 .withMessage("Email inválido"),
             body("password")
                 .isStrongPassword({
-                    minLength: 8,
+                    minLength: 10,
                     maxLenght: 24,
                     minLowercase: 1,
                     minUppercase: 1,
@@ -57,7 +57,7 @@ class EmployeeMiddleware {
         const update = [
             body("id").custom(async (value) => {
                 let result = await EmployeeService.view({ id: Number(value) });
-                if (result.message !== "Funcionário encontrado") {
+                if (result.error !== 0) {
                     throw new Error("Identificador desconhecido");
                 }
             }),
@@ -83,9 +83,15 @@ class EmployeeMiddleware {
                 .withMessage("Email inválido"),
             body("password")
                 .if(body("password").not().isEmpty())
-                .matches(
-                    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])(?:([0-9a-zA-Z$*&@#])(?!\1)){8,24}$/
-                )
+                .isStrongPassword({
+                    minLength: 10,
+                    maxLenght: 24,
+                    minLowercase: 1,
+                    minUppercase: 1,
+                    minNumbers: 1,
+                    minSymbols: 1,
+                    pointsPerUnique: 1,
+                })
                 .withMessage("Senha inválida"),
             body("confirmPassword")
                 .if(body("password").not().isEmpty())
@@ -104,6 +110,22 @@ class EmployeeMiddleware {
 
         //* Retorno da constante de validação:
         return update;
+    }
+
+    //* Método de validar os dados de remoção:
+    delete() {
+        //? Constante com a validação dos campos:
+        const remove = [
+            body("id").custom(async (value, { req }) => {
+                let result = await EmployeeService.view({ id: Number(value), email: req.body.email });
+                if (result.error !== 0) {
+                    throw new Error("Identificador desconhecido");
+                }
+            }),
+        ];
+
+        //* Retorno da constante de validação:
+        return remove;
     }
 }
 
