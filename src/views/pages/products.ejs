@@ -1,79 +1,83 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-        <!--! Importação dos elementos do head -->
-        <%- include("../partials/head.ejs") %>
 
-            <!--! Definição do título da página -->
-            <title>CTQueijo - Produtos</title>
-        </head>
-        <body>
-            <!--! Header -->
-            <header>
-                <!--* Barra de Navegação -->
-                <%- include("../partials/navbar.ejs") %>
+<head>
+    <!--! Importação dos elementos do head -->
+    <%- include("../partials/head.ejs") %>
 
-            </header>
-            <main>
-                <section class="text-gray-600 body-font bg-gray-100 ">
-                    <div class="container px-5 py-16 mx-auto">
-                        <div class="flex flex-col text-center w-full">
-                        <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Conheça os nossos produtos</h1>
-                        <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id ornare justo, at sollicitudin nisi. Maecenas faucibus enim vitae lectus laoreet commodo. Quisque tincidunt varius sem quis rutrum.</p>
+        <!--! Definição do título da página -->
+        <title>CTQueijo - Produtos</title>
+</head>
+
+<body>
+    <!--! Header -->
+    <header>
+        <!--* Barra de Navegação -->
+        <%- include("../partials/navbar.ejs") %>
+
+    </header>
+    <main>
+
+        <!-- Título -->
+        <section class="text-gray-600 body-font bg-gray-100 ">
+            <div class="container px-5 py-16 mx-auto">
+                <div class="flex flex-col text-center w-full">
+                    <h1 class="sm:text-3xl text-2xl font-medium
+                                    title-font mb-4 text-gray-900">Conheça os
+                        nossos produtos</h1>
+                    <p class="lg:w-2/3 mx-auto leading-relaxed
+                                    text-base">Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit. Donec id ornare
+                        justo, at sollicitudin nisi. Maecenas
+                        faucibus enim vitae lectus laoreet commodo.
+                        Quisque tincidunt varius sem quis rutrum.</p>
+                </div>
+            </div>
+        </section>
+        <!-- ./Título -->
+
+        <!-- Marketplace -->
+        <div class="p-6 m-10">
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+                <div class="overflow-hidden rounded-2xl bg-gray-50">
+                    <div class="flex items-center h-60 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1626957341926-98752fc2ba90?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                            alt="Cappucino" />
+                    </div>
+
+                    <div class="p-6">
+                        <div class="flex flex-col items-start
+                                        justify-between sm:flex-row
+                                        sm:items-center">
+                            <div>
+                                <p class="text-gray-400">Laticínios •
+                                    Queijos</p>
+                                <h2 class="mt-2 text-lg
+                                                font-semibold text-gray-800">Queijo Minas</h2>
+                            </div>
+                            <button class="flex items-center px-3 py-1 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-cyan-900 rounded-full hover:bg-cyan-800 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                                <img
+                                src="\assets\add_cart.svg"
+                                class="h-3 sm:h-7 p-1 align-middle"
+                                alt="Add shopping cart"/>
+                                <span>Adicionar</span>
+                            </button>
                         </div>
                     </div>
-                </section>
+                </div>
+            </div>
+        </div>
+        <!-- Marketplace -->
+    </main>
 
-                <section class="text-gray-600 body-font">
-                    <div class="container px-10 py-12 mx-auto ">
-                        <div class="flex flex-wrap -m-3">
-                            <div class="lg:w-1/3 md:w-1/2 p-4 w-full">
-                                <a class="block relative h-50 overflow-hidden">
-                                    <img alt="ecommerce" class="object-cover
-                                        object-center w-full h-full block"
-                                        src="https://images.unsplash.com/photo-1528750997573-59b89d56f4f7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=656&q=80">
-                                </a>
-                                <div class="mt-4">
-                                    <h2 class="text-gray-900 title-font
-                                        text-lg font-medium">The Catalyzer</h2>
-                                    <p class="mt-1">$16.00</p>
-                                </div>
-                            </div>
-                            <div class="lg:w-1/3 md:w-1/2 p-4 w-full">
-                                <a class="block relative h-50 overflow-hidden">
-                                    <img alt="ecommerce" class="object-cover
-                                        object-center w-full h-full block"
-                                        src="https://images.unsplash.com/photo-1626957341926-98752fc2ba90?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80">
-                                </a>
-                                <div class="mt-4">
-                                    <h2 class="text-gray-900 title-font
-                                        text-lg font-medium">Shooting Stars</h2>
-                                    <p class="mt-1">$21.15</p>
-                                </div>
-                            </div>
-                            <div class="lg:w-1/3 md:w-1/2 p-4 w-full">
-                                <a class="block relative h-50 overflow-hidden">
-                                    <img alt="ecommerce" class="object-cover
-                                        object-center w-full h-full block"
-                                        src="https://images.unsplash.com/photo-1669863347414-56230cc70381?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80">
-                                </a>
-                                <div class="mt-4">
-                                    <h2 class="text-gray-900 title-font
-                                        text-lg font-medium">Neptune</h2>
-                                    <p class="mt-1">$12.00</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </main>
-            <footer>
-                <!--* Rodapé -->
-                <%- include("../partials/footer.ejs") %>
-            </footer>
+    <footer>
+        <!--* Rodapé -->
+        <%- include("../partials/footer.ejs") %>
+    </footer>
 
-            <!--! Scripts -->
-            <!--* Script da barra de navegação -->
-            <script src="./scripts/navbar.js"></script>
-        </body>
-    </html>
+    <!--! Scripts -->
+    <!--* Script da barra de navegação -->
+    <script src="./scripts/navbar.js"></script>
+</body>
+
+</html>
