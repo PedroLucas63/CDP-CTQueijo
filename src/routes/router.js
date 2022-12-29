@@ -22,6 +22,11 @@ router.get("/carrinho", (req, res) => {
     res.render("pages/cart");
 });
 
+//? Rota Login:
+router.get("/login", (req, res) => {
+    res.render("pages/login");
+});
+
 //? Rota Dashboard:
 router.get("/dashboard", (req, res) => {
     res.render("pages/dashboard/index.ejs");
