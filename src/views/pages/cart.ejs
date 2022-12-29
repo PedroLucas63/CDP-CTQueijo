@@ -21,17 +21,18 @@
         <!-- component -->
         <div class="w-full h-full bg-black bg-opacity-90 top-0 overflow-y-auto overflow-x-hidden sticky-0"
             id="chec-div">
-            <div class="w-full absolute"
-                id="checkout">
-                <div class="flex items-end lg:flex-row flex-col justify-end" id="cart">
+            <div class="w-full absolute" id="checkout">
+                <div class="flex lg:flex-row justify-end" id="cart">
                     <div class="w-full lg:px-8 lg:py-14 md:px-6 px-4 md:py-8 py-4 bg-white lg:h-screen h-auto"
                         id="scroll">
                         <p class="lg:text-4xl text-3xl font-black leading-10 text-gray-800 pt-3 mb-6">Sacola</p>
-                        
+
                         <!--Itens da sacola-->
-                        <div class="md:flex items-strech py-6 md:py-10 lg:py-8 border-t border-gray-100 px-8 w-full bg-gray-50 rounded-lg">
+                        <div
+                            class="md:flex items-strech py-6 md:py-10 lg:py-8 border-t border-gray-100 px-8 w-full bg-gray-50 rounded-lg">
                             <div class="md:w-4/12 2xl:w-1/4 w-full">
-                                <img src="https://images.unsplash.com/photo-1626957341926-98752fc2ba90?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Black Leather Bag"
+                                <img src="https://images.unsplash.com/photo-1626957341926-98752fc2ba90?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                                    alt="Black Leather Bag"
                                     class="w-full object-center object-cover md:block hidden pr-3" />
                             </div>
                             <div class="md:pl-3 md:w-8/12 2xl:w-3/4 flex flex-col justify-center">
@@ -61,7 +62,7 @@
                     <!-- ./Itens da sacola-->
 
                     <!-- Resumo -->
-                    <div class="lg:w-96 md:w-8/12 w-full bg-gray-100 h-full">
+                    <div class="lg:w-96 md:w-8/12 bg-gray-100 h-full w-full">
                         <div
                             class="flex flex-col lg:h-screen h-auto lg:px-8 md:px-7 px-4 lg:py-20 md:py-10 py-6 justify-between overflow-y-auto">
                             <div>
@@ -75,21 +76,63 @@
                                     <p class="text-base leading-none text-gray-800">Frete</p>
                                     <p class="text-base leading-none text-gray-800">R$ 50,00</p>
                                 </div>
-                                
+
                             </div>
                             <div>
                                 <div class="flex items-center pb-6 justify-between lg:pt-5 pt-20">
                                     <p class="text-2xl leading-normal text-gray-800">Total</p>
-                                    <p
-                                        class="text-2xl font-bold leading-normal text-right text-gray-800">R$ 100,00</p>
+                                    <p class="text-2xl font-bold leading-normal text-right text-gray-800">R$ 100,00</p>
                                 </div>
-                                <button onclick="checkoutHandler1(true)"
+                                <button
                                     class="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white">Confirmar</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- ./Resumo -->
+
+                <!-- Informações do Solicitante-->
+                <div class="p-12">
+                    <div class="mx-auto w-full max-w-[550px]">
+                        <form action="https://formbold.com/s/FORM_ID" method="POST">
+                            <div class="mb-5">
+                                <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
+                                    Full Name
+                                </label>
+                                <input type="text" name="name" id="name" placeholder="Full Name"
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                            </div>
+                            <div class="mb-5">
+                                <label for="email" class="mb-3 block text-base font-medium text-[#07074D]">
+                                    Email Address
+                                </label>
+                                <input type="email" name="email" id="email" placeholder="example@domain.com"
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                            </div>
+                            <div class="mb-5">
+                                <label for="subject" class="mb-3 block text-base font-medium text-[#07074D]">
+                                    Subject
+                                </label>
+                                <input type="text" name="subject" id="subject" placeholder="Enter your subject"
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                            </div>
+                            <div class="mb-5">
+                                <label for="message" class="mb-3 block text-base font-medium text-[#07074D]">
+                                    Message
+                                </label>
+                                <textarea rows="4" name="message" id="message" placeholder="Type your message"
+                                    class="w-full resize-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"></textarea>
+                            </div>
+                            <div>
+                                <button
+                                    class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white outline-none">
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- ./Informações do Solicitante-->
             </div>
         </div>
         <!--* ./Carrinho -->
