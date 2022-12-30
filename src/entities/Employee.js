@@ -54,10 +54,10 @@ class Employee {
 
     //* Métodos Get:
     //? Método de receber o id:
-    get id(){
+    get id() {
         return this.data.id;
     }
-    
+
     //? Método de receber o nome:
     get name() {
         return this.data.name;
@@ -92,9 +92,7 @@ class Employee {
     partialData() {
         //? Remove os dados que estão vazios e o de ID:
         const newData = JSON.parse(JSON.stringify(this.data), (key, value) =>
-            value === null ||
-            value === undefined ||
-            value === ""
+            value === null || value === undefined || value === ""
                 ? undefined
                 : value
         );

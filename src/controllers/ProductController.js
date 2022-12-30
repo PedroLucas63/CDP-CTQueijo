@@ -8,9 +8,6 @@ import ProductService from "../services/ProductService.js";
 //* Módulo que recebe o resultado da validação:
 import { validationResult } from "express-validator";
 
-//* Importa o módulo de arquivos do sistema:
-import fs from "fs";
-
 //! Criação da classe de controle dos dados do produto:
 class ProductController {
     //* Método de criação do produto:
@@ -125,10 +122,7 @@ class ProductController {
         const body = req.body;
 
         //? Cria o produto com os dados:
-        let product = new Product(
-            Number(body.id),
-            body.name.trim(),
-        );
+        let product = new Product(Number(body.id), body.name.trim());
 
         //? Atualiza o produto e verifica as mensagens do serviço:
         result = await ProductService.update(product);

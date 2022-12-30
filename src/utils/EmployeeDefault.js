@@ -12,7 +12,14 @@ async function createAdmin(id, name, email, password, role, image) {
     //* Verifica se foi encontrado:
     if (result.error === 14) {
         //? Cria o funcionário:
-        const employee = new Employee(Number(id), name, email, password, role, image);
+        const employee = new Employee(
+            Number(id),
+            name,
+            email,
+            password,
+            role,
+            image
+        );
 
         //? Faz a tentativa de criação do funcionário:
         result = await EmployeeService.create(employee);

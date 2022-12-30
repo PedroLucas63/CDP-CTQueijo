@@ -1,10 +1,7 @@
 //! Criação da classe dos produtos:
 class Product {
     //* Método de construção da classe:
-    constructor(
-        id = null,
-        name = null,
-    ) {
+    constructor(id = null, name = null) {
         this.data = {
             id: id,
             name: name,
@@ -19,10 +16,10 @@ class Product {
 
     //* Métodos Get:
     //? Método de receber o id:
-    get id(){
+    get id() {
         return this.data.id;
     }
-    
+
     //? Método de receber o nome:
     get name() {
         return this.data.name;
@@ -32,9 +29,7 @@ class Product {
     partialData() {
         //? Remove os dados que estão vazios e o de ID:
         const newData = JSON.parse(JSON.stringify(this.data), (key, value) =>
-            value === null ||
-            value === undefined ||
-            value === ""
+            value === null || value === undefined || value === ""
                 ? undefined
                 : value
         );
