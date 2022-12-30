@@ -45,14 +45,14 @@ model Order {
 
 //? Tabela de endereços:
 model Address {
-  id            Int     @id @default(autoincrement())
-  cep           String  @db.VarChar(8)
-  uf            String  @db.VarChar(2)
-  city          String  @db.VarChar(30)
-  district      String  @db.VarChar(50)
-  streetAddress String  @db.VarChar(50)
-  number        String? @db.VarChar(6)
-  sale          Sale[]
+  id           Int     @id @default(autoincrement())
+  cep          String  @db.VarChar(8)
+  uf           String  @db.VarChar(2)
+  city         String  @db.VarChar(30)
+  neighborhood String  @db.VarChar(50)
+  street       String  @db.VarChar(50)
+  number       String? @db.VarChar(6)
+  sale         Sale[]
 }
 
 //? Tabela de clientes:
