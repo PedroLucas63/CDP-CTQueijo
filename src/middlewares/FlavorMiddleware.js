@@ -24,11 +24,7 @@ class FlavorMiddleware {
                 .trim()
                 .isLength({ min: 4, max: 20 })
                 .withMessage("Nome inválido"),
-            body("price")
-                .not()
-                .isEmpty()
-                .isFloat()
-                .withMessage("Preço inválido"),
+            body("price").notEmpty().isFloat().withMessage("Preço inválido"),
         ];
 
         //* Retorno da constante de validação:
@@ -46,7 +42,7 @@ class FlavorMiddleware {
                 }
             }),
             body("productId")
-                .if(body("productId").not().isEmpty())
+                .if(body("productId").notEmpty())
                 .custom(async (value) => {
                     let result = await ProductService.view(Number(value));
                     if (result.error !== 0) {
@@ -56,12 +52,12 @@ class FlavorMiddleware {
                     }
                 }),
             body("name")
-                .if(body("name").not().isEmpty())
+                .if(body("name").notEmpty())
                 .trim()
                 .isLength({ min: 4, max: 20 })
                 .withMessage("Nome inválido"),
             body("price")
-                .if(body("price").not().isEmpty())
+                .if(body("price").notEmpty())
                 .isFloat()
                 .withMessage("Preço inválido"),
         ];

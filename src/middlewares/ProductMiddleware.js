@@ -7,56 +7,56 @@ import ProductService from "../services/ProductService.js";
 
 //! Criação da classe mediadora dos produtos:
 class ProductMiddleware {
-  //* Método de validar os dados de criação:
-  create() {
-    //? Constante com a validação dos campos:
-    const create = [
-      body("name")
-        .trim()
-        .isLength({ min: 4, max: 20 })
-        .withMessage("Nome inválido"),
-    ];
+    //* Método de validar os dados de criação:
+    create() {
+        //? Constante com a validação dos campos:
+        const create = [
+            body("name")
+                .trim()
+                .isLength({ min: 4, max: 20 })
+                .withMessage("Nome inválido"),
+        ];
 
-    //* Retorno da constante de validação:
-    return create;
-  }
+        //* Retorno da constante de validação:
+        return create;
+    }
 
-  //* Método de validar os dados de atualização:
-  update() {
-    //? Constante com a validação dos campos:
-    const update = [
-      body("id").custom(async (value) => {
-        let result = await ProductService.view(Number(value));
-        if (result.error !== 0) {
-          throw new Error("Identificador desconhecido");
-        }
-      }),
-      body("name")
-        .if(body("name").not().isEmpty())
-        .trim()
-        .isLength({ min: 4, max: 20 })
-        .withMessage("Nome inválido"),
-    ];
+    //* Método de validar os dados de atualização:
+    update() {
+        //? Constante com a validação dos campos:
+        const update = [
+            body("id").custom(async (value) => {
+                let result = await ProductService.view(Number(value));
+                if (result.error !== 0) {
+                    throw new Error("Identificador desconhecido");
+                }
+            }),
+            body("name")
+                .if(body("name").notEmpty())
+                .trim()
+                .isLength({ min: 4, max: 20 })
+                .withMessage("Nome inválido"),
+        ];
 
-    //* Retorno da constante de validação:
-    return update;
-  }
+        //* Retorno da constante de validação:
+        return update;
+    }
 
-  //* Método de validar os dados de remoção:
-  delete() {
-    //? Constante com a validação dos campos:
-    const remove = [
-      body("id").custom(async (value) => {
-        let result = await ProductService.view(Number(value));
-        if (result.error !== 0) {
-          throw new Error("Identificador desconhecido");
-        }
-      }),
-    ];
+    //* Método de validar os dados de remoção:
+    delete() {
+        //? Constante com a validação dos campos:
+        const remove = [
+            body("id").custom(async (value) => {
+                let result = await ProductService.view(Number(value));
+                if (result.error !== 0) {
+                    throw new Error("Identificador desconhecido");
+                }
+            }),
+        ];
 
-    //* Retorno da constante de validação:
-    return remove;
-  }
+        //* Retorno da constante de validação:
+        return remove;
+    }
 }
 
 //* Exportação da classe instânciada:

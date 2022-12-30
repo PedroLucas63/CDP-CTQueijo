@@ -7,6 +7,11 @@ import EmployeeService from "../services/EmployeeService.js";
 
 //! Criação da classe mediadora dos funcionários:
 class EmployeeMiddleware {
+    //* Método de construção:
+    constructor() {
+        //? Definição da lista de funções
+        this.roleList = ["Gerente", "Fabricante", "Bolsista", "Entregador"];
+    }
     //* Método de validar os dados de criação:
     create() {
         //? Constante com a validação dos campos:
@@ -19,11 +24,7 @@ class EmployeeMiddleware {
                 .trim()
                 .isLength({ min: 5, max: 55 })
                 .withMessage("Último nome inválido"),
-            body("email")
-                .not()
-                .isEmpty()
-                .isEmail()
-                .withMessage("Email inválido"),
+            body("email").notEmpty().isEmail().withMessage("Email inválido"),
             body("password")
                 .isStrongPassword({
                     minLength: 10,
@@ -35,16 +36,10 @@ class EmployeeMiddleware {
                     pointsPerUnique: 1,
                 })
                 .withMessage("Senha inválida"),
-            body("confirmPassword").custom((value, { req }) => {
-                if (value !== req.body.password) {
-                    throw new Error("Senhas diferentes");
-                } else {
-                    return true;
-                }
-            }),
-            body("role")
-                .isIn(["Manager", "Manufacturer", "Deliveryman"])
-                .withMessage("Cargo inválido"),
+            body("confirmPassword")
+                .equals(body("password"))
+                .withMessage("Senhas diferentes"),
+            body("role").isIn(this.roleList).withMessage("Cargo inválido"),
         ];
 
         //* Retorno da constante de validação:
@@ -62,27 +57,21 @@ class EmployeeMiddleware {
                 }
             }),
             body("firstName")
-                .if(
-                    body("firstName").not().isEmpty() &&
-                        body("lastName").not().isEmpty()
-                )
+                .if(body("firstName").notEmpty() && body("lastName").notEmpty())
                 .trim()
                 .isLength({ min: 5, max: 55 })
                 .withMessage("Primeiro nome inválido"),
             body("lastName")
-                .if(
-                    body("lastName").not().isEmpty() &&
-                        body("firstName").not().isEmpty()
-                )
+                .if(body("lastName").notEmpty() && body("firstName").notEmpty())
                 .trim()
                 .isLength({ min: 5, max: 55 })
                 .withMessage("Último nome inválido"),
             body("email")
-                .if(body("email").not().isEmpty())
+                .if(body("email").notEmpty())
                 .isEmail()
                 .withMessage("Email inválido"),
             body("password")
-                .if(body("password").not().isEmpty())
+                .if(body("password").notEmpty())
                 .isStrongPassword({
                     minLength: 10,
                     maxLenght: 24,
@@ -94,17 +83,12 @@ class EmployeeMiddleware {
                 })
                 .withMessage("Senha inválida"),
             body("confirmPassword")
-                .if(body("password").not().isEmpty())
-                .custom((value, { req }) => {
-                    if (value !== req.body.password) {
-                        throw new Error("Senhas diferentes");
-                    } else {
-                        return true;
-                    }
-                }),
+                .if(body("password").notEmpty())
+                .equals(body("password"))
+                .withMessage("Senhas diferentes"),
             body("role")
-                .if(body("role").not().isEmpty())
-                .isIn(["Manager", "Manufacturer", "Deliveryman"])
+                .if(body("role").notEmpty())
+                .isIn(this.roleList)
                 .withMessage("Cargo inválido"),
         ];
 
