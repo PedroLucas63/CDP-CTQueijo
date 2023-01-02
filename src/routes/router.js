@@ -37,6 +37,11 @@ router.get("/dashboard/pedidos", (req, res) => {
     res.render("pages/dashboard/requests.ejs");
 });
 
+//? Rota Edição do Dashboard:
+router.get("/dashboard/alterar", (req, res) => {
+    res.render("pages/dashboard/edition.ejs");
+});
+
 //? Rota de erro 404:
 router.use(function (req, res, next) {
     res.status(404).render("pages/404");
