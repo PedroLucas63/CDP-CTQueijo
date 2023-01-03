@@ -14,6 +14,9 @@ import ProductRouter from "./product.routes.js";
 //* Importação do módulo de rotas dos sabores:
 import FlavorRouter from "./flavor.routes.js";
 
+//* Importação do módulo de rotas dos endereços:
+import AddressRouter from "./address.routes.js";
+
 //* Importação do módulo de rotas de Login:
 import LoginRouter from "./login.routes.js";
 
@@ -35,6 +38,9 @@ router.use("/product", AuthMiddleware, ProductRouter);
 
 //? Uso das rotas dos sabores:
 router.use("/flavor", AuthMiddleware, FlavorRouter);
+
+//? Uso das rotas de endereços:
+router.use("/address", AddressRouter);
 
 //? Uso das rotas de login:
 router.use("/", LoginRouter);
