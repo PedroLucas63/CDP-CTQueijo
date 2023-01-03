@@ -34,7 +34,7 @@ As tecnologias empregadas no seguinte software se baseiam principalmente em mód
 
 ## Fase de Desenvolvimento
 
-A seguinte versão do projeto do Controle de Pedidos do CTq está na fase de desenvolvimento: 0.0.1 - Inicial ⚠.
+A seguinte versão do projeto do Controle de Pedidos do CTq está na fase de desenvolvimento: 0.5 - Em desenvolvimento ⚠.
 
 ## Direitos
 
