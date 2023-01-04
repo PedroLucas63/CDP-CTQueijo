@@ -23,8 +23,7 @@
             id="chec-div">
             <div class="w-full absolute" id="checkout">
                 <div class="flex lg:flex-row justify-end" id="cart">
-                    <div class="w-3/4 lg:px-8 lg:py-14 md:px-6 px-4 md:py-8 py-4 bg-white"
-                        id="scroll">
+                    <div class="w-3/4 lg:px-8 lg:py-14 md:px-6 px-4 md:py-8 py-4 bg-white" id="scroll">
                         <p class="lg:text-4xl text-3xl font-black leading-10 text-gray-800 pt-3 mb-6">Sacola</p>
 
                         <!--Itens da sacola-->
@@ -60,7 +59,7 @@
                         </div>
                     </div>
                     <!-- ./Itens da sacola-->
-                    <hr class="my-6 sm:mx-auto border-gray-600 lg:my-8"/>
+                    <hr class="my-6 sm:mx-auto border-gray-600 lg:my-8" />
                     <!-- Resumo -->
                     <div class="md:w-1/4 bg-gray-100 h-full w-full absolute">
                         <div
@@ -83,7 +82,7 @@
                                     <p class="text-2xl leading-normal text-gray-800">Total</p>
                                     <p class="text-2xl font-bold leading-normal text-right text-gray-800">R$ 100,00</p>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -94,7 +93,8 @@
                 <div class="p-8 w-3/4">
                     <hr>
                     <div class="my-5 w-3/4">
-                        <p class="lg:text-4xl text-3xl font-black leading-10 text-gray-800 pt-3 mb-6">Informações do Solicitante</p>
+                        <p class="lg:text-4xl text-3xl font-black leading-10 text-gray-800 pt-3 mb-6">Informações do
+                            Solicitante</p>
                         <form action="" method="POST">
                             <div class="mb-5">
                                 <label for="name" class="mb-3 block text-base font-medium text-gray-800">
@@ -114,12 +114,14 @@
                                 <label for="type" class="mb-3 block text-base font-medium text-gray-800">
                                     Organização
                                 </label>
-                                <select id="type" class="w-full rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-500 outline-none focus:border-gray-900 focus:shadow-md" required>
+                                <select id="type"
+                                    class="w-full rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-500 outline-none focus:border-gray-900 focus:shadow-md"
+                                    required>
                                     <option value="none"></option>
                                     <option value="IPB">Instituição Pública</option>
                                     <option value="IPV">Instituição Privada</option>
                                     <option value="ONG">ONG</option>
-                                </select> 
+                                </select>
                             </div>
                             <div class="mb-5">
                                 <label for="cnpj" class="mb-3 block text-base font-medium text-gray-800">
@@ -133,7 +135,8 @@
                                     Telefone
                                 </label>
                                 <input type="text" name="phone" id="phone" placeholder="Telefone"
-                                    class="w-full rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-500 outline-none focus:border-gray-900 focus:shadow-md" data-mask="00/00/0000" data-mask-selectonfocus="true"/>
+                                    class="w-full rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-500 outline-none focus:border-gray-900 focus:shadow-md"
+                                    data-mask="00/00/0000" data-mask-selectonfocus="true" />
                             </div>
                         </form>
 
@@ -166,7 +169,7 @@
                                     Bairro
                                 </label>
                                 <input type="text" name="neighborhood" id="neighborhood" placeholder="Bairro"
-                                    class="rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-500 outline-none focus:border-gray-900 focus:shadow-md w-full" /> 
+                                    class="rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-500 outline-none focus:border-gray-900 focus:shadow-md w-full" />
                             </div>
                             <div class="mb-5 col-span-2">
                                 <label for="city" class="mb-3 block text-base font-medium text-gray-800">
@@ -196,13 +199,12 @@
     </main>
 
     <!--! Scripts -->
-
     <!--* Script do carrinho -->
-    <script>
-        
-    </script>
+    <script src="./scripts/cart.js"></script>
+
     <!--* Script da barra de navegação -->
     <script src="./scripts/navbar.js"></script>
+    
 </body>
 
 </html>
