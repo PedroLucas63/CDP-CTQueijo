@@ -12,7 +12,7 @@ async function cepSearch(cep) {
     };
 
     //* Remove caracteres que não sejam números:
-    cep = cep.replace(/\D/g, '');
+    cep = String(cep.replace(/\D/g, ''));
 
     //* Tenta fazer a busca pelo CEP:
     try {
