@@ -15,6 +15,7 @@ class ProductMiddleware {
                 .trim()
                 .isLength({ min: 4, max: 20 })
                 .withMessage("Nome inválido"),
+            body("price").notEmpty().isFloat().withMessage("Preço inválido"),
         ];
 
         //* Retorno da constante de validação:
@@ -36,6 +37,10 @@ class ProductMiddleware {
                 .trim()
                 .isLength({ min: 4, max: 20 })
                 .withMessage("Nome inválido"),
+            body("price")
+                .if(body("price").notEmpty())
+                .isFloat()
+                .withMessage("Preço inválido"),
         ];
 
         //* Retorno da constante de validação:

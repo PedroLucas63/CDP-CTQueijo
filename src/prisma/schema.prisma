@@ -15,21 +15,10 @@ datasource db {
 //? Tabela de produtos:
 model Product {
   id     Int     @id @default(autoincrement())
-  name   String
+  name   String  @unique
   price  Decimal @db.Decimal(12, 2)
   image  String
   orders Order[]
-}
-
-//? Tabela de pedidos:
-model Order {
-  id        Int     @id @default(autoincrement())
-  product   Product @relation(fields: [productId], references: [id])
-  productId Int
-  quantity  Int
-  price     Decimal @db.Decimal(12, 2)
-  sale      Sale    @relation(fields: [saleId], references: [id])
-  saleId    Int
 }
 
 //? Tabela de endereços:
@@ -53,6 +42,17 @@ model Client {
   email String
   phone String @db.VarChar(19)
   sale  Sale[]
+}
+
+//? Tabela de pedidos:
+model Order {
+  id        Int     @id @default(autoincrement())
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+  quantity  Int
+  price     Decimal @db.Decimal(12, 2)
+  sale      Sale    @relation(fields: [saleId], references: [id])
+  saleId    Int
 }
 
 //? Tabela de vendas:
