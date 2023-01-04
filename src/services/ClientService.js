@@ -2,18 +2,12 @@
 //* Módulo do cliente prisma:
 import { PrismaClient } from "@prisma/client";
 
-//* Módulo do bcrypt:
-import bcrypt from "bcrypt";
-
 //! Criação da classe de serviços do cliente:
 class ClientService {
     //* Construção da classe:
     constructor() {
         //? Instânciamento do prisma:
         this.prisma = new PrismaClient();
-
-        //? Definição da quantidade de saltos de criptografia:
-        this.salts = 10;
     }
 
     //* Método de criar um novo cliente no banco de dados:
@@ -24,9 +18,6 @@ class ClientService {
             error: 0,
             data: null,
         };
-
-        //? Realização da criptografia da senha:
-        client.password = bcrypt.hashSync(client.password, this.salts);
 
         //? Recebe os dados importantes do cliente:
         let data = client.partialData();
@@ -41,16 +32,9 @@ class ClientService {
             // Dá os dados da criação:
             result.data = createClient;
         } catch (e) {
-            // Verifica se é um tipo de erro conhecido:
-            if (e.code === "P2002") {
-                // Define a mensagem e o erro conhecido:
-                result.message = "Falha na criação";
-                result.error = 43;
-            } else {
-                // Define a mensagem e o erro de conexão:
-                result.message = "Erro na conexão com o banco de dados";
-                result.error = 4;
-            }
+            // Define a mensagem e o erro:
+            result.message = "Erro na conexão com o banco de dados";
+            result.error = 4;
         }
 
         //? Retorna o resultado:
@@ -58,10 +42,10 @@ class ClientService {
     }
 
     //* Método de receber dados de um cliente por meio de chave unica:
-    async view(uniqueValues) {
+    async view(id) {
         //? Objeto com o resultado da pesquisa:
         let result = {
-            message: "cliente encontrado",
+            message: "Cliente encontrado",
             error: 0,
             data: null,
         };
@@ -70,13 +54,13 @@ class ClientService {
         try {
             // Executa a visualização do cliente
             const client = await this.prisma.client.findFirst({
-                where: uniqueValues,
+                where: { id: id },
             });
 
             // Verifica se não foi encontrado um cliente:
             if (client === null) {
                 // Define a mensagem que não foi encontrado:
-                result.message = "cliente não encontrado";
+                result.message = "Cliente não encontrado";
                 result.error = 14;
             } else {
                 // Define a mensagem e os dados que foram encontrados:
@@ -127,11 +111,6 @@ class ClientService {
             data: null,
         };
 
-        //? Verifica se a senha foi modificada e faz a criptografia:
-        if (!(client.password === "")) {
-            client.password = bcrypt.hashSync(client.password, this.salts);
-        }
-
         //? Recebe os dados que foram modificados:
         let data = client.partialData();
 
@@ -146,16 +125,9 @@ class ClientService {
             // Dá os dados atualizados:
             result.data = updateClient;
         } catch (e) {
-            // Verifica se é um tipo de erro conhecido:
-            if (e.code === "P2002") {
-                // Define a mensagem e o erro conhecido:
-                result.message = "Falha na criação";
-                result.error = 43;
-            } else {
-                // Define a mensagem e o erro de conexão:
-                result.message = "Erro na conexão com o banco de dados";
-                result.error = 4;
-            }
+            // Define a mensagem e o erro:
+            result.message = "Erro na conexão com o banco de dados";
+            result.error = 4;
         }
 
         //? Retorna o resultado:
@@ -163,7 +135,7 @@ class ClientService {
     }
 
     //* Método de deletar um cliente do banco de dados:
-    async delete(uniqueValues) {
+    async delete(id) {
         //? Objeto com o resultado da pesquisa:
         let result = {
             message: "Deletado com sucesso",
@@ -174,8 +146,8 @@ class ClientService {
         //? Tenta fazer a deletação do cliente:
         try {
             // Executa a deletação do cliente
-            const deleteClient = await this.prisma.client.deleteMany({
-                where: uniqueValues,
+            const deleteClient = await this.prisma.client.delete({
+                where: { id: id },
             });
 
             // Define a mensagem que foi deletado e os dados:

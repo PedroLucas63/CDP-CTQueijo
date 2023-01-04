@@ -13,9 +13,6 @@ import ClientController from "../controllers/ClientController.js";
 const router = new Router();
 
 //* Definição das rotas:
-//? Rota de criação:
-router.post("/create", ClientMiddleware.create(), ClientController.create);
-
 //? Rota de visualização por chave unica:
 router.post("/view", ClientController.view);
 

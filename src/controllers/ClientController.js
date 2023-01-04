@@ -8,29 +8,18 @@ import ClientService from "../services/ClientService.js";
 //* Módulo que recebe o resultado da validação:
 import { validationResult } from "express-validator";
 
-//* Importa o módulo de arquivos do sistema:
-import fs from "fs";
-
 //! Criação da classe de controle dos dados do cliente:
 class ClientController {
-    //* Método de visualizar um cliente pelo id ou email:
+    //* Método de visualizar um cliente pelo id:
     async view(req, res) {
         //? Recebe o corpo da página:
         const body = req.body;
 
-        //? Recebimento dos dados em um JSON:
-        const values = {
-            id: Number(body.id),
-            email: body.email,
-        };
-
-        //? Gera o JSON que possui valores que foram definidos:
-        const uniqueValues = JSON.parse(JSON.stringify(values), (key, value) =>
-            value === undefined || value === "" || value === 0 ? undefined : value
-        );
+        //? Recebimento do identificador do cliente:
+        const id = Number(body.id);
 
         //? Faz o pedido do resultado da pesquisa:
-        const result = await ClientService.view(uniqueValues);
+        const result = await ClientService.view(id);
 
         //? Define o status como sucesso:
         let status = 200;
@@ -91,7 +80,7 @@ class ClientController {
         //? Cria o cliente com os dados:
         let client = new Client(
             Number(body.id),
-            `${body.firstName} ${body.lastName}`.trim(),
+            body.name,
             body.type,
             body.cnpj,
             body.email,
@@ -141,10 +130,9 @@ class ClientController {
 
         //? Recebe o identificador do usuário e o nome para o e-mail para verificação:
         const id = Number(body.id);
-        const email = body.email;
 
         //? Se tiver encontrado, remove o cliente:
-        result = await ClientService.delete({ id: id, email: email });
+        result = await ClientService.delete(id);
 
         //? Define o status como sucesso na remoção:
         let status = 201;
