@@ -95,40 +95,98 @@
                     <hr>
                     <div class="my-5 w-3/4">
                         <p class="lg:text-4xl text-3xl font-black leading-10 text-gray-800 pt-3 mb-6">Informações do Solicitante</p>
-                        <form action="https://formbold.com/s/FORM_ID" method="POST">
+                        <form action="" method="POST">
                             <div class="mb-5">
-                                <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
-                                    Full Name
+                                <label for="name" class="mb-3 block text-base font-medium text-gray-800">
+                                    Nome
                                 </label>
-                                <input type="text" name="name" id="name" placeholder="Full Name"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                <input type="text" name="name" id="name" placeholder="Nome/ Razão Social"
+                                    class="w-full rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-500 outline-none focus:border-gray-900 focus:shadow-md" />
                             </div>
                             <div class="mb-5">
-                                <label for="email" class="mb-3 block text-base font-medium text-[#07074D]">
-                                    Email Address
+                                <label for="email" class="mb-3 block text-base font-medium text-gray-800">
+                                    Email
                                 </label>
-                                <input type="email" name="email" id="email" placeholder="example@domain.com"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                <input type="email" name="email" id="email" placeholder="exemplo@dominio.com"
+                                    class="w-full rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-500 outline-none focus:border-gray-900 focus:shadow-md" />
                             </div>
                             <div class="mb-5">
-                                <label for="subject" class="mb-3 block text-base font-medium text-[#07074D]">
-                                    Subject
+                                <label for="type" class="mb-3 block text-base font-medium text-gray-800">
+                                    Organização
                                 </label>
-                                <input type="text" name="subject" id="subject" placeholder="Enter your subject"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                <select id="type" class="w-full rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-500 outline-none focus:border-gray-900 focus:shadow-md" required>
+                                    <option value="none"></option>
+                                    <option value="IPB">Instituição Pública</option>
+                                    <option value="IPV">Instituição Privada</option>
+                                    <option value="ONG">ONG</option>
+                                </select> 
                             </div>
                             <div class="mb-5">
-                                <label for="message" class="mb-3 block text-base font-medium text-[#07074D]">
-                                    Message
+                                <label for="cnpj" class="mb-3 block text-base font-medium text-gray-800">
+                                    CNPJ
                                 </label>
-                                <textarea rows="4" name="message" id="message" placeholder="Type your message"
-                                    class="w-full resize-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"></textarea>
+                                <input type="text" name="cnpj" id="cnpj" placeholder="CNPJ"
+                                    class="w-full rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-500 outline-none focus:border-gray-900 focus:shadow-md" />
                             </div>
-                            <div>
-                                <button
-                                    class="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white rounded">Confirmar</button>
+                            <div class="mb-5">
+                                <label for="phone" class="mb-3 block text-base font-medium text-gray-800">
+                                    Telefone
+                                </label>
+                                <input type="text" name="phone" id="phone" placeholder="Telefone"
+                                    class="w-full rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-500 outline-none focus:border-gray-900 focus:shadow-md" data-mask="00/00/0000" data-mask-selectonfocus="true"/>
                             </div>
                         </form>
+
+                        <!-- Endereço do Solicitante-->
+                        <p class="lg:text-2xl text-xl font-black leading-10 text-gray-800 pt-3 mb-6">Endereço</p>
+                        <form action="" method="POST" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                            <div class="mb-5">
+                                <label for="cep" class="mb-3 block text-base font-medium text-gray-800">
+                                    CEP
+                                </label>
+                                <input type="text" name="cep" id="cep" placeholder="CEP"
+                                    class="rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-500 outline-none focus:border-gray-900 focus:shadow-md w-full" />
+                            </div>
+                            <div class="mb-5 col-span-3">
+                                <label for="street" class="mb-3 block text-base font-medium text-gray-800">
+                                    Logradouro
+                                </label>
+                                <input type="text" name="street" id="street" placeholder="Logradouro"
+                                    class="rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-500 outline-none focus:border-gray-900 focus:shadow-md w-full" />
+                            </div>
+                            <div class="mb-5 w-full">
+                                <label for="number" class="mb-3 block text-base font-medium text-gray-800">
+                                    Número
+                                </label>
+                                <input type="number" name="number" id="number"
+                                    class="rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-500 outline-none focus:border-gray-900 focus:shadow-md w-full" />
+                            </div>
+                            <div class="mb-5 col-span-2">
+                                <label for="neighborhood" class="mb-3 block text-base font-medium text-gray-800">
+                                    Bairro
+                                </label>
+                                <input type="text" name="neighborhood" id="neighborhood" placeholder="Bairro"
+                                    class="rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-500 outline-none focus:border-gray-900 focus:shadow-md w-full" /> 
+                            </div>
+                            <div class="mb-5 col-span-2">
+                                <label for="city" class="mb-3 block text-base font-medium text-gray-800">
+                                    Cidade
+                                </label>
+                                <input type="text" name="city" id="city" placeholder="Cidade"
+                                    class="rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-500 outline-none focus:border-gray-900 focus:shadow-md w-full" />
+                            </div>
+                            <div class="mb-5 w-full">
+                                <label for="uf" class="mb-3 block text-base font-medium text-gray-800">
+                                    UF
+                                </label>
+                                <input type="text" name="uf" id="uf" placeholder="UF"
+                                    class="rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-500 outline-none focus:border-gray-900 focus:shadow-md w-full" />
+                            </div>
+                        </form>
+                        <div>
+                            <button
+                                class="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white rounded">Confirmar</button>
+                        </div>
                     </div>
                 </div>
                 <!-- ./Informações do Solicitante-->
@@ -138,6 +196,11 @@
     </main>
 
     <!--! Scripts -->
+
+    <!--* Script do carrinho -->
+    <script>
+        
+    </script>
     <!--* Script da barra de navegação -->
     <script src="./scripts/navbar.js"></script>
 </body>
