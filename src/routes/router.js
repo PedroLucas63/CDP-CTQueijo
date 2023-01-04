@@ -11,11 +11,14 @@ import EmployeeRouter from "./employee.routes.js";
 //* Importação do módulo de rotas dos produtos:
 import ProductRouter from "./product.routes.js";
 
-//* Importação do módulo de rotas dos sabores:
-import FlavorRouter from "./flavor.routes.js";
-
 //* Importação do módulo de rotas dos endereços:
 import AddressRouter from "./address.routes.js";
+
+//* Importação do módulo de rotas dos clientes:
+import ClientRouter from "./client.routes.js";
+
+//* Importação do módulo de rotas dos pedidos:
+import OrderRouter from "./order.routes.js";
 
 //* Importação do módulo de rotas de Login:
 import LoginRouter from "./login.routes.js";
@@ -36,11 +39,14 @@ router.use("/employee", AuthMiddleware, EmployeeRouter);
 //? Uso das rotas dos produtos:
 router.use("/product", AuthMiddleware, ProductRouter);
 
-//? Uso das rotas dos sabores:
-router.use("/flavor", AuthMiddleware, FlavorRouter);
-
 //? Uso das rotas de endereços:
 router.use("/address", AddressRouter);
+
+//? Uso das rotas de clientes:
+router.use("/client", ClientRouter);
+
+//? Uso das rotas de pedidos:
+router.use("/order", OrderRouter);
 
 //? Uso das rotas de login:
 router.use("/", LoginRouter);

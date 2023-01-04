@@ -13,7 +13,9 @@ class AddressMiddleware {
     //* Método de construção:
     constructor() {
         //? Recebimento dos dados da pesquisa:
-        this.searchAddress = cepSearch(body("cep"));
+        this.searchAddress = async () => {
+            await cepSearch(body("cep"));
+        };
         this.data = this.searchAddress.data;
     }
 
@@ -25,33 +27,47 @@ class AddressMiddleware {
                 .trim()
                 .isLength(9)
                 .isPostalCode("BR")
-                .if(this.searchAddress.erros !== 0)
+                .custom(() => {
+                    return this.data.cep !== undefined;
+                })
                 .withMessage("CEP inválido"),
             body("uf")
                 .toUpperCase()
                 .trim()
                 .isLength(2)
-                .equals(this.data.state)
+                .custom((value) => {
+                    return this.data.state === value;
+                })
                 .withMessage("Unidade federativa inválida"),
             body("city")
                 .trim()
                 .notEmpty()
-                .length({ min: 3, max: 30 })
-                .equals(this.data.city)
+                .isLength({ min: 3, max: 30 })
+                .custom((value) => {
+                    return this.data.city === value;
+                })
                 .withMessage("Cidade inválida"),
             body("neighborhood")
                 .trim()
                 .notEmpty()
-                .length({ min: 3, max: 50 })
-                .if(this.data.neighborhood.notEmpty())
-                .equals(this.data.neighborhood)
+                .isLength({ min: 3, max: 50 })
+                .custom(() => {
+                    return this.data.neighborhood !== "";
+                })
+                .custom((value) => {
+                    return this.data.neighborhood === value;
+                })
                 .withMessage("Bairro inválido"),
             body("street")
                 .trim()
                 .notEmpty()
-                .length({ min: 3, max: 50 })
-                .if(this.data.street.notEmpty())
-                .equals(this.data.street)
+                .isLength({ min: 3, max: 50 })
+                .custom(() => {
+                    return this.data.street !== "";
+                })
+                .custom((value) => {
+                    return this.data.street === value;
+                })
                 .withMessage("Logradouro inválido"),
             body("number").isInt().withMessage("Número inválido"),
         ];
@@ -71,49 +87,75 @@ class AddressMiddleware {
                 }
             }),
             body("cep")
-                .if(body("cep").notEmpty() || this.data.cep.notEmpty())
+                .custom((value) => {
+                    return value !== "" || this.data.cep !== undefined;
+                })
                 .trim()
                 .isLength(9)
                 .isPostalCode("BR")
-                .if(this.searchAddress.erros !== 0)
+                .custom(() => {
+                    return this.data.cep !== undefined;
+                })
                 .withMessage("CEP inválido"),
             body("uf")
-                .if(body("uf").notEmpty() || this.data.state.notEmpty())
+                .custom((value) => {
+                    return value !== "" || this.data.state !== undefined;
+                })
                 .toUpperCase()
                 .trim()
                 .isLength(2)
-                .equals(this.data.state)
+                .custom((value) => {
+                    return this.data.state === value;
+                })
                 .withMessage("Unidade federativa inválida"),
             body("city")
-                .if(body("city").notEmpty() || this.data.city.notEmpty())
+                .custom((value) => {
+                    return value !== "" || this.data.city !== undefined;
+                })
                 .trim()
                 .notEmpty()
-                .length({ min: 3, max: 30 })
-                .equals(this.data.city)
+                .isLength({ min: 3, max: 30 })
+                .custom((value) => {
+                    return this.data.city === value;
+                })
                 .withMessage("Cidade inválida"),
             body("neighborhood")
-                .if(
-                    body("neighborhood").notEmpty() ||
-                        this.data.neighborhood.notEmpty()
-                )
+                .custom((value) => {
+                    return (
+                        value !== "" ||
+                        (this.data.neighborhood !== undefined &&
+                            this.data.neighborhood !== "")
+                    );
+                })
                 .trim()
                 .notEmpty()
-                .length({ min: 3, max: 50 })
-                .if(this.data.neighborhood.notEmpty())
-                .equals(this.data.neighborhood)
+                .isLength({ min: 3, max: 50 })
+                .custom(() => {
+                    return this.data.neighborhood !== "";
+                })
+                .custom((value) => {
+                    return this.data.neighborhood === value;
+                })
                 .withMessage("Bairro inválido"),
             body("street")
-                .if(body("street").notEmpty() || this.data.street.notEmpty())
+                .custom((value) => {
+                    return (
+                        value !== "" ||
+                        (this.data.street !== undefined &&
+                            this.data.street !== "")
+                    );
+                })
                 .trim()
                 .notEmpty()
-                .length({ min: 3, max: 50 })
-                .if(this.data.street.notEmpty())
-                .equals(this.data.street)
+                .isLength({ min: 3, max: 50 })
+                .custom(() => {
+                    return this.data.street !== "";
+                })
+                .custom((value) => {
+                    return this.data.street === value;
+                })
                 .withMessage("Logradouro inválido"),
-            body("number")
-                .if(body("number").notEmpty())
-                .isInt()
-                .withMessage("Número inválido"),
+            body("number").isInt().withMessage("Número inválido"),
         ];
 
         //* Retorno da constante de validação:

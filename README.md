@@ -22,6 +22,7 @@ As tecnologias empregadas no seguinte software se baseiam principalmente em mód
 |-----------------|--------------------------------------------------------------------------|
 | [bcrypt](https://www.npmjs.com/package/bcrypt) | Biblioteca para trabalho com Hash |
 | [cep-promise](https://github.com/BrasilAPI/cep-promise) | Buscador de CEP integrado aos diversos serviços online |
+| [cpf-cnpj-validator](https://www.npmjs.com/package/cpf-cnpj-validator) | Biblioteca de validação de CPF e CNPJ |
 | [dotenv](https://www.npmjs.com/package/dotenv)          | Sistema que carrega variáveis de arquivos .env                           |
 | [ejs](https://ejs.co/)             | Uma linguagem de modelagem incorporada com o JavaScript                  |
 | [express-fileupload](https://www.npmjs.com/package/express-fileupload) | Mediador para o upload de arquivos no sistema |

@@ -1,30 +1,33 @@
 //! Importação dos módulos:
-//* Módulo base do cliente:
-import Client from "../entities/Client.js";
+//* Módulo base do pedido:
+import Order from "../entities/Order.js";
 
-//* Módulo de serviço do cliente:
-import ClientService from "../services/ClientService.js";
+//* Módulo de serviço do pedido:
+import OrderService from "../services/OrderService.js";
+
+//* Módulo de serviço de produtos:
+import ProductService from "../services/ProductService.js";
 
 //* Módulo que recebe o resultado da validação:
 import { validationResult } from "express-validator";
 
-//! Criação da classe de controle dos dados do cliente:
-class ClientController {
-    //* Método de visualizar um cliente pelo id:
+//! Criação da classe de controle dos dados do pedido:
+class OrderController {
+    //* Método de visualizar um pedido pelo id e/ou nome:
     async view(req, res) {
         //? Recebe o corpo da página:
         const body = req.body;
 
-        //? Recebimento do identificador do cliente:
+        //? Recebimento do identificador do pedido:
         const id = Number(body.id);
 
         //? Faz o pedido do resultado da pesquisa:
-        const result = await ClientService.view(id);
+        const result = await OrderService.view(id);
 
         //? Define o status como sucesso:
         let status = 200;
 
-        //? Verifica se o cliente não foi encontrado:
+        //? Verifica se o pedido não foi encontrado:
         if (result.error !== 0) {
             // Modifica o status para conflito com recursos no servidor:
             status = 409;
@@ -34,15 +37,15 @@ class ClientController {
         return res.status(status).json(result);
     }
 
-    //* Método de visualizar todos os clientes:
+    //* Método de visualizar todos os pedidos:
     async viewAll(req, res) {
-        //? Faz a requisição dos dados de todos os clientes:
-        const result = await ClientService.viewAll();
+        //? Faz a requisição dos dados de todos os pedidos:
+        const result = await OrderService.viewAll();
 
         //? Define o status como sucesso:
         let status = 200;
 
-        //? Verifica se os clientes não foram encontrados:
+        //? Verifica se os pedidos não foram encontrados:
         if (result.error !== 0) {
             // Modifica o status para conflito com recursos no servidor:
             status = 409;
@@ -52,7 +55,7 @@ class ClientController {
         return res.status(status).json(result);
     }
 
-    //* Método de atualizar um cliente:
+    //* Método de atualizar um pedido:
     async update(req, res) {
         //? Objeto JSON com o resultado:
         let result = {
@@ -77,23 +80,33 @@ class ClientController {
         //? Recebe o corpo da página:
         const body = req.body;
 
-        //? Cria o cliente com os dados:
-        let client = new Client(
+        //? Recebe o ID do produto:
+        const productId = Number(body.productId);
+
+        //? Recebe o produto do pedido:
+        const product = await ProductService.view({ id: productId });
+
+        //? Recebe a quantidade e define o valor do pedido:
+        const quantity = body.quantity;
+        const price = quantity * product.data.price;
+
+        //? Cria o pedido com os dados:
+        let order = new Order(
             Number(body.id),
             body.name,
-            body.type,
-            body.cnpj,
-            body.email,
+            productId,
+            quantity,
+            price,
             body.phone
         );
 
-        //? Atualiza o cliente e verifica as mensagens do serviço:
-        result = await ClientService.update(client);
+        //? Atualiza o pedido e verifica as mensagens do serviço:
+        result = await OrderService.update(order);
 
         //? Define o status como sucesso na atualização:
         let status = 201;
 
-        //? Verifica se o cliente não foi editado:
+        //? Verifica se o pedido não foi editado:
         if (result.error !== 0) {
             // Modifica o status para conflito com recursos no servidor:
             status = 409;
@@ -103,7 +116,7 @@ class ClientController {
         return res.status(status).json(result);
     }
 
-    //* Método de deletar um cliente:
+    //* Método de deletar um pedido:
     async delete(req, res) {
         //? Objeto JSON com o resultado:
         let result = {
@@ -128,16 +141,16 @@ class ClientController {
         //? Recebe o corpo da página:
         const body = req.body;
 
-        //? Recebe o identificador do usuário e o nome para o e-mail para verificação:
+        //? Recebe o identificador do pedido:
         const id = Number(body.id);
 
-        //? Se tiver encontrado, remove o cliente:
-        result = await ClientService.delete(id);
+        //? Se tiver encontrado, remove o pedido:
+        result = await OrderService.delete(id);
 
         //? Define o status como sucesso na remoção:
         let status = 201;
 
-        //? Verifica se o cliente não foi deletado:
+        //? Verifica se o pedido não foi deletado:
         if (result.error !== 0) {
             // Modifica o status para conflito com recursos no servidor:
             status = 409;
@@ -148,5 +161,5 @@ class ClientController {
     }
 }
 
-//! Exporta o controlador dos clientes:
-export default new ClientController();
+//! Exporta o controlador dos pedidos:
+export default new OrderController();

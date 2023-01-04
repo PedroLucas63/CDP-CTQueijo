@@ -49,7 +49,7 @@ class ProductService {
     }
 
     //* Método de receber dados de um produto por meio de chave unica:
-    async view(id) {
+    async view(uniqueValues) {
         //? Objeto com o resultado da pesquisa:
         let result = {
             message: "Produto encontrado",
@@ -61,10 +61,7 @@ class ProductService {
         try {
             // Executa a visualização do produto
             const product = await this.prisma.product.findFirst({
-                where: { id: id },
-                include: {
-                    flavors: true,
-                },
+                where: uniqueValues,
             });
 
             // Verifica se não foi encontrado um produto:
@@ -90,7 +87,7 @@ class ProductService {
     async viewAll() {
         //? Objeto com o resultado da pesquisa:
         let result = {
-            message: "produtos encontrados",
+            message: "Produtos encontrados",
             error: 0,
             data: null,
         };
@@ -98,11 +95,7 @@ class ProductService {
         //? Tenta fazer a pesquisa por meio do prisma:
         try {
             // Recebe os dados de todos os produtos:
-            const products = await this.prisma.product.findMany({
-                include: {
-                    flavors: true,
-                },
-            });
+            const products = await this.prisma.product.findMany();
 
             // Salva os produtos nos dados do resultado:
             result.data = products;
@@ -142,7 +135,7 @@ class ProductService {
             // Verifica se é um tipo de erro conhecido:
             if (e.code === "P2002") {
                 // Define a mensagem e o erro conhecido:
-                result.message = "Falha na criação";
+                result.message = "Falha na atualização";
                 result.error = 43;
             } else {
                 // Define a mensagem e o erro de conexão:
