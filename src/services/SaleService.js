@@ -62,6 +62,11 @@ class SaleService {
             // Executa a visualização da venda
             const sale = await this.prisma.sale.findFirst({
                 where: { id: id },
+                include: {
+                    name: true,
+                    address: true,
+                    orders: true,
+                },
             });
 
             // Verifica se não foi encontrada uma venda:
@@ -95,7 +100,11 @@ class SaleService {
         //? Tenta fazer a pesquisa por meio do prisma:
         try {
             // Recebe os dados de todas as vendas:
-            const sales = await this.prisma.sale.findMany();
+            const sales = await this.prisma.sale.findMany({
+                orderBy: {
+                    deliveryAt: 'asc',
+                },
+            });
 
             // Salva as vendas nos dados do resultado:
             result.data = sales;
