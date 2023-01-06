@@ -84,7 +84,7 @@ class EmployeeMiddleware {
                 .withMessage("Senha inválida"),
             body("confirmPassword")
                 .if(body("password").notEmpty())
-                .equals(body("password"))
+                .custom((value, { req }) => value === req.body.password)
                 .withMessage("Senhas diferentes"),
             body("role")
                 .if(body("role").notEmpty())
@@ -105,9 +105,9 @@ class EmployeeMiddleware {
                     id: Number(value),
                     email: req.body.email,
                 });
-                if (result.error !== 0) {
+                if (result.error !== 0 || result.data.id === 1) {
                     throw new Error("Identificador desconhecido");
-                }
+                } 
             }),
             body("email").isEmail().withMessage("Email inválido"),
         ];
