@@ -37,7 +37,7 @@ class EmployeeMiddleware {
                 })
                 .withMessage("Senha inválida"),
             body("confirmPassword")
-                .equals(body("password"))
+                .custom((value, { req }) => value === req.body.password)
                 .withMessage("Senhas diferentes"),
             body("role").isIn(this.roleList).withMessage("Cargo inválido"),
         ];
