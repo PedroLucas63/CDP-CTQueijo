@@ -2,14 +2,32 @@
 //* Módulo base da venda:
 import Sale from "../entities/Sale.js";
 
+//* Módulo base do endereço:
+import Address from "../entities/Address.js";
+
+//* Módulo base do client:
+import Client from "../entities/Client.js";
+
+//* Módulo base do pedido:
+import Order from "../entities/Order.js";
+
 //* Módulo de serviço da venda:
 import SaleService from "../services/SaleService.js";
 
+//* Módulo de serviço do endereço:
+import AddressService from "../services/AddressService.js";
+
+//* Módulo de serviço do cliente:
+import ClientService from "../services/ClientService.js";
+
+//* Módulo de serviço dos pedidos:
+import OrderService from "../services/OrderService.js";
+
+//* Módulo de serviço dos produtos:
+import ProductService from "../services/ProductService.js";
+
 //* Módulo que recebe o resultado da validação:
 import { validationResult } from "express-validator";
-
-//* Importa o módulo de arquivos do sistema:
-import fs from "fs";
 
 //! Criação da classe de controle dos dados da venda:
 class SaleController {
@@ -38,17 +56,95 @@ class SaleController {
         //? Recebe o corpo da página:
         const body = req.body;
 
-        //? Cria a venda:
-        let sale = new Sale();
+        //? Cria o endereço:
+        let address = new Address();
 
-        //? Recebimento dos dados:
-        Sale.price = Number(body.price);
-        Sale.clientId = Number(body.clientId);
-        Sale.addressId = Number(body.addressId);
-        Sale.situation = body.situation.trim();
+        //? Define os dados do endereço:
+        address.cep = body.cep;
+        address.uf = body.uf;
+        address.city = body.city;
+        address.neighborhood = body.neighborhood;
+        address.street = body.street;
+        address.number = body.number;
 
-        //? Cria a venda e verifica as mensagens do serviço:
-        result = await SaleService.create(sale);
+        //? Faz a criação do endereço:
+        result = await AddressService.create(address);
+
+        //? Verifica se não aconteceu algum erro na criação do endereço:
+        if (result.error === 0) {
+            // Recebe o ID do endereço:
+            const addressId = result.data.id;
+
+            // Cria o cliente:
+            let client = new Client();
+
+            // Define os dados do endereço:
+            client.name = body.name;
+            client.type = body.type;
+            client.cnpj = body.cnpj;
+            client.email = body.email;
+            client.phone = body.phone;
+
+            // Faz a criação do cliente:
+            result = await ClientService.create(client);
+        }
+
+        //? Verifica se não aconteceu algum erro na criação do cliente:
+        if (result.error === 0) {
+            // Recebe o ID do client:
+            const clientId = result.data.id;
+
+            // Cria um array dos pedidos:
+            let orders = [];
+
+            // Define a quantidade de falhas:
+            let fail = 0;
+
+            // Define o preço da venda completa:
+            let price = 0;
+
+            // Percorre os produtos e a quantidade:
+            for (let i = 0; i < body.product.length; i++) {
+                // Pesquisa o produto:
+                result = await ProductService.view({ name: body.product[i] });
+
+                // Verifica se foi encontrado:
+                if (result.error === 0) {
+                    // Define os dados do pedido:
+                    let order = {
+                        productId: result.data.id,
+                        quantity: Number(body.quantity),
+                        price:
+                            Number(result.data.price) * Number(body.quantity),
+                    };
+
+                    // Faz a soma dos preços:
+                    price += order.price;
+
+                    // Adiciona o pedido no array:
+                    orders.push(order);
+                } else {
+                    fail++;
+                }
+            }
+
+            // Verifica se não aconteceu nenhuma falha:
+            if (fail === 0) {
+                // Cria a venda:
+                let sale = new Sale();
+
+                // Define os valores:
+                sale.price = price;
+                sale.deliveryAt = body.deliveryAt;
+                sale.clientId = clientId;
+                sale.addressId = addressId;
+                sale.situation = "Em análise";
+                sale.orders = orders;
+
+                //? Cria a venda e verifica as mensagens do serviço:
+                result = await SaleService.create(sale);
+            }
+        }
 
         //? Define o status como sucesso na criação:
         let status = 201;
@@ -133,7 +229,7 @@ class SaleController {
             Number(body.price),
             Number(body.clientId),
             Number(body.addressId),
-            body.situation.trim(),
+            body.situation.trim()
         );
 
         //? Atualiza a venda e verifica as mensagens do serviço:

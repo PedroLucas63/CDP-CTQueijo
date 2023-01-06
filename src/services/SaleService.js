@@ -52,7 +52,7 @@ class SaleService {
     async view(id) {
         //? Objeto com o resultado da pesquisa:
         let result = {
-            message: "venda encontrada",
+            message: "Venda encontrada",
             error: 0,
             data: null,
         };

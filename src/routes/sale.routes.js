@@ -4,6 +4,9 @@ import { Router } from "express";
 
 //* Importação do módulo de validação de dados:
 import SaleMiddleware from "../middlewares/SaleMiddleware.js";
+import AddressMiddleware from "../middlewares/AddressMiddleware.js";
+import ClientMiddleware from "../middlewares/ClientMiddleware.js";
+import OrderMiddleware from "../middlewares/OrderMiddleware.js";
 
 //* Importação do módulo de controle dos dados da venda:
 import SaleController from "../controllers/SaleController.js";
@@ -14,7 +17,14 @@ const router = new Router();
 
 //* Definição das rotas:
 //? Rota de criação:
-router.post("/create", SaleMiddleware.create(), SaleController.create);
+router.post(
+    "/create",
+    SaleMiddleware.create(),
+    AddressMiddleware.create(),
+    ClientMiddleware.create(),
+    OrderMiddleware.create(),
+    SaleController.create
+);
 
 //? Rota de visualização por chave unica:
 router.post("/view", SaleController.view);

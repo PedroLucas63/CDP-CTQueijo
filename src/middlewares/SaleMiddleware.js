@@ -17,23 +17,9 @@ class SaleMiddleware {
     create() {
         //? Constante com a validação dos campos:
         const create = [
-            body("price").notEmpty().isFloat().withMessage("Preço inválido"),
-            body("clientId").custom(async (value) => {
-                let result = await ClientService.view(Number(value));
-                if (result.error !== 0) {
-                    throw new Error("Identificador de cliente desconhecido");
-                }
-            }),
-            body("addressId").custom(async (value) => {
-                let result = await AddressService.view(Number(value));
-                if (result.error !== 0) {
-                    throw new Error("Identificador de endereço desconhecido");
-                }
-            }),
-            body("situation")
-                .trim()
-                .isLength({ min: 4, max: 20 })
-                .withMessage("Situação inválida"),
+            body("deliveryAt")
+                .isISO8601()
+                .withMessage("Data ou horário inválido"),
         ];
 
         //* Retorno da constante de validação:
@@ -50,10 +36,6 @@ class SaleMiddleware {
                     throw new Error("Identificador desconhecido");
                 }
             }),
-            body("price")
-                .if(body("price").notEmpty())
-                .isFloat()
-                .withMessage("Preço inválido"),
             body("clientId")
                 .if(body("clientId").notEmpty())
                 .custom(async (value) => {
