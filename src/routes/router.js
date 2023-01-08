@@ -20,6 +20,9 @@ import ClientRouter from "./client.routes.js";
 //* Importação do módulo de rotas dos pedidos:
 import OrderRouter from "./order.routes.js";
 
+//* Importação do módulo de rotas das vendas:
+import SaleRouter from "./sale.routes.js";
+
 //* Importação do módulo de rotas de Login:
 import LoginRouter from "./login.routes.js";
 
@@ -47,6 +50,9 @@ router.use("/client", ClientRouter);
 
 //? Uso das rotas de pedidos:
 router.use("/order", OrderRouter);
+
+//? Uso das rotas de vendas:
+router.use("/sale", SaleRouter);
 
 //? Uso das rotas de login:
 router.use("/", LoginRouter);
