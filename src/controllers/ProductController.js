@@ -171,7 +171,9 @@ class ProductController {
                 localImage = localFile.replace("./public", "");
 
                 // Recebe os dados  do usuário:
-                const { data } = await FlavorService.view(Number(req.body.id));
+                const { data } = await ProductService.view({
+                    id: Number(req.body.id),
+                });
 
                 // Recebe o local da imagem salva:
                 let imageSaved = data.image;

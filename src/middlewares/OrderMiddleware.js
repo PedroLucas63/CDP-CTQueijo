@@ -20,26 +20,26 @@ class OrderMiddleware {
             body("product").custom(async (values) => {
                 for (let i = 0; i < values.length; i++) {
                     let result = await ProductService.view({ name: values[i] });
-
                     if (result.error !== 0) {
                         throw new Error("Identificador desconhecido");
                     }
                 }
             }),
-            body("quantity")
-                .isLength(body("product").length)
-                .withMessage("Quantidade inválida")
-                .custom(async (values) => {
-                    for (let i = 0; i < values.length; i++) {
-                        if (isNumber(values[i])) {
-                            if (Number(values[i] <= 0)) {
-                                throw new Error("Quantidade inválida");
-                            }
-                        } else {
+            body("quantity").custom(async (values, {req}) => {
+                if (values.length !== req.body.product.length) {
+                    throw new Error("Quantidade inválida");
+                }
+
+                for (let i = 0; i < values.length; i++) {
+                    if (isNumber(values[i])) {
+                        if (Number(values[i] <= 0)) {
                             throw new Error("Quantidade inválida");
                         }
+                    } else {
+                        throw new Error("Quantidade inválida");
                     }
-                }),
+                }
+            }),
         ];
 
         //* Retorno da constante de validação:

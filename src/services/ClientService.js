@@ -32,6 +32,7 @@ class ClientService {
             // Dá os dados da criação:
             result.data = createClient;
         } catch (e) {
+            console.log(e)
             // Define a mensagem e o erro:
             result.message = "Erro na conexão com o banco de dados";
             result.error = 4;

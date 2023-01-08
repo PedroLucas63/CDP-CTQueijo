@@ -32,6 +32,7 @@ class SaleService {
             // Dá os dados da criação:
             result.data = createSale;
         } catch (e) {
+            console.log(e)
             // Verifica se é um tipo de erro conhecido:
             if (e.code === "P2002") {
                 // Define a mensagem e o erro conhecido:
@@ -63,7 +64,7 @@ class SaleService {
             const sale = await this.prisma.sale.findFirst({
                 where: { id: id },
                 include: {
-                    name: true,
+                    client: true,
                     address: true,
                     orders: true,
                 },

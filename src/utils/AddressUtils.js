@@ -17,7 +17,7 @@ async function cepSearch(cep) {
     //* Tenta fazer a busca pelo CEP:
     try {
         //? Recebe os dados do encontro:
-        address = cepPromise(cep);
+        let address = await cepPromise(cep);
 
         //? Adiciona o endereço nos dados do resultado:
         result.data = address;

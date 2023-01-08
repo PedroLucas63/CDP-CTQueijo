@@ -13,7 +13,7 @@ class ProductMiddleware {
         const create = [
             body("name")
                 .trim()
-                .isLength({ min: 4, max: 20 })
+                .isLength({ min: 4, max: 45 })
                 .withMessage("Nome inválido"),
             body("price").notEmpty().isFloat().withMessage("Preço inválido"),
         ];
@@ -27,7 +27,7 @@ class ProductMiddleware {
         //? Constante com a validação dos campos:
         const update = [
             body("id").custom(async (value) => {
-                let result = await ProductService.view(Number(value));
+                let result = await ProductService.view({ id: Number(value) });
                 if (result.error !== 0) {
                     throw new Error("Identificador desconhecido");
                 }
@@ -35,7 +35,7 @@ class ProductMiddleware {
             body("name")
                 .if(body("name").notEmpty())
                 .trim()
-                .isLength({ min: 4, max: 20 })
+                .isLength({ min: 4, max: 45 })
                 .withMessage("Nome inválido"),
             body("price")
                 .if(body("price").notEmpty())
@@ -52,7 +52,7 @@ class ProductMiddleware {
         //? Constante com a validação dos campos:
         const remove = [
             body("id").custom(async (value) => {
-                let result = await ProductService.view(Number(value));
+                let result = await ProductService.view({ id: Number(value) });
                 if (result.error !== 0) {
                     throw new Error("Identificador desconhecido");
                 }

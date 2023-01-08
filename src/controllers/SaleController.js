@@ -20,9 +20,6 @@ import AddressService from "../services/AddressService.js";
 //* Módulo de serviço do cliente:
 import ClientService from "../services/ClientService.js";
 
-//* Módulo de serviço dos pedidos:
-import OrderService from "../services/OrderService.js";
-
 //* Módulo de serviço dos produtos:
 import ProductService from "../services/ProductService.js";
 
@@ -65,15 +62,16 @@ class SaleController {
         address.city = body.city;
         address.neighborhood = body.neighborhood;
         address.street = body.street;
-        address.number = body.number;
+        address.number = Number(body.number);
 
         //? Faz a criação do endereço:
         result = await AddressService.create(address);
+        let addressId;
 
         //? Verifica se não aconteceu algum erro na criação do endereço:
         if (result.error === 0) {
             // Recebe o ID do endereço:
-            const addressId = result.data.id;
+            addressId = result.data.id;
 
             // Cria o cliente:
             let client = new Client();
@@ -111,18 +109,18 @@ class SaleController {
                 // Verifica se foi encontrado:
                 if (result.error === 0) {
                     // Define os dados do pedido:
-                    let order = {
-                        productId: result.data.id,
-                        quantity: Number(body.quantity),
-                        price:
-                            Number(result.data.price) * Number(body.quantity),
-                    };
+                    let order = new Order();
 
+                    order.productId = result.data.id;
+                    order.quantity = Number(body.quantity[i]);
+                    order.price =
+                        Number(result.data.price) * Number(body.quantity[i]);
+                        
                     // Faz a soma dos preços:
                     price += order.price;
 
                     // Adiciona o pedido no array:
-                    orders.push(order);
+                    orders.push(order.partialData());
                 } else {
                     fail++;
                 }
@@ -135,7 +133,7 @@ class SaleController {
 
                 // Define os valores:
                 sale.price = price;
-                sale.deliveryAt = body.deliveryAt;
+                sale.deliveryAt = new Date(body.deliveryAt);
                 sale.clientId = clientId;
                 sale.addressId = addressId;
                 sale.situation = "Em análise";

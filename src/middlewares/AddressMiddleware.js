@@ -1,6 +1,6 @@
 //! Importação dos módulos:
 //* Módulo de receber informações do corpo:
-import { body } from "express-validator";
+import { body, Result } from "express-validator";
 
 //* Módulo de serviço dos endereços:
 import AddressService from "../services/AddressService.js";
@@ -12,6 +12,15 @@ import cepSearch from "../utils/AddressUtils.js";
 class AddressMiddleware {
     //* Construção da classe:
     constructor() {
+        this.data = {
+            cep: "",
+            state: "",
+            city: "",
+            neighborhood: "",
+            street: "",
+            number: 0,
+        };
+        
         this.address = {
             cep: "",
             state: "",
@@ -91,9 +100,12 @@ class AddressMiddleware {
         const update = [
             body("id").custom(async (value) => {
                 let result = await AddressService.view(Number(value));
+
                 if (result.error !== 0) {
                     throw new Error("Identificador desconhecido");
                 }
+
+                this.data = result.data;
             }),
             body("cep")
                 .custom((value) => {
@@ -112,12 +124,12 @@ class AddressMiddleware {
             body("uf")
                 .custom((value) => {
                     return value !== "" || this.data.state !== undefined;
-                })  
+                })
                 .toUpperCase()
                 .trim()
                 .isLength(2)
                 .custom((value) => {
-                    return this.data.state === value;
+                    return this.address.state === value;
                 })
                 .withMessage("Unidade federativa inválida"),
             body("city")
@@ -128,7 +140,7 @@ class AddressMiddleware {
                 .notEmpty()
                 .isLength({ min: 3, max: 30 })
                 .custom((value) => {
-                    return this.data.city === value;
+                    return this.address.city === value;
                 })
                 .withMessage("Cidade inválida"),
             body("neighborhood")
@@ -142,11 +154,11 @@ class AddressMiddleware {
                 .trim()
                 .notEmpty()
                 .isLength({ min: 3, max: 50 })
-                .custom(() => {
-                    return this.data.neighborhood !== "";
-                })
                 .custom((value) => {
-                    return this.data.neighborhood === value;
+                    if (this.address.neighborhood) {
+                        return this.address.neighborhood === value;
+                    }
+                    return true;
                 })
                 .withMessage("Bairro inválido"),
             body("street")
@@ -160,14 +172,17 @@ class AddressMiddleware {
                 .trim()
                 .notEmpty()
                 .isLength({ min: 3, max: 50 })
-                .custom(() => {
-                    return this.data.street !== "";
-                })
                 .custom((value) => {
-                    return this.data.street === value;
+                    if (this.address.street) {
+                        return this.address.street === value;
+                    }
+                    return true;
                 })
                 .withMessage("Logradouro inválido"),
-            body("number").isInt().withMessage("Número inválido"),
+            body("number")
+                .if(body("number").notEmpty())
+                .isInt()
+                .withMessage("Número inválido"),
         ];
 
         //* Retorno da constante de validação:
