@@ -10,13 +10,16 @@ import cepSearch from "../utils/AddressUtils.js";
 
 //! Criação da classe mediadora dos endereços:
 class AddressMiddleware {
-    //* Método de construção:
+    //* Construção da classe:
     constructor() {
-        //? Recebimento dos dados da pesquisa:
-        this.searchAddress = async () => {
-            await cepSearch(body("cep"));
+        this.address = {
+            cep: "",
+            state: "",
+            city: "",
+            neighborhood: "",
+            street: "",
+            number: 0,
         };
-        this.data = this.searchAddress.data;
     }
 
     //* Método de validar os dados de criação:
@@ -27,8 +30,11 @@ class AddressMiddleware {
                 .trim()
                 .isLength(9)
                 .isPostalCode("BR")
-                .custom(() => {
-                    return this.data.cep !== undefined;
+                .custom(async (value) => {
+                    let searchAddress = await cepSearch(value);
+                    let data = searchAddress.data;
+                    this.address = data;
+                    return data.cep !== undefined;
                 })
                 .withMessage("CEP inválido"),
             body("uf")
@@ -36,7 +42,7 @@ class AddressMiddleware {
                 .trim()
                 .isLength(2)
                 .custom((value) => {
-                    return this.data.state === value;
+                    return this.address.state === value;
                 })
                 .withMessage("Unidade federativa inválida"),
             body("city")
@@ -44,32 +50,35 @@ class AddressMiddleware {
                 .notEmpty()
                 .isLength({ min: 3, max: 30 })
                 .custom((value) => {
-                    return this.data.city === value;
+                    return this.address.city === value;
                 })
                 .withMessage("Cidade inválida"),
             body("neighborhood")
                 .trim()
                 .notEmpty()
                 .isLength({ min: 3, max: 50 })
-                .custom(() => {
-                    return this.data.neighborhood !== "";
-                })
                 .custom((value) => {
-                    return this.data.neighborhood === value;
+                    if (this.address.neighborhood) {
+                        return this.address.neighborhood === value;
+                    }
+                    return true;
                 })
                 .withMessage("Bairro inválido"),
             body("street")
                 .trim()
                 .notEmpty()
                 .isLength({ min: 3, max: 50 })
-                .custom(() => {
-                    return this.data.street !== "";
-                })
                 .custom((value) => {
-                    return this.data.street === value;
+                    if (this.address.street) {
+                        return this.address.street === value;
+                    }
+                    return true;
                 })
                 .withMessage("Logradouro inválido"),
-            body("number").isInt().withMessage("Número inválido"),
+            body("number")
+                .if(body("number").notEmpty())
+                .isInt()
+                .withMessage("Número inválido"),
         ];
 
         //* Retorno da constante de validação:
@@ -93,14 +102,17 @@ class AddressMiddleware {
                 .trim()
                 .isLength(9)
                 .isPostalCode("BR")
-                .custom(() => {
-                    return this.data.cep !== undefined;
+                .custom(async (value) => {
+                    let searchAddress = await cepSearch(value);
+                    let data = searchAddress.data;
+                    this.address = data;
+                    return data.cep !== undefined;
                 })
                 .withMessage("CEP inválido"),
             body("uf")
                 .custom((value) => {
                     return value !== "" || this.data.state !== undefined;
-                })
+                })  
                 .toUpperCase()
                 .trim()
                 .isLength(2)
