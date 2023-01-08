@@ -13,7 +13,7 @@ class ClientMiddleware {
     //* Método de construção da classe:
     constructor() {
         //? Definição dos tipos:
-        this.types = ["Instituição de ensino", "ONG"];
+        this.types = ["Instituição Pública", "Instituição Privada", "ONG"];
     }
     //* Método de validar os dados de criação:
     create() {
@@ -67,7 +67,7 @@ class ClientMiddleware {
             body("cnpj")
                 .if(body("cnpj").notEmpty())
                 .trim()
-                .isLength(14)
+                .isLength(18)
                 .custom((value) => {
                     return cnpj.isValid(value);
                 })
