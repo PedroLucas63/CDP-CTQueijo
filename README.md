@@ -30,7 +30,7 @@ cd src
 echo .example.env > .env
 ````
 
-1. O terceiro passo está relacionado com a instalação de todos os módulos e bibliotecas utilizados pelo sistema.
+3. O terceiro passo está relacionado com a instalação de todos os módulos e bibliotecas utilizados pelo sistema.
 
 ````shell
 npm install
