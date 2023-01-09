@@ -44,7 +44,7 @@ class ProductController {
         //? Recebimento dos dados:
         product.name = body.name.trim();
         product.price = Number(body.price);
-        product.image = "/images/products/default.png";
+        product.image = "/assets/products/default.png";
 
         //? Cria o produto e verifica as mensagens do serviço:
         result = await ProductService.create(product);
@@ -152,7 +152,7 @@ class ProductController {
                 // Define a imagem e o local:
                 const image = files.image;
                 const localFile =
-                    "./public/images/products/" + Date.now() + image.name;
+                    "./public/assets/products/" + Date.now() + image.name;
 
                 // Faz o upload da imagem:
                 image.mv(localFile, function (e) {
@@ -179,7 +179,7 @@ class ProductController {
                 let imageSaved = data.image;
 
                 // Verifica se não é a imagem padrão:
-                if (imageSaved !== "/images/products/default.png") {
+                if (imageSaved !== "/assets/products/default.png") {
                     // Edita o nome da imagem
                     imageSaved = imageSaved.replace("/", "./public/");
 

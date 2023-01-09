@@ -46,7 +46,7 @@ class EmployeeController {
         employee.email = body.email;
         employee.password = body.password;
         employee.role = body.role;
-        employee.image = "/images/profiles/default.png";
+        employee.image = "/assets/profiles/default.png";
 
         //? Cria o funcionário e verifica as mensagens do serviço:
         result = await EmployeeService.create(employee);
@@ -154,7 +154,7 @@ class EmployeeController {
                 // Define a imagem e o local:
                 const image = files.image;
                 const localFile =
-                    "./public/images/profiles/" + Date.now() + image.name;
+                    "./public/assets/profiles/" + Date.now() + image.name;
 
                 // Faz o upload da imagem:
                 image.mv(localFile, function (e) {
@@ -181,7 +181,7 @@ class EmployeeController {
                 let imageSaved = data.image;
 
                 // Verifica se não é a imagem padrão:
-                if (imageSaved !== "/images/profiles/default.png") {
+                if (imageSaved !== "/assets/profiles/default.png") {
                     // Edita o nome da imagem
                     imageSaved = imageSaved.replace("/", "./public/");
 
