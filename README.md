@@ -14,6 +14,45 @@ As funcionalidades do projeto buscam otimizar o trabalho do administrador local 
   + [ ] 🔃 Atualização da situação dos pedidos realizados.
 * [ ] ℹ Plataforma de informações sobre o CTq para os clientes.
 
+## Instalação
+
+A aplicação deverá ser executada em uma máquina com acesso ao PostgreSQL e com o Node.js instalados. Satisfazendo esses requerimentos, é necessário executar o passo a passo a seguir:
+
+1. O primeiro passo se consiste em entrar na pasta do código para a execução dos demais passos para a execução.
+
+```shell
+cd src
+```
+
+2. O segundo passo se consiste em copiar e colar o arquivo .example.env e renomeá-lo para .env. Após isso, **NO ARQUIVO .ENV**, os dados de conexão com o banco de dados, o email e a senha do adminstrador e a chave SHA-256, devem ser definidos pelo usuário.
+
+3. O terceiro passo está relacionado com a instalação de todos os módulos e bibliotecas utilizados pelo sistema.
+
+````shell
+npm install
+````
+
+4. O quarto passo está na instalação de forma global do nodemon para uma maior segurança na execução do sistema.
+
+```shell
+npm install -g nodemon
+```
+
+5. O quinto passo se consiste em criar as tabelas necessárias no banco de dados através do Prisma.
+
+```shell
+npm run migrate-db
+```
+
+6. Por fim, o sistema pode ser rodado através do node ou nodemon (recomendado):
+```shell
+nodemon app.js
+#or
+#node app.js
+```
+
+Feito esses passos, o usuário será capaz de visualizar a interface gráfica no endereço e porta determinados ([padrão](localhost:3000)).
+
 ## Tecnologias usadas
 
 As tecnologias empregadas no seguinte software se baseiam principalmente em módulos do Node.js empregados em otimizar e potencializar a programação e desenvolvimento no sistema de internet que possui como bases o HTML, CSS e JavaScript.
@@ -35,7 +74,7 @@ As tecnologias empregadas no seguinte software se baseiam principalmente em mód
 
 ## Fase de Desenvolvimento
 
-A seguinte versão do projeto do Controle de Pedidos do CTq está na fase de desenvolvimento: 0.5 - Em desenvolvimento ⚠.
+A seguinte versão do projeto do Controle de Pedidos do CTq está na fase de desenvolvimento: 0.75 - Em unificação (front e back) 🔀.
 
 ## Direitos
 
