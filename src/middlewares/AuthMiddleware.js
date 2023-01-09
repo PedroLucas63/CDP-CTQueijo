@@ -7,10 +7,10 @@ async function AuthMiddleware(req, res, next) {
     //* Verifica se o funcionário se encontra logado:
     if (req.session.user !== null && req.session.user !== undefined) {
         //? Procura o funcionário no banco de dados:
-        const result = await EmployeeService.view({id: req.session.user});
+        const result = await EmployeeService.view({ id: req.session.user });
 
         //? Verifica se o usuário não se encontra no banco de dados:
-        if(result.error !== 0){
+        if (result.error !== 0) {
             return res.status(401).redirect("/logout");
         }
 

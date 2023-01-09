@@ -77,7 +77,9 @@ class EmployeeController {
 
         //? Gera o JSON que possui valores que foram definidos:
         const uniqueValues = JSON.parse(JSON.stringify(values), (key, value) =>
-            value === undefined || value === "" || value === 0 ? undefined : value
+            value === undefined || value === "" || value === 0
+                ? undefined
+                : value
         );
 
         //? Faz o pedido do resultado da pesquisa:

@@ -26,7 +26,11 @@ router.get("/viewAll", EmployeeController.viewAll);
 router.put("/update", EmployeeMiddleware.update(), EmployeeController.update);
 
 //? Rota de deletar um funcionário:
-router.delete("/delete", EmployeeMiddleware.delete(), EmployeeController.delete);
+router.delete(
+    "/delete",
+    EmployeeMiddleware.delete(),
+    EmployeeController.delete
+);
 
 //! Exportação das rotas:
 export default router;

@@ -43,6 +43,8 @@ class ProductController {
 
         //? Recebimento dos dados:
         product.name = body.name.trim();
+        product.price = Number(body.price);
+        product.image = "/images/products/default.png";
 
         //? Cria o produto e verifica as mensagens do serviço:
         result = await ProductService.create(product);
@@ -65,8 +67,21 @@ class ProductController {
         //? Recebe o corpo da página:
         const body = req.body;
 
+        //? Recebimento dos dados em um JSON:
+        const values = {
+            id: Number(body.id),
+            name: body.name,
+        };
+
+        //? Gera o JSON que possui valores que foram definidos:
+        const uniqueValues = JSON.parse(JSON.stringify(values), (key, value) =>
+            value === undefined || value === "" || value === 0
+                ? undefined
+                : value
+        );
+
         //? Faz o pedido do resultado da pesquisa:
-        const result = await ProductService.view(Number(body.id));
+        const result = await ProductService.view(uniqueValues);
 
         //? Define o status como sucesso:
         let status = 200;
@@ -121,6 +136,69 @@ class ProductController {
             return res.status(400).json(result);
         }
 
+        //? Recebe os arquivos enviados:
+        const files = req.files;
+
+        //? Determina o local de upload:
+        let localImage = "";
+
+        //? Verifica se foi enviado um arquivo com o name de image:
+        if (files.image) {
+            // Cria um array com os tipos de arquivos suportados:
+            const mimetypes = ["image/jpeg", "image/png"];
+
+            // Verifica se o arquivo enviado é uma imagem no formato aceito:
+            if (mimetypes.indexOf(files.image.mimetype) !== -1) {
+                // Define a imagem e o local:
+                const image = files.image;
+                const localFile =
+                    "./public/images/products/" + Date.now() + image.name;
+
+                // Faz o upload da imagem:
+                image.mv(localFile, function (e) {
+                    // Verifica se aconteceu um erro:
+                    if (e) {
+                        // Define a mensagem e o erro:
+                        result.message = "Falha no upload da imagem";
+                        result.error = 17;
+
+                        // Retorna o resultado com o status de falha:
+                        return res.status(400).json(result);
+                    }
+                });
+
+                // Determina o local da imagem:
+                localImage = localFile.replace("./public", "");
+
+                // Recebe os dados  do usuário:
+                const { data } = await ProductService.view({
+                    id: Number(req.body.id),
+                });
+
+                // Recebe o local da imagem salva:
+                let imageSaved = data.image;
+
+                // Verifica se não é a imagem padrão:
+                if (imageSaved !== "/images/products/default.png") {
+                    // Edita o nome da imagem
+                    imageSaved = imageSaved.replace("/", "./public/");
+
+                    // Executa a função de deletar a imagem:
+                    fs.unlink(imageSaved, (e) => {
+                        // Verifica se aconteceu um erro:
+                        if (e) {
+                            // Define a mensagem e o erro:
+                            result.message = "Erro em deletar a imagem antiga";
+                            result.error = 16;
+
+                            // Retorna o resultado com o status de falha:
+                            return res.status(400).json(result);
+                        }
+                    });
+                }
+            }
+        }
+
         //? Recebe o corpo da página:
         const body = req.body;
 
@@ -128,6 +206,8 @@ class ProductController {
         let product = new Product(
             Number(body.id),
             body.name.trim(),
+            Number(body.price),
+            localImage
         );
 
         //? Atualiza o produto e verifica as mensagens do serviço:

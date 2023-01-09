@@ -1,31 +1,31 @@
-//! Criação da classe de sabor:
-class Flavor {
+//! Criação da classe de pedido:
+class Order {
     //* Método de construção da classe:
     constructor(
         id = null,
         productId = null,
-        name = null,
+        quantity = null,
         price = null,
-        image = null
+        saleId = null
     ) {
         this.data = {
             id: id,
             productId: productId,
-            name: name,
+            quantity: quantity,
             price: price,
-            image: image,
+            saleId: saleId,
         };
     }
 
     //* Métodos Set:
-    //? Método de definir o identificador do produto:
+    //? Método de definir o identificador de produto:
     set productId(productId) {
         this.data.productId = productId;
     }
 
-    //? Método de definir o nome:
-    set name(name) {
-        this.data.name = name;
+    //? Método de definir a quantidade:
+    set quantity(quantity) {
+        this.data.quantity = quantity;
     }
 
     //? Método de definir o preço:
@@ -33,9 +33,9 @@ class Flavor {
         this.data.price = price;
     }
 
-    //? Método de definir a imagem:
-    set image(image) {
-        this.data.image = image;
+    //? Método de definir o identificador da venda:
+    set saleId(saleId) {
+        this.data.saleId = saleId;
     }
 
     //* Métodos Get:
@@ -49,9 +49,9 @@ class Flavor {
         return this.data.productId;
     }
 
-    //? Método de receber o nome:
-    get name() {
-        return this.data.name;
+    //? Método de receber a quantidade:
+    get quantity() {
+        return this.data.quantity;
     }
 
     //? Método de receber o preço:
@@ -59,9 +59,9 @@ class Flavor {
         return this.data.price;
     }
 
-    //? Método de receber a imagem:
-    get image() {
-        return this.data.image;
+    //? Método de definir o identificador de venda:
+    get saleId() {
+        return this.data.saleId;
     }
 
     //* Método de receber os dados não vazios:
@@ -79,4 +79,4 @@ class Flavor {
 }
 
 //! Exportação da classe:
-export default Flavor;
+export default Order;

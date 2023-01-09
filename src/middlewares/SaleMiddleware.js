@@ -2,20 +2,24 @@
 //* Módulo de receber informações do corpo:
 import { body } from "express-validator";
 
-//* Módulo de serviço dos produtos:
-import ProductService from "../services/ProductService.js";
+//* Módulo de serviço das vendas:
+import SaleService from "../services/SaleService.js";
 
-//! Criação da classe mediadora dos produtos:
-class ProductMiddleware {
+//* Módulo de serviço dos produtos:
+import ClientService from "../services/ClientService.js";
+
+//* Módulo de serviço dos endereços:
+import AddressService from "../services/AddressService.js";
+
+//! Criação da classe mediadora das vendas:
+class SaleMiddleware {
     //* Método de validar os dados de criação:
     create() {
         //? Constante com a validação dos campos:
         const create = [
-            body("name")
-                .trim()
-                .isLength({ min: 4, max: 45 })
-                .withMessage("Nome inválido"),
-            body("price").notEmpty().isFloat().withMessage("Preço inválido"),
+            body("deliveryAt")
+                .isISO8601()
+                .withMessage("Data ou horário inválido"),
         ];
 
         //* Retorno da constante de validação:
@@ -27,20 +31,21 @@ class ProductMiddleware {
         //? Constante com a validação dos campos:
         const update = [
             body("id").custom(async (value) => {
-                let result = await ProductService.view({ id: Number(value) });
+                let result = await SaleService.view(Number(value));
                 if (result.error !== 0) {
                     throw new Error("Identificador desconhecido");
                 }
             }),
-            body("name")
-                .if(body("name").notEmpty())
+            body("situation")
+                .if(body("situation").notEmpty())
                 .trim()
-                .isLength({ min: 4, max: 45 })
-                .withMessage("Nome inválido"),
-            body("price")
-                .if(body("price").notEmpty())
-                .isFloat()
-                .withMessage("Preço inválido"),
+                .isLength({ min: 4, max: 20 })
+                .withMessage("Situação inválida"),
+            body("message")
+                .if(body("message").notEmpty())
+                .trim()
+                .isLength({ min: 4, max: 20 })
+                .withMessage("Mensagem inválida"),
         ];
 
         //* Retorno da constante de validação:
@@ -52,7 +57,7 @@ class ProductMiddleware {
         //? Constante com a validação dos campos:
         const remove = [
             body("id").custom(async (value) => {
-                let result = await ProductService.view({ id: Number(value) });
+                let result = await SaleService.view(Number(value));
                 if (result.error !== 0) {
                     throw new Error("Identificador desconhecido");
                 }
@@ -65,4 +70,4 @@ class ProductMiddleware {
 }
 
 //* Exportação da classe instânciada:
-export default new ProductMiddleware();
+export default new SaleMiddleware();
