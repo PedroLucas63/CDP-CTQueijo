@@ -32,7 +32,7 @@ class SaleService {
             // Dá os dados da criação:
             result.data = createSale;
         } catch (e) {
-            console.log(e)
+            console.log(e);
             // Verifica se é um tipo de erro conhecido:
             if (e.code === "P2002") {
                 // Define a mensagem e o erro conhecido:
@@ -103,7 +103,7 @@ class SaleService {
             // Recebe os dados de todas as vendas:
             const sales = await this.prisma.sale.findMany({
                 orderBy: {
-                    deliveryAt: 'asc',
+                    deliveryAt: "asc",
                 },
             });
 
@@ -142,16 +142,9 @@ class SaleService {
             // Dá os dados atualizados:
             result.data = updatesale;
         } catch (e) {
-            // Verifica se é um tipo de erro conhecido:
-            if (e.code === "P2002") {
-                // Define a mensagem e o erro conhecido:
-                result.message = "Falha na criação";
-                result.error = 43;
-            } else {
-                // Define a mensagem e o erro de conexão:
-                result.message = "Erro na conexão com o banco de dados";
-                result.error = 4;
-            }
+            // Define a mensagem e o erro de conexão:
+            result.message = "Erro na conexão com o banco de dados";
+            result.error = 4;
         }
 
         //? Retorna o resultado:

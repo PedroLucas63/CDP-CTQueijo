@@ -66,6 +66,7 @@ model Sale {
   address    Address  @relation(fields: [addressId], references: [id])
   addressId  Int
   situation  String
+  message    String?
   orders     Order[]
 }
 

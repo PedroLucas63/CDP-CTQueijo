@@ -9,6 +9,7 @@ class Sale {
         clientId = null,
         addressId = null,
         situation = null,
+        message = null,
         orders = null
     ) {
         this.data = {
@@ -19,6 +20,7 @@ class Sale {
             clientId: clientId,
             addressId: addressId,
             situation: situation,
+            message: message,
             orders: orders,
         };
     }
@@ -53,6 +55,11 @@ class Sale {
     //? Método de definir a situação da venda:
     set situation(situation) {
         this.data.situation = situation;
+    }
+
+    //? Método de definir a mensagem da venda:
+    set message(message) {
+        this.data.situation = message;
     }
 
     //? Método de definir os pedidos da venda:
@@ -94,6 +101,11 @@ class Sale {
     //? Método de receber a situação da venda:
     get situation() {
         return this.data.situation;
+    }
+
+    //? Método de receber a mensagem da venda:
+    get message() {
+        return this.data.message;
     }
 
     //? Método de receber os pedidos da venda:

@@ -115,7 +115,7 @@ class SaleController {
                     order.quantity = Number(body.quantity[i]);
                     order.price =
                         Number(result.data.price) * Number(body.quantity[i]);
-                        
+
                     // Faz a soma dos preços:
                     price += order.price;
 
@@ -224,10 +224,13 @@ class SaleController {
         //? Cria a venda com os dados:
         let sale = new Sale(
             Number(body.id),
-            Number(body.price),
-            Number(body.clientId),
-            Number(body.addressId),
-            body.situation.trim()
+            null,
+            null,
+            null,
+            null,
+            null,
+            body.situation.trim(),
+            body.message.trim()
         );
 
         //? Atualiza a venda e verifica as mensagens do serviço:

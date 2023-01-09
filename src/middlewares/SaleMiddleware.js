@@ -36,31 +36,16 @@ class SaleMiddleware {
                     throw new Error("Identificador desconhecido");
                 }
             }),
-            body("clientId")
-                .if(body("clientId").notEmpty())
-                .custom(async (value) => {
-                    let result = await ClientService.view(Number(value));
-                    if (result.error !== 0) {
-                        throw new Error(
-                            "Identificador de cliente desconhecido"
-                        );
-                    }
-                }),
-            body("addressId")
-                .if(body("addressId").notEmpty())
-                .custom(async (value) => {
-                    let result = await AddressService.view(Number(value));
-                    if (result.error !== 0) {
-                        throw new Error(
-                            "Identificador de endereço desconhecido"
-                        );
-                    }
-                }),
             body("situation")
                 .if(body("situation").notEmpty())
                 .trim()
                 .isLength({ min: 4, max: 20 })
                 .withMessage("Situação inválida"),
+            body("message")
+                .if(body("message").notEmpty())
+                .trim()
+                .isLength({ min: 4, max: 20 })
+                .withMessage("Mensagem inválida"),
         ];
 
         //* Retorno da constante de validação:
