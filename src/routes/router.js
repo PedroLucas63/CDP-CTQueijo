@@ -46,23 +46,18 @@ router.get("/carrinho", (req, res) => {
     res.render("pages/cart");
 });
 
-//? Rota Login:
-router.get("/login", (req, res) => {
-    res.render("pages/login");
-});
-
 //? Rota Dashboard:
-router.get("/dashboard", (req, res) => {
+router.get("/dashboard", AuthMiddleware, (req, res) => {
     res.render("pages/dashboard/index.ejs");
 });
 
 //? Rota Pedidos do Dashboard:
-router.get("/dashboard/pedidos", (req, res) => {
+router.get("/dashboard/pedidos", AuthMiddleware, (req, res) => {
     res.render("pages/dashboard/requests.ejs");
 });
 
 //? Rota Edição do Dashboard:
-router.get("/dashboard/alterar", (req, res) => {
+router.get("/dashboard/alterar", AuthMiddleware, (req, res) => {
     res.render("pages/dashboard/edition.ejs");
 });
 

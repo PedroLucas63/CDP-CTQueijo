@@ -10,20 +10,19 @@ import EmployeeService from "../services/EmployeeService.js";
 
 //! Criação da classe de controle dos dados do login:
 class LoginController {
-    //* Método de realizar login no servidor:
-    async login(req, res) {
-        //? Verifica se já existe um funcionário logado na sessão:
+    //* Método padrão do login no servidor:
+    async index(req, res) {
+        //? Verifica se já tem um login ativo:
         if (req.session.user !== null && req.session.user !== undefined) {
-            return res.status(400).json("Já está logado!");
+            return res.redirect("/dashboard");
         }
 
-        //? Cria o objeto de resultado:
-        let result = {
-            message: "Dados incorretos",
-            error: 3,
-            data: null,
-        };
+        //? Se não tiver login ele renderiza a página de login:
+        return res.status(200).render("pages/login");
+    }
 
+    //* Método de realizar login no servidor:
+    async login(req, res) {
         //? Recebe o corpo da página:
         const body = req.body;
 
@@ -37,7 +36,7 @@ class LoginController {
         //? Verifica se não tiveram dados encontrados:
         if (data === null) {
             // Retorna o resultado com erro:
-            return res.json(result);
+            return res.status(400).redirect("/login");
         }
 
         //? Cria um funcionário com os dados encontrados:
@@ -56,17 +55,12 @@ class LoginController {
             // Salva o login na sessão:
             req.session.user = employee.id;
 
-            // Modifica os dados do resultado:
-            result.message = "Login executado com sucesso";
-            result.error = 0;
-            result.data = data;
-
             // Retorna o resultado com o sucesso:
-            return res.status(200).json(result);
+            return res.status(200).redirect("/dashboard");
         }
 
         //? Retorna o resultado com erro:
-        return res.status(400).json(result);
+        return res.status(400).redirect("/login");
     }
 
     //* Método de fazer o logout no servidor:
@@ -74,15 +68,8 @@ class LoginController {
         //? Determina o usuário logado como vazio:
         req.session.user = null;
 
-        //? Determina o resultado:
-        const result = {
-            message: "Deslogado com sucesso",
-            error: 0,
-            data: null,
-        };
-
         //? Faz o retorno do resultado:
-        return res.json(result);
+        return res.status(200).redirect("/");
     }
 }
 

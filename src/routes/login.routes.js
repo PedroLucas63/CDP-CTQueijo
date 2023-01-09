@@ -10,8 +10,11 @@ import LoginController from "../controllers/LoginController.js";
 const router = new Router();
 
 //* Definição das rotas:
-//? Rota de login:
-router.post("/login", LoginController.login);
+//? Rota da página login:
+router.get("/login", LoginController.index);
+
+//? Rota da página de logar:
+router.post("/logar", LoginController.login);
 
 //? Rota de logout:
 router.get("/logout", LoginController.logout);
