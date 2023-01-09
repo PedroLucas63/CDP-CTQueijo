@@ -7,9 +7,6 @@ import upload from "express-fileupload";
 //* Importação da função de interfaces da rede:
 import { networkInterfaces } from "os";
 
-//* Importação da função de interfaces da rede:
-import { networkInterfaces } from "os";
-
 //* Importação do módulo dotenv:
 import dotenv from "dotenv";
 
