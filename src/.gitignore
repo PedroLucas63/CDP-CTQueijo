@@ -112,3 +112,6 @@ tailwind.config.js
 
 # Prisma
 prisma/migrations
+
+# Funções de teste
+utils/ImagesUtils.js

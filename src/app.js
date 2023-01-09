@@ -2,12 +2,19 @@
 //* Importação do módulos express:
 import express from "express";
 import session from "express-session";
+import upload from "express-fileupload";
+
+//* Importação da função de interfaces da rede:
+import { networkInterfaces } from "os";
 
 //* Importação da função de interfaces da rede:
 import { networkInterfaces } from "os";
 
 //* Importação do módulo dotenv:
 import dotenv from "dotenv";
+
+//* Importação do módulo de criar o adminstrador padrão:
+import createAdmin from "./utils/EmployeeDefault.js";
 
 //* Importação de módulos locais:
 import router from "./routes/router.js";
@@ -23,6 +30,16 @@ const app = express();
 //* Definição da engine do projeto:
 app.set("view engine", "ejs");
 app.set("views", "./views");
+
+//* Define o uso do upload de arquivos:
+app.use(
+    upload({
+        limits: { fileSize: 20 * 1024 * 1024 },
+        defCharset: "utf8",
+        safeFileNames: / +/,
+        parseNested: true,
+    })
+);
 
 //* Define a pasta public para conteúdo estático:
 app.use(express.static("./public"));
@@ -47,6 +64,16 @@ app.use(
 
 //* Define o uso das rotas:
 app.use(router);
+
+//! Criação do adminstrador padrão:
+await createAdmin(
+    process.env.ADMIN_ID,
+    process.env.ADMIN_NAME,
+    process.env.ADMIN_EMAIL,
+    process.env.ADMIN_PASSWORD,
+    process.env.ADMIN_ROLE,
+    process.env.ADMIN_IMAGE
+);
 
 //! Iniciação do servidor:
 //* Recebe as informações da rede:

@@ -23,10 +23,11 @@ As tecnologias empregadas no seguinte software se baseiam principalmente em mód
 | [bcrypt](https://www.npmjs.com/package/bcrypt) | Biblioteca para trabalho com Hash |
 | [dotenv](https://www.npmjs.com/package/dotenv)          | Sistema que carrega variáveis de arquivos .env                           |
 | [ejs](https://ejs.co/)             | Uma linguagem de modelagem incorporada com o JavaScript                  |
+| [express-fileupload](https://www.npmjs.com/package/express-fileupload) | Mediador para o upload de arquivos no sistema |
 | [express-session](https://www.npmjs.com/package/express-session) | Mediador de sessões para o express                                       |
+| [express-validator](https://express-validator.github.io/docs/) | Mediador para validar dados recebidos |
 | [express](https://expressjs.com/pt-br/)      | Framework para a construção de sistemas de internet                      |
 | [jest](https://jestjs.io/pt-BR/)            | Framework de testes do JavaScript                                        |
-| [multer](https://www.npmjs.com/package/multer) | Mediador para o Upload de arquivos no sistema |
 | [prisma](https://www.prisma.io/)          | Sistema de gerenciamento de conexões com banco de dados                  |
 | [tailwindcss](https://tailwindcss.com/)     | Framework do CSS para personalização por meio de classes pré-construídas |
 
