@@ -1,6 +1,15 @@
-//! Criação da classe de endereço:
+/** Classe representando um endereço. */
 class Address {
-    //* Método de construção da classe:
+    /**
+     * Cria um endereço.
+     * @param {number} id - O identificador.
+     * @param {string} cep - O código de endereçamento postal.
+     * @param {string} uf - A unidade federativa.
+     * @param {string} city - A cidade.
+     * @param {string} neighborhood - O bairro.
+     * @param {string} street - O logradouro.
+     * @param {number} number - O número.
+     */
     constructor(
         id = null,
         cep = null,
@@ -10,6 +19,7 @@ class Address {
         street = null,
         number = null
     ) {
+        //? Define os dados do endereço:
         this.data = {
             id: id,
             cep: cep,
@@ -22,73 +32,109 @@ class Address {
     }
 
     //* Métodos Set:
-    //? Método de definir o CEP:
+    /**
+     * Define o código de endereçamento postal.
+     */
     set cep(cep) {
         this.data.cep = cep;
     }
 
-    //? Método de definir a UF:
+    /**
+     * Define a unidade federativa.
+     */
     set uf(uf) {
         this.data.uf = uf;
     }
 
-    //? Método de definir a cidade:
+    /**
+     * Define a cidade.
+     */
     set city(city) {
         this.data.city = city;
     }
 
-    //? Método de definir o bairro:
+    /**
+     * Define o bairro.
+     */
     set neighborhood(neighborhood) {
         this.data.neighborhood = neighborhood;
     }
 
-    //? Método de definir o logradouro:
+    /**
+     * Define o logradouro.
+     */
     set street(street) {
         this.data.street = street;
     }
 
-    //? Método de definir o número residencial/comercial:
+    /**
+     * Define o número.
+     */
     set number(number) {
         this.data.number = number;
     }
 
     //* Métodos Get:
-    //? Método de receber o id:
+    /**
+     * Pega o identificador.
+     * @return {number} O identificador.
+     */
     get id() {
         return this.data.id;
     }
 
-    //? Método de receber o CEP:
+    /**
+     * Pega o código de endereçamento postal.
+     * @return {string} O código de endereçamento postal.
+     */
     get cep() {
         return this.data.cep;
     }
 
-    //? Método de receber a UF:
+    /**
+     * Pega a unidade federativa.
+     * @return {string} A unidade federativa.
+     */    
     get uf() {
         return this.data.uf;
     }
 
-    //? Método de receber a cidade:
+    /**
+     * Pega a cidade.
+     * @return {string} A cidade.
+     */        
     get city() {
         return this.data.city;
     }
 
-    //? Método de receber o bairro:
+    /**
+     * Pega o bairro.
+     * @return {string} O bairro.
+     */    
     get neighborhood() {
         return this.data.neighborhood;
     }
 
-    //? Método de definir o logradouro:
+    /**
+     * Pega o logradouro.
+     * @return {string} O logradouro.
+     */    
     get street() {
         return this.data.street;
     }
 
-    //? Método de definir o número residencial/comercial:
+    /**
+     * Pega o número.
+     * @return {number} O número.
+     */        
     get number() {
         return this.data.number;
     }
 
-    //* Método de receber os dados não vazios:
+    /**
+     * Pega os dados não vazios do endereço.
+     * @return {json} Os dados não vazios do endereço.
+     */
     partialData() {
         //? Remove os dados que estão vazios e o de ID:
         const newData = JSON.parse(JSON.stringify(this.data), (key, value) =>

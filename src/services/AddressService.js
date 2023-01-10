@@ -2,15 +2,21 @@
 //* Módulo do cliente prisma:
 import { PrismaClient } from "@prisma/client";
 
-//! Criação da classe de serviços do endereço:
+/** Classe representando os serviços do endereço. */
 class AddressService {
-    //* Construção da classe:
+    /**
+     * Cria os serviços do endereço.
+     */
     constructor() {
         //? Instânciamento do prisma:
         this.prisma = new PrismaClient();
     }
 
-    //* Método de criar um novo endereço no banco de dados:
+    /**
+     * Cria um novo endereço no banco de dados.
+     * @param {Address} address - O endereço.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (endereço criado).
+     */
     async create(address) {
         //? Objeto JSON com dados do resultado:
         let result = {
@@ -41,7 +47,11 @@ class AddressService {
         return result;
     }
 
-    //* Método de receber dados de um endereço por meio de chave unica:
+    /**
+     * Visualiza um endereço do banco de dados por meio do seu identificador.
+     * @param {number} id - O identificador do endereço.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (endereço encontrado).
+     */
     async view(id) {
         //? Objeto com o resultado da pesquisa:
         let result = {
@@ -76,7 +86,10 @@ class AddressService {
         return result;
     }
 
-    //* Método de receber dados de todos os endereços:
+    /**
+     * Visualiza todos os endereços do banco de dados.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (todos os endereços encontrados).
+     */
     async viewAll() {
         //? Objeto com o resultado da pesquisa:
         let result = {
@@ -102,7 +115,11 @@ class AddressService {
         return result;
     }
 
-    //* Método de atualizar um endereço no banco de dados:
+    /**
+     * Atualiza um endereço do banco de dados.
+     * @param {Address} address - O endereço.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (endereço atualizado).
+     */
     async update(address) {
         //? Objeto JSON com dados do resultado:
         let result = {
@@ -134,7 +151,11 @@ class AddressService {
         return result;
     }
 
-    //* Método de deletar um endereço do banco de dados:
+    /**
+     * Deleta um endereço do banco de dados por meio do seu identificador.
+     * @param {number} id - O identificador do endereço.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (endereço deletado).
+     */
     async delete(id) {
         //? Objeto com o resultado:
         let result = {

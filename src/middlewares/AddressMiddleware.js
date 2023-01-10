@@ -8,9 +8,11 @@ import AddressService from "../services/AddressService.js";
 //* Módulo de pesquisa por CEP:
 import cepSearch from "../utils/AddressUtils.js";
 
-//! Criação da classe mediadora dos endereços:
+/** Classe representando os mediadores do endereço. */
 class AddressMiddleware {
-    //* Construção da classe:
+    /**
+     * Cria os dados do endereço encontrado e existente.
+     */
     constructor() {
         this.data = {
             cep: "",
@@ -20,7 +22,7 @@ class AddressMiddleware {
             street: "",
             number: 0,
         };
-        
+
         this.address = {
             cep: "",
             state: "",
@@ -31,7 +33,10 @@ class AddressMiddleware {
         };
     }
 
-    //* Método de validar os dados de criação:
+    /**
+     * Cria as validações dos campos da criação de um endereço.
+     * @return {json} O resultado da validação dos dados passados.
+     */
     create() {
         //? Constante com a validação dos campos:
         const create = [
@@ -94,8 +99,10 @@ class AddressMiddleware {
         return create;
     }
 
-    //* Método de validar os dados de atualização:
-    update() {
+    /**
+     * Cria as validações dos campos da atualização de um endereço.
+     * @return {json} O resultado da validação dos dados passados.
+     */ update() {
         //? Constante com a validação dos campos:
         const update = [
             body("id").custom(async (value) => {
@@ -189,8 +196,10 @@ class AddressMiddleware {
         return update;
     }
 
-    //* Método de validar os dados de remoção:
-    delete() {
+    /**
+     * Cria as validações dos campos da deletação de um endereço.
+     * @return {json} O resultado da validação dos dados passados.
+     */ delete() {
         //? Constante com a validação dos campos:
         const remove = [
             body("id").custom(async (value, { req }) => {
