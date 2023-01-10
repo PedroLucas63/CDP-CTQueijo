@@ -48,7 +48,9 @@ router.get("/carrinho", (req, res) => {
 
 //? Rota Dashboard:
 router.get("/dashboard", AuthMiddleware, (req, res) => {
-    res.render("pages/dashboard/index.ejs");
+    return res.render("pages/dashboard/index.ejs", {
+        user: req.session.user
+    });
 });
 
 //? Rota Pedidos do Dashboard:
