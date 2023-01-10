@@ -8,9 +8,14 @@ import AddressService from "../services/AddressService.js";
 //* Módulo que recebe o resultado da validação:
 import { validationResult } from "express-validator";
 
-//! Criação da classe de controle dos dados do endereço:
+/** Classe representando os controladores do endereço. */
 class AddressController {
-    //* Método de visualizar um endereço pelo id ou email:
+    /**
+     * Visualiza um endereço com base no identificador enviado pelo frontend.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados encontrados do endereço.
+     */
     async view(req, res) {
         //? Recebe o corpo da página:
         const body = req.body;
@@ -34,7 +39,12 @@ class AddressController {
         return res.status(status).json(result);
     }
 
-    //* Método de visualizar todos os endereços:
+    /**
+     * Visualiza todos os endereços.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados encontrados de todos os endereços.
+     */
     async viewAll(req, res) {
         //? Faz a requisição dos dados de todos os endereços:
         const result = await AddressService.viewAll();
@@ -52,7 +62,12 @@ class AddressController {
         return res.status(status).json(result);
     }
 
-    //* Método de atualizar um endereço:
+    /**
+     * Atualiza um endereço com base nos dados enviados no frontend.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados atualizados do endereço.
+     */
     async update(req, res) {
         //? Objeto JSON com o resultado:
         let result = {
@@ -104,8 +119,12 @@ class AddressController {
         return res.status(status).json(result);
     }
 
-    //* Método de deletar um endereço:
-    async delete(req, res) {
+    /**
+     * Deleta um endereço com base no identificador enviado no frontend.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados do endereço deletado.
+     */ async delete(req, res) {
         //? Objeto JSON com o resultado:
         let result = {
             message: null,
