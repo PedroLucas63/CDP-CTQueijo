@@ -7,7 +7,7 @@
       <!-- Modal header -->
       <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-          Cadastrar Produto
+          Cadastrar Produto 
         </h3>
         <button type="button"
           class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -22,21 +22,26 @@
         </button>
       </div>
       <!-- Modal body -->
-      <form action="#">
+      <form method="POST" action="/product/create" encType="multipart/form-data">
         <div class="grid gap-4 mb-4 sm:grid-cols-2">
           <div>
             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nome</label>
             <input type="text" name="name" id="name"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              placeholder="Nome" required="">
+              placeholder="Nome" required>
           </div>
           <div>
             <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Preço</label>
-            <input type="number" name="price" id="price"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              placeholder="R$" required="">
+            <div class="relative mt-1 rounded-md shadow-sm">
+              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <span class="text-gray-500 sm:text-sm">R$</span>
+              </div>
+              <input type="number" name="price" id="price" step="0.01"
+              class=" pl-9 pr-12 block bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500  dark:focus:border-primary-500"
+              placeholder="0.00" required>
+            </div>
           </div>
-          <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Carregar
+          <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Carregar
             imagem</label>
           <div class="max-w-2xl col-span-2">
             <div class="flex items-center justify-center w-full">
@@ -53,7 +58,7 @@
                       carregar</span> ou arraste e solte</p>
                   <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                 </div>
-                <input id="dropzone-file" type="file" class="hidden" />
+                <input id="dropzone-file" type="file" name="image" class="hidden"/>
               </label>
             </div>
 

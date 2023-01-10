@@ -32,7 +32,7 @@ class ProductController {
             result.error = errors.array();
 
             // Retorna o resultado com o status de falha:
-            return res.status(400).json(result);
+            return res.status(400).redirect("/dashboard");
         }
 
         //? Recebe os arquivos enviados:
@@ -62,7 +62,7 @@ class ProductController {
                         result.error = 17;
 
                         // Retorna o resultado com o status de falha:
-                        return res.status(400).json(result);
+                        return res.status(400).redirect("/dashboard");
                     }
                 });
 
@@ -99,7 +99,7 @@ class ProductController {
         }
 
         //? Retorna o resultado:
-        return res.status(status).json(result);
+        return res.status(status).redirect("/dashboard");
     }
 
     //* Método de visualizar um produto pelo id ou email:
