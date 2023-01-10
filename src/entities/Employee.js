@@ -1,6 +1,15 @@
-//! Criação da classe de empregado:
+/** Classe representando um funcionário. */
 class Employee {
-    //* Método de construção da classe:
+    /**
+     * Cria um funcionário.
+     * @param {number} id - O identificador.
+     * @param {string} name - O nome.
+     * @param {string} email - o E-mail.
+     * @param {string} password - A senha.
+     * @param {string} role - O cargo.
+     * @param {string} image - A imagem.
+     * @param {DateTime} createdAt - A data de criação.
+     */
     constructor(
         id = null,
         name = null,
@@ -10,6 +19,7 @@ class Employee {
         image = null,
         createdAt = null
     ) {
+        //? Define os dados do funcionário:
         this.data = {
             id: id,
             name: name,
@@ -22,73 +32,109 @@ class Employee {
     }
 
     //* Métodos Set:
-    //? Método de definir o nome:
+    /**
+     * Define o nome do funcionário.
+     */
     set name(name) {
         this.data.name = name;
     }
 
-    //? Método de definir o email:
+    /**
+     * Define o email do funcionário.
+     */
     set email(email) {
         this.data.email = email;
     }
 
-    //? Método de definir a senha:
+    /**
+     * Define a senha do funcionário.
+     */
     set password(password) {
         this.data.password = password;
     }
 
-    //? Método de definir o cargo:
+    /**
+     * Define o cargo do funcionário.
+     */
     set role(role) {
         this.data.role = role;
     }
 
-    //? Método de definir a imagem:
+    /**
+     * Define a imagem do funcionário.
+     */
     set image(image) {
         this.data.image = image;
     }
 
-    //? Método de definir a data de criação:
+    /**
+     * Define a data de criação do funcionário.
+     */
     set createdAt(createdAt) {
         this.data.createdAt = createdAt;
     }
 
     //* Métodos Get:
-    //? Método de receber o id:
+    /**
+     * Pega o identificador.
+     * @return {number} O identificador.
+     */
     get id() {
         return this.data.id;
     }
 
-    //? Método de receber o nome:
+    /**
+     * Pega o nome do funcionário.
+     * @return {string} O nome do funcionário.
+     */
     get name() {
         return this.data.name;
     }
 
-    //? Método de receber o email:
+    /**
+     * Pega o email do funcionário.
+     * @return {string} O email do funcionário.
+     */
     get email() {
         return this.data.email;
     }
 
-    //? Método de receber a senha:
+    /**
+     * Pega a senha do funcionário.
+     * @return {string} A senha do funcionário.
+     */
     get password() {
         return this.data.password;
     }
 
-    //? Método de receber o cargo:
+    /**
+     * Pega o cargo do funcionário.
+     * @return {string} O cargo do funcionário.
+     */
     get role() {
         return this.data.role;
     }
 
-    //? Método de definir a imagem:
+    /**
+     * Pega a imagem do funcionário.
+     * @return {string} A imagem do funcionário.
+     */
     get image() {
         return this.data.image;
     }
 
-    //? Método de definir a data de criação:
+    /**
+     * Pega a data de criação do funcionário.
+     * @return {DateTime} A data de criação do funcionário.
+     */
     get createdAt() {
         return this.data.createdAt;
     }
 
-    //* Método de receber os dados não vazios:
+    /**
+     * Pega os dados não vazios do funcionário.
+     * @return {json} Os dados não vazios do funcionário.
+     */
     partialData() {
         //? Remove os dados que estão vazios e o de ID:
         const newData = JSON.parse(JSON.stringify(this.data), (key, value) =>

@@ -1,6 +1,14 @@
-//! Criação da classe de cliente:
+/** Classe representando um cliente. */
 class Client {
-    //* Método de construção da classe:
+    /**
+     * Cria um cliente.
+     * @param {number} id - O identificador.
+     * @param {string} name - O nome.
+     * @param {string} type - O tipo.
+     * @param {string} cnpj - O CNPJ.
+     * @param {string} email - O e-mail.
+     * @param {string} phone - O telefone.
+     */
     constructor(
         id = null,
         name = null,
@@ -9,6 +17,7 @@ class Client {
         email = null,
         phone = null
     ) {
+        //? Define os dados do cliente:
         this.data = {
             id: id,
             name: name,
@@ -20,63 +29,94 @@ class Client {
     }
 
     //* Métodos Set:
-    //? Método de definir o nome:
+    /**
+     * Define o nome do cliente.
+     */
     set name(name) {
         this.data.name = name;
     }
 
-    //? Método de definir o tipo:
+    /**
+     * Define o tipo de cliente.
+     */
     set type(type) {
         this.data.type = type;
     }
 
-    //? Método de definir o cnpj:
+    /**
+     * Define o cnpj do cliente.
+     */
     set cnpj(cnpj) {
         this.data.cnpj = cnpj;
     }
 
-    //? Método de definir o email:
+    /**
+     * Define o e-mail do cliente.
+     */
     set email(email) {
         this.data.email = email;
     }
 
-    //? Método de definir o telefone:
+    /**
+     * Define o telefone do cliente.
+     */
     set phone(phone) {
         this.data.phone = phone;
     }
 
     //* Métodos Get:
-    //? Método de receber o id:
+    /**
+     * Pega o identificador.
+     * @return {number} O identificador.
+     */
     get id() {
         return this.data.id;
     }
 
-    //? Método de receber o nome:
+    /**
+     * Pega nome do cliente.
+     * @return {string} O nome do cliente.
+     */
     get name() {
         return this.data.name;
     }
 
-    //? Método de receber o tipo:
+    /**
+     * Pega o tipo do cliente.
+     * @return {string} O tipo do cliente.
+     */
     get type() {
         return this.data.type;
     }
 
-    //? Método de receber o cnpj:
+    /**
+     * Pega CNPJ do cliente.
+     * @return {string} O CNPJ do cliente.
+     */
     get cnpj() {
         return this.data.cnpj;
     }
 
-    //? Método de receber o email:
+    /**
+     * Pega o e-mail do cliente.
+     * @return {string} O e-mail do cliente.
+     */
     get email() {
         return this.data.email;
     }
 
-    //? Método de receber a telefone:
+    /**
+     * Pega o telefone do cliente.
+     * @return {string} O telefone do cliente.
+     */
     get phone() {
         return this.data.phone;
     }
 
-    //* Método de receber os dados não vazios:
+    /**
+     * Pega os dados não vazios do cliente.
+     * @return {json} Os dados não vazios do cliente.
+     */
     partialData() {
         //? Remove os dados que estão vazios e o de ID:
         const newData = JSON.parse(JSON.stringify(this.data), (key, value) =>

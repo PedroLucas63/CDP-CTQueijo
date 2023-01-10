@@ -2,15 +2,21 @@
 //* Módulo do cliente prisma:
 import { PrismaClient } from "@prisma/client";
 
-//! Criação da classe de serviços das vendas:
+/** Classe representando os serviços da venda. */
 class SaleService {
-    //* Construção da classe:
+    /**
+     * Cria os serviços da venda.
+     */
     constructor() {
         //? Instanciamento do prisma:
         this.prisma = new PrismaClient();
     }
 
-    //* Método de criar uma nova venda no banco de dados:
+    /**
+     * Cria uma nova venda no banco de dados.
+     * @param {Sale} sale - A venda.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (venda criada).
+     */
     async create(sale) {
         //? Objeto JSON com dados do resultado:
         let result = {
@@ -49,7 +55,11 @@ class SaleService {
         return result;
     }
 
-    //* Método de receber dados de uma venda por meio de chave unica:
+    /**
+     * Visualiza uma venda do banco de dados por meio do seu identificador.
+     * @param {number} id - O identificador da venda.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (venda encontrada).
+     */
     async view(id) {
         //? Objeto com o resultado da pesquisa:
         let result = {
@@ -89,7 +99,10 @@ class SaleService {
         return result;
     }
 
-    //* Método de receber dados de todas as vendas:
+    /**
+     * Visualiza todas as vendas do banco de dados.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (todas as vendas encontradas).
+     */
     async viewAll() {
         //? Objeto com o resultado da pesquisa:
         let result = {
@@ -119,7 +132,11 @@ class SaleService {
         return result;
     }
 
-    //* Método de atualizar uma venda no banco de dados:
+    /**
+     * Atualiza uma venda do banco de dados.
+     * @param {Sale} sale - A venda.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (venda atualizada).
+     */
     async update(sale) {
         //? Objeto JSON com dados do resultado:
         let result = {
@@ -151,7 +168,11 @@ class SaleService {
         return result;
     }
 
-    //* Método de deletar uma venda do banco de dados:
+    /**
+     * Deleta uma venda do banco de dados por meio do seu identificador.
+     * @param {number} id - O identificador da venda.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (venda deletada).
+     */
     async delete(id) {
         //? Objeto com o resultado da pesquisa:
         let result = {

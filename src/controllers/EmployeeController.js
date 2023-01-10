@@ -11,9 +11,14 @@ import { validationResult } from "express-validator";
 //* Importa o módulo de arquivos do sistema:
 import fs from "fs";
 
-//! Criação da classe de controle dos dados do funcionário:
+/** Classe representando os controladores do funcionário. */
 class EmployeeController {
-    //* Método de criação do funcionário:
+    /**
+     * Cria um funcionário com base no identificador enviado pelo frontend.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados criados do funcionário.
+     */
     async create(req, res) {
         //? Objeto JSON com o resultado:
         let result = {
@@ -64,7 +69,12 @@ class EmployeeController {
         return res.status(status).json(result);
     }
 
-    //* Método de visualizar um funcionário pelo id ou email:
+    /**
+     * Visualiza um funcionário com base no identificador enviado pelo frontend.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados encontrados do funcionário.
+     */
     async view(req, res) {
         //? Recebe o corpo da página:
         const body = req.body;
@@ -98,7 +108,12 @@ class EmployeeController {
         return res.status(status).json(result);
     }
 
-    //* Método de visualizar todos os funcionários:
+    /**
+     * Visualiza todos os funcionários.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados encontrados de todos os funcionários.
+     */
     async viewAll(req, res) {
         //? Faz a requisição dos dados de todos os funcionários:
         const result = await EmployeeService.viewAll();
@@ -116,7 +131,12 @@ class EmployeeController {
         return res.status(status).json(result);
     }
 
-    //* Método de atualizar um funcionário:
+    /**
+     * Atualiza um funcionário com base nos dados enviados no frontend.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados atualizados do funcionário.
+     */
     async update(req, res) {
         //? Objeto JSON com o resultado:
         let result = {
@@ -230,7 +250,12 @@ class EmployeeController {
         return res.status(status).json(result);
     }
 
-    //* Método de deletar um funcionário:
+    /**
+     * Deleta um funcionário com base no identificador enviado no frontend.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados do funcionário deletado.
+     */
     async delete(req, res) {
         //? Objeto JSON com o resultado:
         let result = {

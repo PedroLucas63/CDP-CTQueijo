@@ -5,9 +5,12 @@ import { body } from "express-validator";
 //* Módulo de serviço dos produtos:
 import ProductService from "../services/ProductService.js";
 
-//! Criação da classe mediadora dos produtos:
+/** Classe representando os mediadores do produto. */
 class ProductMiddleware {
-    //* Método de validar os dados de criação:
+    /**
+     * Cria as validações dos campos da criação de um produto.
+     * @return {json} O resultado da validação dos dados passados.
+     */
     create() {
         //? Constante com a validação dos campos:
         const create = [
@@ -22,7 +25,10 @@ class ProductMiddleware {
         return create;
     }
 
-    //* Método de validar os dados de atualização:
+    /**
+     * Cria as validações dos campos da atualização de um funcionário.
+     * @return {json} O resultado da validação dos dados passados.
+     */
     update() {
         //? Constante com a validação dos campos:
         const update = [
@@ -47,7 +53,10 @@ class ProductMiddleware {
         return update;
     }
 
-    //* Método de validar os dados de remoção:
+    /**
+     * Cria as validações dos campos da deletação de um funcionário.
+     * @return {json} O resultado da validação dos dados passados.
+     */
     delete() {
         //? Constante com a validação dos campos:
         const remove = [

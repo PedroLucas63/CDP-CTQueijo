@@ -1,7 +1,14 @@
-//! Criação da classe dos produtos:
+/** Classe representando um produto. */
 class Product {
-    //* Método de construção da classe:
+    /**
+     * Cria um produto.
+     * @param {number} id - O identificador.
+     * @param {string} name - O nome.
+     * @param {number} price - O preço.
+     * @param {string} image - A imagem.
+     */
     constructor(id = null, name = null, price = null, image = null) {
+        //? Define os dados do produto:
         this.data = {
             id: id,
             name: name,
@@ -11,43 +18,64 @@ class Product {
     }
 
     //* Métodos Set:
-    //? Método de definir o nome:
+    /**
+     * Define o nome do produto.
+     */
     set name(name) {
         this.data.name = name;
     }
 
-    //? Método de definir o preço:
+    /**
+     * Define o preço do produto.
+     */
     set price(price) {
         this.data.price = price;
     }
 
-    //? Método de definir a imagem:
+    /**
+     * Define a imagem do produto.
+     */
     set image(image) {
         this.data.image = image;
     }
 
     //* Métodos Get:
-    //? Método de receber o id:
+    /**
+     * Pega o identificador.
+     * @return {number} O identificador.
+     */
     get id() {
         return this.data.id;
     }
 
-    //? Método de receber o nome:
+    /**
+     * Pega o nome do produto.
+     * @return {string} O nome do produto.
+     */
     get name() {
         return this.data.name;
     }
 
-    //? Método de receber o preço:
+    /**
+     * Pega o preço do produto.
+     * @return {number} O preço do produto.
+     */
     get price() {
         return this.data.price;
     }
 
-    //? Método de receber a imagem:
+    /**
+     * Pega a imagem do produto.
+     * @return {string} A imagem do produto.
+     */
     get image() {
         return this.data.image;
     }
 
-    //* Método de receber os dados não vazios e diferentes de ID:
+    /**
+     * Pega os dados não vazios do produto.
+     * @return {json} Os dados não vazios do produto.
+     */
     partialData() {
         //? Remove os dados que estão vazios e o de ID:
         const newData = JSON.parse(JSON.stringify(this.data), (key, value) =>

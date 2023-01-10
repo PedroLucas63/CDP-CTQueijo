@@ -26,9 +26,14 @@ import ProductService from "../services/ProductService.js";
 //* Módulo que recebe o resultado da validação:
 import { validationResult } from "express-validator";
 
-//! Criação da classe de controle dos dados da venda:
+/** Classe representando os controladores da venda. */
 class SaleController {
-    //* Método de criação da venda:
+    /**
+     * Cria uma venda com base no identificador enviado pelo frontend.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados criados da venda.
+     */
     async create(req, res) {
         //? Objeto JSON com o resultado:
         let result = {
@@ -157,7 +162,12 @@ class SaleController {
         return res.status(status).json(result);
     }
 
-    //* Método de visualizar uma venda pelo id:
+    /**
+     * Visualiza uma venda com base no identificador enviado pelo frontend.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados encontrados da venda.
+     */
     async view(req, res) {
         //? Recebe o corpo da página:
         const body = req.body;
@@ -178,7 +188,12 @@ class SaleController {
         return res.status(status).json(result);
     }
 
-    //* Método de visualizar todas as vendas:
+    /**
+     * Visualiza todas as vendas.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados encontrados de todas as vendas.
+     */
     async viewAll(req, res) {
         //? Faz a requisição dos dados de todas as vendas:
         const result = await SaleService.viewAll();
@@ -196,7 +211,12 @@ class SaleController {
         return res.status(status).json(result);
     }
 
-    //* Método de atualizar uma venda:
+    /**
+     * Atualiza uma venda com base nos dados enviados no frontend.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados atualizados da venda.
+     */
     async update(req, res) {
         //? Objeto JSON com o resultado:
         let result = {
@@ -249,7 +269,12 @@ class SaleController {
         return res.status(status).json(result);
     }
 
-    //* Método de deletar uma venda:
+    /**
+     * Deleta uma venda com base no identificador enviado no frontend.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados da venda deletada.
+     */
     async delete(req, res) {
         //? Objeto JSON com o resultado:
         let result = {

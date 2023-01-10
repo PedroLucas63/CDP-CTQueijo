@@ -1,6 +1,13 @@
-//! Criação da classe de pedido:
+/** Classe representando um pedido. */
 class Order {
-    //* Método de construção da classe:
+    /**
+     * Cria um pedido.
+     * @param {number} id - O identificador.
+     * @param {number} productId - O identificador do produto.
+     * @param {number} quantity - A quantidade.
+     * @param {number} price - O preço.
+     * @param {number} saleId - O identificador da venda.
+     */
     constructor(
         id = null,
         productId = null,
@@ -8,6 +15,7 @@ class Order {
         price = null,
         saleId = null
     ) {
+        //? Define os dados do pedido:
         this.data = {
             id: id,
             productId: productId,
@@ -18,53 +26,79 @@ class Order {
     }
 
     //* Métodos Set:
-    //? Método de definir o identificador de produto:
+    /**
+     * Define o identificador de produto.
+     */
     set productId(productId) {
         this.data.productId = productId;
     }
 
-    //? Método de definir a quantidade:
+    /**
+     * Define a quantidade.
+     */
     set quantity(quantity) {
         this.data.quantity = quantity;
     }
 
-    //? Método de definir o preço:
+    /**
+     * Define o preço.
+     */
     set price(price) {
         this.data.price = price;
     }
 
-    //? Método de definir o identificador da venda:
+    /**
+     * Define o identificador da venda.
+     */
     set saleId(saleId) {
         this.data.saleId = saleId;
     }
 
     //* Métodos Get:
-    //? Método de receber o id:
+    /**
+     * Pega o identificador.
+     * @return {number} O identificador.
+     */
     get id() {
         return this.data.id;
     }
 
-    //? Método de receber o identificador do produto:
+    /**
+     * Pega o identificador do produto.
+     * @return {number} O identificador do produto.
+     */
     get productId() {
         return this.data.productId;
     }
 
-    //? Método de receber a quantidade:
+    /**
+     * Pega a quantidade.
+     * @return {number} A quantidade.
+     */
     get quantity() {
         return this.data.quantity;
     }
 
-    //? Método de receber o preço:
+    /**
+     * Pega o preço.
+     * @return {number} O preço.
+     */
     get price() {
         return this.data.price;
     }
 
-    //? Método de definir o identificador de venda:
+    /**
+     * Pega o identificador da venda.
+     * @return {number} O identificador da venda.
+     */
     get saleId() {
         return this.data.saleId;
     }
 
-    //* Método de receber os dados não vazios:
+    /**
+     * Pega os dados não vazios do pedido.
+     * @return {json} Os dados não vazios do pedido.
+     */
     partialData() {
         //? Remove os dados que estão vazios e o de ID:
         const newData = JSON.parse(JSON.stringify(this.data), (key, value) =>

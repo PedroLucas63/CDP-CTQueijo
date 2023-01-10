@@ -11,9 +11,14 @@ import { validationResult } from "express-validator";
 //* Importa o módulo de arquivos do sistema:
 import fs from "fs";
 
-//! Criação da classe de controle dos dados do produto:
+/** Classe representando os controladores do produto. */
 class ProductController {
-    //* Método de criação do produto:
+    /**
+     * Cria um produto com base no identificador enviado pelo frontend.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados criados do produto.
+     */
     async create(req, res) {
         //? Objeto JSON com o resultado:
         let result = {
@@ -102,7 +107,12 @@ class ProductController {
         return res.status(status).json(result);
     }
 
-    //* Método de visualizar um produto pelo id ou email:
+    /**
+     * Visualiza um produto com base no identificador enviado pelo frontend.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados encontrados do produto.
+     */
     async view(req, res) {
         //? Recebe o corpo da página:
         const body = req.body;
@@ -136,7 +146,12 @@ class ProductController {
         return res.status(status).json(result);
     }
 
-    //* Método de visualizar todos os produtos:
+    /**
+     * Visualiza todos os produtos.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados encontrados de todos os produtos.
+     */
     async viewAll(req, res) {
         //? Faz a requisição dos dados de todos os produtos:
         const result = await ProductService.viewAll();
@@ -154,7 +169,12 @@ class ProductController {
         return res.status(status).json(result);
     }
 
-    //* Método de atualizar um produto:
+    /**
+     * Atualiza um produto com base nos dados enviados no frontend.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados atualizados do produto.
+     */
     async update(req, res) {
         //? Objeto JSON com o resultado:
         let result = {
@@ -266,7 +286,12 @@ class ProductController {
         return res.status(status).json(result);
     }
 
-    //* Método de deletar um produto:
+    /**
+     * Deleta um produto com base no identificador enviado no frontend.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados do produto deletado.
+     */
     async delete(req, res) {
         //? Objeto JSON com o resultado:
         let result = {

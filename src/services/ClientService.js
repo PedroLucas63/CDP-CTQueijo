@@ -2,15 +2,21 @@
 //* Módulo do cliente prisma:
 import { PrismaClient } from "@prisma/client";
 
-//! Criação da classe de serviços do cliente:
+/** Classe representando os serviços do cliente. */
 class ClientService {
-    //* Construção da classe:
+    /**
+     * Cria os serviços do cliente.
+     */
     constructor() {
         //? Instânciamento do prisma:
         this.prisma = new PrismaClient();
     }
 
-    //* Método de criar um novo cliente no banco de dados:
+    /**
+     * Cria um novo cliente no banco de dados.
+     * @param {Client} client - O cliente.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (cliente criado).
+     */
     async create(client) {
         //? Objeto JSON com dados do resultado:
         let result = {
@@ -42,7 +48,11 @@ class ClientService {
         return result;
     }
 
-    //* Método de receber dados de um cliente por meio de chave unica:
+    /**
+     * Visualiza um cliente do banco de dados por meio do seu identificador.
+     * @param {number} id - O identificador do cliente.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (cliente encontrado).
+     */
     async view(id) {
         //? Objeto com o resultado da pesquisa:
         let result = {
@@ -77,7 +87,10 @@ class ClientService {
         return result;
     }
 
-    //* Método de receber dados de todos os clientes:
+    /**
+     * Visualiza todos os clientes do banco de dados.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (todos os clientes encontrados).
+     */
     async viewAll() {
         //? Objeto com o resultado da pesquisa:
         let result = {
@@ -103,7 +116,11 @@ class ClientService {
         return result;
     }
 
-    //* Método de atualizar um cliente no banco de dados:
+    /**
+     * Atualiza um cliente do banco de dados.
+     * @param {Client} client - O cliente.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (cliente atualizado).
+     */
     async update(client) {
         //? Objeto JSON com dados do resultado:
         let result = {
@@ -135,7 +152,11 @@ class ClientService {
         return result;
     }
 
-    //* Método de deletar um cliente do banco de dados:
+    /**
+     * Deleta um cliente do banco de dados por meio do seu identificador.
+     * @param {number} id - O identificador do cliente.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (cliente deletado).
+     */
     async delete(id) {
         //? Objeto com o resultado da pesquisa:
         let result = {

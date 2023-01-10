@@ -5,9 +5,11 @@ import { PrismaClient } from "@prisma/client";
 //* Módulo do bcrypt:
 import bcrypt from "bcrypt";
 
-//! Criação da classe de serviços do funcionario:
+/** Classe representando os serviços do funcionário. */
 class EmployeeService {
-    //* Construção da classe:
+    /**
+     * Cria os serviços do funcionário.
+     */
     constructor() {
         //? Instânciamento do prisma:
         this.prisma = new PrismaClient();
@@ -16,7 +18,11 @@ class EmployeeService {
         this.salts = 10;
     }
 
-    //* Método de criar um novo funcionário no banco de dados:
+    /**
+     * Cria um novo funcionário no banco de dados.
+     * @param {Employee} employee - O funcionário.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (funcionário criado).
+     */
     async create(employee) {
         //? Objeto JSON com dados do resultado:
         let result = {
@@ -57,7 +63,11 @@ class EmployeeService {
         return result;
     }
 
-    //* Método de receber dados de um funcionário por meio de chave unica:
+    /**
+     * Visualiza um funcionário do banco de dados por meio do seu identificador.
+     * @param {number} id - O identificador do funcionário.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (funcionário encontrado).
+     */
     async view(uniqueValues) {
         //? Objeto com o resultado da pesquisa:
         let result = {
@@ -92,7 +102,11 @@ class EmployeeService {
         return result;
     }
 
-    //* Método de receber dados de todos os funcionários:
+    
+    /**
+     * Visualiza todos os funcionários do banco de dados.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (todos os funcionários encontrados).
+     */
     async viewAll() {
         //? Objeto com o resultado da pesquisa:
         let result = {
@@ -118,7 +132,11 @@ class EmployeeService {
         return result;
     }
 
-    //* Método de atualizar um funcionário no banco de dados:
+    /**
+     * Atualiza um funcionário do banco de dados.
+     * @param {Employee} employee - O funcionário.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (funcionário atualizado).
+     */
     async update(employee) {
         //? Objeto JSON com dados do resultado:
         let result = {
@@ -162,7 +180,11 @@ class EmployeeService {
         return result;
     }
 
-    //* Método de deletar um funcionário do banco de dados:
+    /**
+     * Deleta um funcionário do banco de dados por meio do seu identificador.
+     * @param {number} id - O identificador do funcionário.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (funcionário deletado).
+     */
     async delete(uniqueValues) {
         //? Objeto com o resultado da pesquisa:
         let result = {

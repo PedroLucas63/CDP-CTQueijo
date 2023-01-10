@@ -10,7 +10,12 @@ import EmployeeService from "../services/EmployeeService.js";
 
 //! Criação da classe de controle dos dados do login:
 class LoginController {
-    //* Método padrão do login no servidor:
+    /**
+     * Padrão de login no servidor.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados padrão do login.
+     */
     async index(req, res) {
         //? Verifica se já tem um login ativo:
         if (req.session.user !== null && req.session.user !== undefined) {
@@ -21,7 +26,12 @@ class LoginController {
         return res.status(200).render("pages/login");
     }
 
-    //* Método de realizar login no servidor:
+    /**
+     * Realizar login no servidor.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados de realização do login.
+     */
     async login(req, res) {
         //? Recebe o corpo da página:
         const body = req.body;
@@ -63,7 +73,12 @@ class LoginController {
         return res.status(400).redirect("/login");
     }
 
-    //* Método de fazer o logout no servidor:
+    /**
+     * Faz logout no servidor.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados de logout.
+     */
     async logout(req, res) {
         //? Determina o usuário logado como vazio:
         req.session.user = null;

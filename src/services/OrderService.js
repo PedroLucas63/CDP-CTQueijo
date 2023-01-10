@@ -2,15 +2,21 @@
 //* Módulo do cliente prisma:
 import { PrismaClient } from "@prisma/client";
 
-//! Criação da classe de serviços do pedido:
+/** Classe representando os serviços do pedido. */
 class OrderService {
-    //* Construção da classe:
+    /**
+     * Cria os serviços do pedido.
+     */
     constructor() {
         //? Instânciamento do prisma:
         this.prisma = new PrismaClient();
     }
 
-    //* Método de criar um novo pedido no banco de dados:
+    /**
+     * Cria um novo pedido no banco de dados.
+     * @param {Order} order - O pedido.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (pedido criado).
+     */
     async create(order) {
         //? Objeto JSON com dados do resultado:
         let result = {
@@ -41,7 +47,11 @@ class OrderService {
         return result;
     }
 
-    //* Método de receber dados de um pedido por meio de chave unica:
+    /**
+     * Visualiza um pedido do banco de dados por meio do seu identificador.
+     * @param {number} id - O identificador do pedido.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (pedido encontrado).
+     */
     async view(id) {
         //? Objeto com o resultado da pesquisa:
         let result = {
@@ -76,7 +86,10 @@ class OrderService {
         return result;
     }
 
-    //* Método de receber dados de todos os pedidos:
+    /**
+     * Visualiza todos os pedidos do banco de dados.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (todos os pedidos encontrados).
+     */
     async viewAll() {
         //? Objeto com o resultado da pesquisa:
         let result = {
@@ -102,7 +115,11 @@ class OrderService {
         return result;
     }
 
-    //* Método de atualizar um pedido no banco de dados:
+    /**
+     * Atualiza um pedido do banco de dados.
+     * @param {Order} order - O pedido.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (pedido atualizado).
+     */
     async update(order) {
         //? Objeto JSON com dados do resultado:
         let result = {
@@ -134,7 +151,11 @@ class OrderService {
         return result;
     }
 
-    //* Método de deletar um pedido do banco de dados:
+    /**
+     * Deleta um pedido do banco de dados por meio do seu identificador.
+     * @param {number} id - O identificador do pedido.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (pedido deletado).
+     */
     async delete(id) {
         //? Objeto com o resultado da pesquisa:
         let result = {

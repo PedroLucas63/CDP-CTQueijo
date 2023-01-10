@@ -8,9 +8,14 @@ import ClientService from "../services/ClientService.js";
 //* Módulo que recebe o resultado da validação:
 import { validationResult } from "express-validator";
 
-//! Criação da classe de controle dos dados do cliente:
+/** Classe representando os controladores do cliente. */
 class ClientController {
-    //* Método de visualizar um cliente pelo id:
+    /**
+     * Visualiza um cliente com base no identificador enviado pelo frontend.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados encontrados do cliente.
+     */
     async view(req, res) {
         //? Recebe o corpo da página:
         const body = req.body;
@@ -34,7 +39,12 @@ class ClientController {
         return res.status(status).json(result);
     }
 
-    //* Método de visualizar todos os clientes:
+    /**
+     * Visualiza todos os cliente.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados encontrados de todos os clientes.
+     */
     async viewAll(req, res) {
         //? Faz a requisição dos dados de todos os clientes:
         const result = await ClientService.viewAll();
@@ -52,7 +62,12 @@ class ClientController {
         return res.status(status).json(result);
     }
 
-    //* Método de atualizar um cliente:
+    /**
+     * Atualiza um cliente com base nos dados enviados no frontend.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados atualizados do cliente.
+     */
     async update(req, res) {
         //? Objeto JSON com o resultado:
         let result = {
@@ -103,7 +118,12 @@ class ClientController {
         return res.status(status).json(result);
     }
 
-    //* Método de deletar um cliente:
+    /**
+     * Deleta um cliente com base no identificador enviado no frontend.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados do cliente deletado.
+     */
     async delete(req, res) {
         //? Objeto JSON com o resultado:
         let result = {

@@ -1,6 +1,17 @@
-//! Criação da classe de venda:
+/** Classe representando uma venda. */
 class Sale {
-    //* Método de construção da classe:
+    /**
+     * Cria uma venda.
+     * @param {number} id - O identificador.
+     * @param {dateTime} createdAt - A data de criação.
+     * @param {number} price - O preço.
+     * @param {dateTime} deliveryAt - A data de entrega.
+     * @param {number} clientId - O identificador do cliente.
+     * @param {number} addressId - O identificador do endereço.
+     * @param {string} situation - A situação.
+     * @param {string} message - A mensagem.
+     * @param {string} orders - O pedido.
+     */
     constructor(
         id = null,
         createdAt = null,
@@ -12,6 +23,7 @@ class Sale {
         message = null,
         orders = null
     ) {
+        //? Define os dados da venda:
         this.data = {
             id: id,
             createdAt: createdAt,
@@ -27,93 +39,139 @@ class Sale {
 
     //* Métodos Set:
 
-    //? Método de definir a data que a venda foi solicitada:
+    /**
+     * Define a data que a venda foi solicitada.
+     */
     set createdAt(createdAt) {
         this.data.createdAt = createdAt;
     }
 
-    //? Método de definir o preço:
+    /**
+     * Define o preço da venda.
+     */
     set price(price) {
         this.data.price = price;
     }
 
-    //? Método de definir a data de entrega da venda:
+    /**
+     * Define a data de entrega da venda.
+     */
     set deliveryAt(deliveryAt) {
         this.data.deliveryAt = deliveryAt;
     }
 
-    //? Método de definir o identificador do cliente:
+    /**
+     * Define o identificador do cliente.
+     */
     set clientId(clientId) {
         this.data.clientId = clientId;
     }
 
-    //? Método de definir o identificador do endereço:
+    /**
+     * Define o identificador do endereço.
+     */
     set addressId(addressId) {
         this.data.addressId = addressId;
     }
 
-    //? Método de definir a situação da venda:
+    /**
+     * Define a situação da venda.
+     */
     set situation(situation) {
         this.data.situation = situation;
     }
 
-    //? Método de definir a mensagem da venda:
+    /**
+     * Define a mensagem da venda.
+     */
     set message(message) {
         this.data.situation = message;
     }
 
-    //? Método de definir os pedidos da venda:
+    /**
+     * Define os pedidos da venda.
+     */
     set orders(orders) {
         this.data.orders = { create: orders };
     }
 
     //* Métodos Get:
-    //? Método de receber o id:
+    /**
+     * Pega o identificador.
+     * @return {number} O identificador.
+     */
     get id() {
         return this.data.id;
     }
 
-    //? Método de receber a data que a venda foi solicitada:
+    /**
+     * Pega a data que a venda foi solicitada.
+     * @return {dateTime} A data de solicitação.
+     */
     get createdAt() {
         return this.data.createdAt;
     }
 
-    //? Método de receber o preço:
+    /**
+     * Pega o preço.
+     * @return {number} O preço.
+     */
     get price() {
         return this.data.price;
     }
 
-    //? Método de receber a data de entrega da venda:
+    /**
+     * Pega a data de entrega da venda.
+     * @return {dateTime} A data de entrega.
+     */
     get deliveryAt() {
         return this.data.deliveryAt;
     }
 
-    //? Método de receber o identificador do cliente:
+    /**
+     * Pega o identificador do cliente.
+     * @return {number} O identificador do cliente.
+     */
     get clientId() {
         return this.data.clientId;
     }
 
-    //? Método de receber o identificador do endereço:
+    /**
+     * Pega o identificador do endereço.
+     * @return {number} O identificador do endereço.
+     */
     get addressId() {
         return this.data.addressId;
     }
 
-    //? Método de receber a situação da venda:
+    /**
+     * Pega a situação da venda.
+     * @return {string} A situação.
+     */
     get situation() {
         return this.data.situation;
     }
 
-    //? Método de receber a mensagem da venda:
+    /**
+     * Pega a mensagem da venda.
+     * @return {string} A mensagem da venda.
+     */
     get message() {
         return this.data.message;
     }
 
-    //? Método de receber os pedidos da venda:
+    /**
+     * Pega os pedidos.
+     * @return {string} Os pedidos.
+     */
     get orders() {
         return this.data.orders;
     }
 
-    //* Método de receber os dados não vazios:
+    /**
+     * Pega os dados não vazios da venda.
+     * @return {json} Os dados não vazios da venda.
+     */
     partialData() {
         //? Remove os dados que estão vazios e o de ID:
         const newData = JSON.parse(JSON.stringify(this.data), (key, value) =>

@@ -2,7 +2,7 @@
 //* Importação da função de procura dos serviços do funcionário:
 import EmployeeService from "../services/EmployeeService.js";
 
-//! Função mediadora de verificar se o funcionário está logado:
+/** Função mediadora que verifica se o funcionário está logado. */
 async function AuthMiddleware(req, res, next) {
     //* Verifica se o funcionário se encontra logado:
     if (req.session.user !== null && req.session.user !== undefined) {

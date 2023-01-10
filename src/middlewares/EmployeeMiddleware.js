@@ -5,14 +5,19 @@ import { body } from "express-validator";
 //* Módulo de serviço dos funcionários:
 import EmployeeService from "../services/EmployeeService.js";
 
-//! Criação da classe mediadora dos funcionários:
+/** Classe representando os mediadores do funcionário. */
 class EmployeeMiddleware {
-    //* Método de construção:
+    /**
+     * Cria os dados do funcionário encontrado e existente.
+     */
     constructor() {
         //? Definição da lista de funções
         this.roleList = ["Gerente", "Fabricante", "Bolsista", "Entregador"];
     }
-    //* Método de validar os dados de criação:
+    /**
+     * Cria as validações dos campos da criação de um funcionário.
+     * @return {json} O resultado da validação dos dados passados.
+     */
     create() {
         //? Constante com a validação dos campos:
         const create = [
@@ -46,7 +51,10 @@ class EmployeeMiddleware {
         return create;
     }
 
-    //* Método de validar os dados de atualização:
+    /**
+     * Cria as validações dos campos da atualização de um funcionário.
+     * @return {json} O resultado da validação dos dados passados.
+     */
     update() {
         //? Constante com a validação dos campos:
         const update = [
@@ -96,7 +104,10 @@ class EmployeeMiddleware {
         return update;
     }
 
-    //* Método de validar os dados de remoção:
+    /**
+     * Cria as validações dos campos da deletação de um funcionário.
+     * @return {json} O resultado da validação dos dados passados.
+     */
     delete() {
         //? Constante com a validação dos campos:
         const remove = [

@@ -11,9 +11,12 @@ import ProductService from "../services/ProductService.js";
 //* Módulo de verificar se uma cadeira de caracteres é um número:
 import isNumber from "../utils/NumberUtils.js";
 
-//! Criação da classe mediadora dos pedidos:
+/** Classe representando os mediadores do pedido. */
 class OrderMiddleware {
-    //* Método de validar os dados de criação:
+    /**
+     * Cria as validações dos campos da criação de um pedido.
+     * @return {json} O resultado da validação dos dados passados.
+     */
     create() {
         //? Constante com a validação dos campos:
         const create = [
@@ -46,7 +49,10 @@ class OrderMiddleware {
         return create;
     }
 
-    //* Método de validar os dados de atualização:
+    /**
+     * Cria as validações dos campos da atualização de um pedido.
+     * @return {json} O resultado da validação dos dados passados.
+     */
     update() {
         //? Constante com a validação dos campos:
         const update = [
@@ -72,7 +78,10 @@ class OrderMiddleware {
         return update;
     }
 
-    //* Método de validar os dados de remoção:
+    /**
+     * Cria as validações dos campos da deletação de um pedido.
+     * @return {json} O resultado da validação dos dados passados.
+     */
     delete() {
         //? Constante com a validação dos campos:
         const remove = [

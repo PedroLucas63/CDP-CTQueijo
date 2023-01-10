@@ -11,9 +11,12 @@ import ClientService from "../services/ClientService.js";
 //* Módulo de serviço dos endereços:
 import AddressService from "../services/AddressService.js";
 
-//! Criação da classe mediadora das vendas:
+/** Classe representando os mediadores da venda. */
 class SaleMiddleware {
-    //* Método de validar os dados de criação:
+    /**
+     * Cria as validações dos campos da criação de uma venda.
+     * @return {json} O resultado da validação dos dados passados.
+     */
     create() {
         //? Constante com a validação dos campos:
         const create = [
@@ -26,7 +29,10 @@ class SaleMiddleware {
         return create;
     }
 
-    //* Método de validar os dados de atualização:
+    /**
+     * Cria as validações dos campos da atualização de uma venda.
+     * @return {json} O resultado da validação dos dados passados.
+     */
     update() {
         //? Constante com a validação dos campos:
         const update = [
@@ -52,7 +58,10 @@ class SaleMiddleware {
         return update;
     }
 
-    //* Método de validar os dados de remoção:
+    /**
+     * Cria as validações dos campos da deletação de uma venda.
+     * @return {json} O resultado da validação dos dados passados.
+     */
     delete() {
         //? Constante com a validação dos campos:
         const remove = [

@@ -2,15 +2,21 @@
 //* Módulo do cliente prisma:
 import { PrismaClient } from "@prisma/client";
 
-//! Criação da classe de serviços do funcionario:
+/** Classe representando os serviços do produto. */
 class ProductService {
-    //* Construção da classe:
+    /**
+     * Cria os serviços do produto.
+     */
     constructor() {
         //? Instânciamento do prisma:
         this.prisma = new PrismaClient();
     }
 
-    //* Método de criar um novo produto no banco de dados:
+    /**
+     * Cria um novo produto no banco de dados.
+     * @param {Product} product - O produto.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (produto criado).
+     */
     async create(product) {
         //? Objeto JSON com dados do resultado:
         let result = {
@@ -48,7 +54,11 @@ class ProductService {
         return result;
     }
 
-    //* Método de receber dados de um produto por meio de chave unica:
+    /**
+     * Visualiza um produto do banco de dados por meio do seu identificador.
+     * @param {number} id - O identificador do produto.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (produto encontrado).
+     */
     async view(uniqueValues) {
         //? Objeto com o resultado da pesquisa:
         let result = {
@@ -83,7 +93,10 @@ class ProductService {
         return result;
     }
 
-    //* Método de receber dados de todos os produtos:
+    /**
+     * Visualiza todos os produtos do banco de dados.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (todos os produtos encontrados).
+     */
     async viewAll() {
         //? Objeto com o resultado da pesquisa:
         let result = {
@@ -109,7 +122,11 @@ class ProductService {
         return result;
     }
 
-    //* Método de atualizar um produto no banco de dados:
+    /**
+     * Atualiza um produto do banco de dados.
+     * @param {Product} product - O produto.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (produto atualizado).
+     */
     async update(product) {
         //? Objeto JSON com dados do resultado:
         let result = {
@@ -148,7 +165,11 @@ class ProductService {
         return result;
     }
 
-    //* Método de deletar um produto do banco de dados:
+    /**
+     * Deleta um produto do banco de dados por meio do seu identificador.
+     * @param {number} id - O identificador do produto.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (produto deletado).
+     */
     async delete(id) {
         //? Objeto com o resultado da pesquisa:
         let result = {

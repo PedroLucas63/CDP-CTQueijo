@@ -8,14 +8,19 @@ import { cnpj } from "cpf-cnpj-validator";
 //* Módulo de serviço dos clientes:
 import ClientService from "../services/ClientService.js";
 
-//! Criação da classe mediadora dos clientes:
+/** Classe representando os mediadores do cliente. */
 class ClientMiddleware {
-    //* Método de construção da classe:
+    /**
+     * Cria os dados do cliente encontrado e existente.
+     */
     constructor() {
         //? Definição dos tipos:
         this.types = ["Instituição Pública", "Instituição Privada", "ONG"];
     }
-    //* Método de validar os dados de criação:
+    /**
+     * Cria as validações dos campos da criação de um cliente.
+     * @return {json} O resultado da validação dos dados passados.
+     */
     create() {
         //? Constante com a validação dos campos:
         const create = [
@@ -44,7 +49,10 @@ class ClientMiddleware {
         return create;
     }
 
-    //* Método de validar os dados de atualização:
+    /**
+     * Cria as validações dos campos da atualização de um cliente.
+     * @return {json} O resultado da validação dos dados passados.
+     */
     update() {
         //? Constante com a validação dos campos:
         const update = [
@@ -90,7 +98,10 @@ class ClientMiddleware {
         return update;
     }
 
-    //* Método de validar os dados de remoção:
+    /**
+     * Cria as validações dos campos da deletação de um cliente.
+     * @return {json} O resultado da validação dos dados passados.
+     */
     delete() {
         //? Constante com a validação dos campos:
         const remove = [
