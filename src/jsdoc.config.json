@@ -1,0 +1,12 @@
+{
+  "source": {
+    "include": [
+      "."
+    ],
+    "excludePattern": "node_modules"
+  },
+  "opts": {
+    "destination": "../docs/",
+    "encoding": "utf8"
+  }
+}
