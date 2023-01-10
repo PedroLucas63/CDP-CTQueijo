@@ -35,6 +35,42 @@ class ProductController {
             return res.status(400).json(result);
         }
 
+        //? Recebe os arquivos enviados:
+        const files = req.files;
+
+        //? Determina o local de upload:
+        let localImage = "";
+
+        //? Verifica se foi enviado um arquivo com o name de image:
+        if (files.image) {
+            // Cria um array com os tipos de arquivos suportados:
+            const mimetypes = ["image/jpeg", "image/png"];
+
+            // Verifica se o arquivo enviado é uma imagem no formato aceito:
+            if (mimetypes.indexOf(files.image.mimetype) !== -1) {
+                // Define a imagem e o local:
+                const image = files.image;
+                const localFile =
+                    "./public/assets/products/" + Date.now() + image.name;
+
+                // Faz o upload da imagem:
+                image.mv(localFile, function (e) {
+                    // Verifica se aconteceu um erro:
+                    if (e) {
+                        // Define a mensagem e o erro:
+                        result.message = "Falha no upload da imagem";
+                        result.error = 17;
+
+                        // Retorna o resultado com o status de falha:
+                        return res.status(400).json(result);
+                    }
+                });
+
+                // Determina o local da imagem:
+                localImage = localFile.replace("./public", "");
+            }
+        }
+
         //? Recebe o corpo da página:
         const body = req.body;
 
@@ -44,7 +80,11 @@ class ProductController {
         //? Recebimento dos dados:
         product.name = body.name.trim();
         product.price = Number(body.price);
-        product.image = "/assets/products/default.png";
+        if (localImage === "") {
+            product.image = "/assets/products/default.png";
+        } else {
+            product.image = localImage;
+        }
 
         //? Cria o produto e verifica as mensagens do serviço:
         result = await ProductService.create(product);
