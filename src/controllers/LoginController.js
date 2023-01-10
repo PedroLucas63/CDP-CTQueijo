@@ -63,7 +63,7 @@ class LoginController {
         //? Verifica se as senhas são iguais:
         if (bcrypt.compareSync(password, employee.password)) {
             // Salva o login na sessão:
-            req.session.user = employee.id;
+            req.session.user = employee.partialData();
 
             // Retorna o resultado com o sucesso:
             return res.status(200).redirect("/dashboard");

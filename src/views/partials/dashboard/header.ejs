@@ -4,9 +4,9 @@
         <div class="flex justify-between items-center w-full h-14 bg-gray-900 header-right">
             <div class="flex justify-start items-center pl-3 w-14 h-14 bg-gray-900 border-none md:justify-center md:w-64">
                 <img class="overflow-hidden mr-2 w-7 h-7 rounded-full md:w-10 md:h-10"
-                    src="https://therminic2018.eu/wp-content/uploads/2018/07/dummy-avatar.jpg"
+                    src="<%= user.image %>"
                     />
-                <span class="hidden md:block">Admin</span>
+                <span class="hidden md:block"><%= user.name %></span>
             </div>
             <ul class="flex items-center">
                 <li>
