@@ -5,12 +5,6 @@ import { body } from "express-validator";
 //* Módulo de serviço das vendas:
 import SaleService from "../services/SaleService.js";
 
-//* Módulo de serviço dos produtos:
-import ClientService from "../services/ClientService.js";
-
-//* Módulo de serviço dos endereços:
-import AddressService from "../services/AddressService.js";
-
 /** Classe representando os mediadores da venda. */
 class SaleMiddleware {
     /**
