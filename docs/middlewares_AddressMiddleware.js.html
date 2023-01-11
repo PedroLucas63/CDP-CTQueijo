@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: middlewares/AddressMiddleware.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: middlewares/AddressMiddleware.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//! Importação dos módulos:
+//* Módulo de receber informações do corpo:
+import { body, Result } from "express-validator";
+
+//* Módulo de serviço dos endereços:
+import AddressService from "../services/AddressService.js";
+
+//* Módulo de pesquisa por CEP:
+import cepSearch from "../utils/AddressUtils.js";
+
+/** Classe representando os mediadores do endereço. */
+class AddressMiddleware {
+    /**
+     * Cria os dados do endereço encontrado e existente.
+     */
+    constructor() {
+        this.data = {
+            cep: "",
+            state: "",
+            city: "",
+            neighborhood: "",
+            street: "",
+            number: 0,
+        };
+
+        this.address = {
+            cep: "",
+            state: "",
+            city: "",
+            neighborhood: "",
+            street: "",
+            number: 0,
+        };
+    }
+
+    /**
+     * Cria as validações dos campos da criação de um endereço.
+     * @return {json} O resultado da validação dos dados passados.
+     */
+    create() {
+        //? Constante com a validação dos campos:
+        const create = [
+            body("cep")
+                .trim()
+                .isLength(9)
+                .isPostalCode("BR")
+                .custom(async (value) => {
+                    let searchAddress = await cepSearch(value);
+                    let data = searchAddress.data;
+                    this.address = data;
+                    return data.cep !== undefined;
+                })
+                .withMessage("CEP inválido"),
+            body("uf")
+                .toUpperCase()
+                .trim()
+                .isLength(2)
+                .custom((value) => {
+                    return this.address.state === value;
+                })
+                .withMessage("Unidade federativa inválida"),
+            body("city")
+                .trim()
+                .notEmpty()
+                .isLength({ min: 3, max: 30 })
+                .custom((value) => {
+                    return this.address.city === value;
+                })
+                .withMessage("Cidade inválida"),
+            body("neighborhood")
+                .trim()
+                .notEmpty()
+                .isLength({ min: 3, max: 50 })
+                .custom((value) => {
+                    if (this.address.neighborhood) {
+                        return this.address.neighborhood === value;
+                    }
+                    return true;
+                })
+                .withMessage("Bairro inválido"),
+            body("street")
+                .trim()
+                .notEmpty()
+                .isLength({ min: 3, max: 50 })
+                .custom((value) => {
+                    if (this.address.street) {
+                        return this.address.street === value;
+                    }
+                    return true;
+                })
+                .withMessage("Logradouro inválido"),
+            body("number")
+                .if(body("number").notEmpty())
+                .isInt()
+                .withMessage("Número inválido"),
+        ];
+
+        //* Retorno da constante de validação:
+        return create;
+    }
+
+    /**
+     * Cria as validações dos campos da atualização de um endereço.
+     * @return {json} O resultado da validação dos dados passados.
+     */ update() {
+        //? Constante com a validação dos campos:
+        const update = [
+            body("id").custom(async (value) => {
+                let result = await AddressService.view(Number(value));
+
+                if (result.error !== 0) {
+                    throw new Error("Identificador desconhecido");
+                }
+
+                this.data = result.data;
+            }),
+            body("cep")
+                .custom((value) => {
+                    return value !== "" || this.data.cep !== undefined;
+                })
+                .trim()
+                .isLength(9)
+                .isPostalCode("BR")
+                .custom(async (value) => {
+                    let searchAddress = await cepSearch(value);
+                    let data = searchAddress.data;
+                    this.address = data;
+                    return data.cep !== undefined;
+                })
+                .withMessage("CEP inválido"),
+            body("uf")
+                .custom((value) => {
+                    return value !== "" || this.data.state !== undefined;
+                })
+                .toUpperCase()
+                .trim()
+                .isLength(2)
+                .custom((value) => {
+                    return this.address.state === value;
+                })
+                .withMessage("Unidade federativa inválida"),
+            body("city")
+                .custom((value) => {
+                    return value !== "" || this.data.city !== undefined;
+                })
+                .trim()
+                .notEmpty()
+                .isLength({ min: 3, max: 30 })
+                .custom((value) => {
+                    return this.address.city === value;
+                })
+                .withMessage("Cidade inválida"),
+            body("neighborhood")
+                .custom((value) => {
+                    return (
+                        value !== "" ||
+                        (this.data.neighborhood !== undefined &amp;&amp;
+                            this.data.neighborhood !== "")
+                    );
+                })
+                .trim()
+                .notEmpty()
+                .isLength({ min: 3, max: 50 })
+                .custom((value) => {
+                    if (this.address.neighborhood) {
+                        return this.address.neighborhood === value;
+                    }
+                    return true;
+                })
+                .withMessage("Bairro inválido"),
+            body("street")
+                .custom((value) => {
+                    return (
+                        value !== "" ||
+                        (this.data.street !== undefined &amp;&amp;
+                            this.data.street !== "")
+                    );
+                })
+                .trim()
+                .notEmpty()
+                .isLength({ min: 3, max: 50 })
+                .custom((value) => {
+                    if (this.address.street) {
+                        return this.address.street === value;
+                    }
+                    return true;
+                })
+                .withMessage("Logradouro inválido"),
+            body("number")
+                .if(body("number").notEmpty())
+                .isInt()
+                .withMessage("Número inválido"),
+        ];
+
+        //* Retorno da constante de validação:
+        return update;
+    }
+
+    /**
+     * Cria as validações dos campos da deletação de um endereço.
+     * @return {json} O resultado da validação dos dados passados.
+     */ delete() {
+        //? Constante com a validação dos campos:
+        const remove = [
+            body("id").custom(async (value, { req }) => {
+                let result = await AddressService.view(Number(value));
+                if (result.error !== 0) {
+                    throw new Error("Identificador desconhecido");
+                }
+            }),
+        ];
+
+        //* Retorno da constante de validação:
+        return remove;
+    }
+}
+
+//* Exportação da classe instânciada:
+export default new AddressMiddleware();
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Address.html">Address</a></li><li><a href="AddressController.html">AddressController</a></li><li><a href="AddressMiddleware.html">AddressMiddleware</a></li><li><a href="AddressService.html">AddressService</a></li><li><a href="Client.html">Client</a></li><li><a href="ClientController.html">ClientController</a></li><li><a href="ClientMiddleware.html">ClientMiddleware</a></li><li><a href="ClientService.html">ClientService</a></li><li><a href="Employee.html">Employee</a></li><li><a href="EmployeeController.html">EmployeeController</a></li><li><a href="EmployeeMiddleware.html">EmployeeMiddleware</a></li><li><a href="EmployeeService.html">EmployeeService</a></li><li><a href="Order.html">Order</a></li><li><a href="OrderController.html">OrderController</a></li><li><a href="OrderMiddleware.html">OrderMiddleware</a></li><li><a href="OrderService.html">OrderService</a></li><li><a href="Product.html">Product</a></li><li><a href="ProductController.html">ProductController</a></li><li><a href="ProductMiddleware.html">ProductMiddleware</a></li><li><a href="ProductService.html">ProductService</a></li><li><a href="Sale.html">Sale</a></li><li><a href="SaleController.html">SaleController</a></li><li><a href="SaleMiddleware.html">SaleMiddleware</a></li><li><a href="SaleService.html">SaleService</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AuthMiddleware">AuthMiddleware</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Wed Jan 11 2023 18:44:15 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

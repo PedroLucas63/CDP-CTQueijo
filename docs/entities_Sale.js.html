@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: entities/Sale.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: entities/Sale.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** Classe representando uma venda. */
+class Sale {
+    /**
+     * Cria uma venda.
+     * @param {number} id - O identificador.
+     * @param {dateTime} createdAt - A data de criação.
+     * @param {number} price - O preço.
+     * @param {dateTime} deliveryAt - A data de entrega.
+     * @param {number} clientId - O identificador do cliente.
+     * @param {number} addressId - O identificador do endereço.
+     * @param {string} situation - A situação.
+     * @param {string} message - A mensagem.
+     * @param {string} orders - O pedido.
+     */
+    constructor(
+        id = null,
+        createdAt = null,
+        price = null,
+        deliveryAt = null,
+        clientId = null,
+        addressId = null,
+        situation = null,
+        message = null,
+        orders = null
+    ) {
+        //? Define os dados da venda:
+        this.data = {
+            id: id,
+            createdAt: createdAt,
+            price: price,
+            deliveryAt: deliveryAt,
+            clientId: clientId,
+            addressId: addressId,
+            situation: situation,
+            message: message,
+            orders: orders,
+        };
+    }
+
+    //* Métodos Set:
+
+    /**
+     * Define a data que a venda foi solicitada.
+     */
+    set createdAt(createdAt) {
+        this.data.createdAt = createdAt;
+    }
+
+    /**
+     * Define o preço da venda.
+     */
+    set price(price) {
+        this.data.price = price;
+    }
+
+    /**
+     * Define a data de entrega da venda.
+     */
+    set deliveryAt(deliveryAt) {
+        this.data.deliveryAt = deliveryAt;
+    }
+
+    /**
+     * Define o identificador do cliente.
+     */
+    set clientId(clientId) {
+        this.data.clientId = clientId;
+    }
+
+    /**
+     * Define o identificador do endereço.
+     */
+    set addressId(addressId) {
+        this.data.addressId = addressId;
+    }
+
+    /**
+     * Define a situação da venda.
+     */
+    set situation(situation) {
+        this.data.situation = situation;
+    }
+
+    /**
+     * Define a mensagem da venda.
+     */
+    set message(message) {
+        this.data.situation = message;
+    }
+
+    /**
+     * Define os pedidos da venda.
+     */
+    set orders(orders) {
+        this.data.orders = { create: orders };
+    }
+
+    //* Métodos Get:
+    /**
+     * Pega o identificador.
+     * @return {number} O identificador.
+     */
+    get id() {
+        return this.data.id;
+    }
+
+    /**
+     * Pega a data que a venda foi solicitada.
+     * @return {dateTime} A data de solicitação.
+     */
+    get createdAt() {
+        return this.data.createdAt;
+    }
+
+    /**
+     * Pega o preço.
+     * @return {number} O preço.
+     */
+    get price() {
+        return this.data.price;
+    }
+
+    /**
+     * Pega a data de entrega da venda.
+     * @return {dateTime} A data de entrega.
+     */
+    get deliveryAt() {
+        return this.data.deliveryAt;
+    }
+
+    /**
+     * Pega o identificador do cliente.
+     * @return {number} O identificador do cliente.
+     */
+    get clientId() {
+        return this.data.clientId;
+    }
+
+    /**
+     * Pega o identificador do endereço.
+     * @return {number} O identificador do endereço.
+     */
+    get addressId() {
+        return this.data.addressId;
+    }
+
+    /**
+     * Pega a situação da venda.
+     * @return {string} A situação.
+     */
+    get situation() {
+        return this.data.situation;
+    }
+
+    /**
+     * Pega a mensagem da venda.
+     * @return {string} A mensagem da venda.
+     */
+    get message() {
+        return this.data.message;
+    }
+
+    /**
+     * Pega os pedidos.
+     * @return {string} Os pedidos.
+     */
+    get orders() {
+        return this.data.orders;
+    }
+
+    /**
+     * Pega os dados não vazios da venda.
+     * @return {json} Os dados não vazios da venda.
+     */
+    partialData() {
+        //? Remove os dados que estão vazios e o de ID:
+        const newData = JSON.parse(JSON.stringify(this.data), (key, value) =>
+            value === null || value === undefined || value === "" || value === 0
+                ? undefined
+                : value
+        );
+
+        //? Retorna os dados:
+        return newData;
+    }
+}
+
+//! Exportação da classe:
+export default Sale;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Address.html">Address</a></li><li><a href="AddressController.html">AddressController</a></li><li><a href="AddressMiddleware.html">AddressMiddleware</a></li><li><a href="AddressService.html">AddressService</a></li><li><a href="Client.html">Client</a></li><li><a href="ClientController.html">ClientController</a></li><li><a href="ClientMiddleware.html">ClientMiddleware</a></li><li><a href="ClientService.html">ClientService</a></li><li><a href="Employee.html">Employee</a></li><li><a href="EmployeeController.html">EmployeeController</a></li><li><a href="EmployeeMiddleware.html">EmployeeMiddleware</a></li><li><a href="EmployeeService.html">EmployeeService</a></li><li><a href="Order.html">Order</a></li><li><a href="OrderController.html">OrderController</a></li><li><a href="OrderMiddleware.html">OrderMiddleware</a></li><li><a href="OrderService.html">OrderService</a></li><li><a href="Product.html">Product</a></li><li><a href="ProductController.html">ProductController</a></li><li><a href="ProductMiddleware.html">ProductMiddleware</a></li><li><a href="ProductService.html">ProductService</a></li><li><a href="Sale.html">Sale</a></li><li><a href="SaleController.html">SaleController</a></li><li><a href="SaleMiddleware.html">SaleMiddleware</a></li><li><a href="SaleService.html">SaleService</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AuthMiddleware">AuthMiddleware</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Wed Jan 11 2023 18:44:15 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
