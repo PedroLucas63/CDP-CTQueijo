@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: controllers/EmployeeController.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: controllers/EmployeeController.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//! Importação dos módulos:
+//* Módulo base do funcionário:
+import Employee from "../entities/Employee.js";
+
+//* Módulo de serviço do funcionário:
+import EmployeeService from "../services/EmployeeService.js";
+
+//* Módulo que recebe o resultado da validação:
+import { validationResult } from "express-validator";
+
+//* Importa o módulo de arquivos do sistema:
+import fs from "fs";
+
+/** Classe representando os controladores do funcionário. */
+class EmployeeController {
+    /**
+     * Cria um funcionário com base no identificador enviado pelo frontend.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados criados do funcionário.
+     */
+    async create(req, res) {
+        //? Objeto JSON com o resultado:
+        let result = {
+            message: null,
+            error: null,
+            data: null,
+        };
+
+        //? Recebe o resultado da validação do express:
+        const errors = validationResult(req);
+
+        //? Verifica se ocorreram erros na validação:
+        if (!errors.isEmpty()) {
+            // Define uma mensagem e um erro:
+            result.message = "Erro nos dados passados";
+            result.error = errors.array();
+
+            // Retorna o resultado com o status de falha:
+            return res.status(400).json(result);
+        }
+
+        //? Recebe o corpo da página:
+        const body = req.body;
+
+        //? Cria o funcionário:
+        let employee = new Employee();
+
+        //? Recebimento dos dados:
+        employee.name = `${body.firstName} ${body.lastName}`.trim();
+        employee.email = body.email;
+        employee.password = body.password;
+        employee.role = body.role;
+        employee.image = "/assets/profiles/default.png";
+
+        //? Cria o funcionário e verifica as mensagens do serviço:
+        result = await EmployeeService.create(employee);
+
+        //? Define o status como sucesso na criação:
+        let status = 201;
+
+        //? Verifica se o funcionário não foi criado:
+        if (result.error !== 0) {
+            // Modifica o status para conflito com recursos no servidor:
+            status = 409;
+        }
+
+        //? Retorna o resultado:
+        return res.status(status).json(result);
+    }
+
+    /**
+     * Visualiza um funcionário com base no identificador enviado pelo frontend.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados encontrados do funcionário.
+     */
+    async view(req, res) {
+        //? Recebe o corpo da página:
+        const body = req.body;
+
+        //? Recebimento dos dados em um JSON:
+        const values = {
+            id: Number(body.id),
+            email: body.email,
+        };
+
+        //? Gera o JSON que possui valores que foram definidos:
+        const uniqueValues = JSON.parse(JSON.stringify(values), (key, value) =>
+            value === undefined || value === "" || value === 0
+                ? undefined
+                : value
+        );
+
+        //? Faz o pedido do resultado da pesquisa:
+        const result = await EmployeeService.view(uniqueValues);
+
+        //? Define o status como sucesso:
+        let status = 200;
+
+        //? Verifica se o funcionário não foi encontrado:
+        if (result.error !== 0) {
+            // Modifica o status para conflito com recursos no servidor:
+            status = 409;
+        }
+
+        //? Retorna o resultado:
+        return res.status(status).json(result);
+    }
+
+    /**
+     * Visualiza todos os funcionários.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados encontrados de todos os funcionários.
+     */
+    async viewAll(req, res) {
+        //? Faz a requisição dos dados de todos os funcionários:
+        const result = await EmployeeService.viewAll();
+
+        //? Define o status como sucesso:
+        let status = 200;
+
+        //? Verifica se os funcionários não foram encontrados:
+        if (result.error !== 0) {
+            // Modifica o status para conflito com recursos no servidor:
+            status = 409;
+        }
+
+        //? Retorna o resultado:
+        return res.status(status).json(result);
+    }
+
+    /**
+     * Atualiza um funcionário com base nos dados enviados no frontend.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados atualizados do funcionário.
+     */
+    async update(req, res) {
+        //? Objeto JSON com o resultado:
+        let result = {
+            message: null,
+            error: null,
+            data: null,
+        };
+
+        //? Recebe o resultado da validação do express:
+        const errors = validationResult(req);
+
+        //? Verifica se ocorreram erros na validação:
+        if (!errors.isEmpty()) {
+            // Define uma mensagem e um erro:
+            result.message = "Erro nos dados passados";
+            result.error = errors.array();
+
+            // Retorna o resultado com o status de falha:
+            return res.status(400).json(result);
+        }
+
+        //? Recebe os arquivos enviados:
+        const files = req.files;
+
+        //? Determina o local de upload:
+        let localImage = "";
+
+        //? Verifica se foi enviado um arquivo com o name de image:
+        if (files.image) {
+            // Cria um array com os tipos de arquivos suportados:
+            const mimetypes = ["image/jpeg", "image/png"];
+
+            // Verifica se o arquivo enviado é uma imagem no formato aceito:
+            if (mimetypes.indexOf(files.image.mimetype) !== -1) {
+                // Define a imagem e o local:
+                const image = files.image;
+                const localFile =
+                    "./public/assets/profiles/" + Date.now() + image.name;
+
+                // Faz o upload da imagem:
+                image.mv(localFile, function (e) {
+                    // Verifica se aconteceu um erro:
+                    if (e) {
+                        // Define a mensagem e o erro:
+                        result.message = "Falha no upload da imagem";
+                        result.error = 17;
+
+                        // Retorna o resultado com o status de falha:
+                        return res.status(400).json(result);
+                    }
+                });
+
+                // Determina o local da imagem:
+                localImage = localFile.replace("./public", "");
+
+                // Recebe os dados  do usuário:
+                const { data } = await EmployeeService.view({
+                    id: Number(req.body.id),
+                });
+
+                // Recebe o local da imagem salva:
+                let imageSaved = data.image;
+
+                // Verifica se não é a imagem padrão:
+                if (imageSaved !== "/assets/profiles/default.png") {
+                    // Edita o nome da imagem
+                    imageSaved = imageSaved.replace("/", "./public/");
+
+                    // Executa a função de deletar a imagem:
+                    fs.unlink(imageSaved, (e) => {
+                        // Verifica se aconteceu um erro:
+                        if (e) {
+                            // Define a mensagem e o erro:
+                            result.message = "Erro em deletar a imagem antiga";
+                            result.error = 16;
+
+                            // Retorna o resultado com o status de falha:
+                            return res.status(400).json(result);
+                        }
+                    });
+                }
+            }
+        }
+
+        //? Recebe o corpo da página:
+        const body = req.body;
+
+        //? Cria o funcionário com os dados:
+        let employee = new Employee(
+            Number(body.id),
+            `${body.firstName} ${body.lastName}`.trim(),
+            body.email,
+            body.password,
+            body.role,
+            localImage
+        );
+
+        //? Atualiza o funcionário e verifica as mensagens do serviço:
+        result = await EmployeeService.update(employee);
+
+        //? Define o status como sucesso na atualização:
+        let status = 201;
+
+        //? Verifica se o funcionário não foi editado:
+        if (result.error !== 0) {
+            // Modifica o status para conflito com recursos no servidor:
+            status = 409;
+        }
+
+        //? Retorna o resultado:
+        return res.status(status).json(result);
+    }
+
+    /**
+     * Deleta um funcionário com base no identificador enviado no frontend.
+     * @param {*} req - Os requisitos enviados pela página.
+     * @param {*} res - A resposta enviada pelo controlador.
+     * @return {page} A página com os dados do funcionário deletado.
+     */
+    async delete(req, res) {
+        //? Objeto JSON com o resultado:
+        let result = {
+            message: null,
+            error: null,
+            data: null,
+        };
+
+        //? Recebe o resultado da validação do express:
+        const errors = validationResult(req);
+
+        //? Verifica se ocorreram erros na validação:
+        if (!errors.isEmpty()) {
+            // Define uma mensagem e um erro:
+            result.message = "Erro nos dados passados";
+            result.error = errors.array();
+
+            // Retorna o resultado com o status de falha:
+            return res.status(400).json(result);
+        }
+
+        //? Recebe o corpo da página:
+        const body = req.body;
+
+        //? Recebe o identificador do usuário e o nome para o e-mail para verificação:
+        const id = Number(body.id);
+        const email = body.email;
+
+        //? Se tiver encontrado, remove o funcionário:
+        result = await EmployeeService.delete({ id: id, email: email });
+
+        //? Define o status como sucesso na remoção:
+        let status = 201;
+
+        //? Verifica se o funcionário não foi deletado:
+        if (result.error !== 0) {
+            // Modifica o status para conflito com recursos no servidor:
+            status = 409;
+        }
+
+        //? Retorna o resultado:
+        return res.status(status).json(result);
+    }
+}
+
+//! Exporta o controlador dos funcionários:
+export default new EmployeeController();
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Address.html">Address</a></li><li><a href="AddressController.html">AddressController</a></li><li><a href="AddressMiddleware.html">AddressMiddleware</a></li><li><a href="AddressService.html">AddressService</a></li><li><a href="Client.html">Client</a></li><li><a href="ClientController.html">ClientController</a></li><li><a href="ClientMiddleware.html">ClientMiddleware</a></li><li><a href="ClientService.html">ClientService</a></li><li><a href="Employee.html">Employee</a></li><li><a href="EmployeeController.html">EmployeeController</a></li><li><a href="EmployeeMiddleware.html">EmployeeMiddleware</a></li><li><a href="EmployeeService.html">EmployeeService</a></li><li><a href="Order.html">Order</a></li><li><a href="OrderController.html">OrderController</a></li><li><a href="OrderMiddleware.html">OrderMiddleware</a></li><li><a href="OrderService.html">OrderService</a></li><li><a href="Product.html">Product</a></li><li><a href="ProductController.html">ProductController</a></li><li><a href="ProductMiddleware.html">ProductMiddleware</a></li><li><a href="ProductService.html">ProductService</a></li><li><a href="Sale.html">Sale</a></li><li><a href="SaleController.html">SaleController</a></li><li><a href="SaleMiddleware.html">SaleMiddleware</a></li><li><a href="SaleService.html">SaleService</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AuthMiddleware">AuthMiddleware</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Wed Jan 11 2023 18:44:15 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

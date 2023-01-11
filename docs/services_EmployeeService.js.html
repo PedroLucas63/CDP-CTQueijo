@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: services/EmployeeService.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: services/EmployeeService.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//! Exportação dos módulos:
+//* Módulo do cliente prisma:
+import { PrismaClient } from "@prisma/client";
+
+//* Módulo do bcrypt:
+import bcrypt from "bcrypt";
+
+/** Classe representando os serviços do funcionário. */
+class EmployeeService {
+    /**
+     * Cria os serviços do funcionário.
+     */
+    constructor() {
+        //? Instânciamento do prisma:
+        this.prisma = new PrismaClient();
+
+        //? Definição da quantidade de saltos de criptografia:
+        this.salts = 10;
+    }
+
+    /**
+     * Cria um novo funcionário no banco de dados.
+     * @param {Employee} employee - O funcionário.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (funcionário criado).
+     */
+    async create(employee) {
+        //? Objeto JSON com dados do resultado:
+        let result = {
+            message: "Criado com sucesso",
+            error: 0,
+            data: null,
+        };
+
+        //? Realização da criptografia da senha:
+        employee.password = bcrypt.hashSync(employee.password, this.salts);
+
+        //? Recebe os dados importantes do empregado:
+        let data = employee.partialData();
+
+        //? Testa a criação do funcionário:
+        try {
+            // Executa o comando de criação o funcionario:
+            let createEmployee = await this.prisma.employee.create({
+                data: data,
+            });
+
+            // Dá os dados da criação:
+            result.data = createEmployee;
+        } catch (e) {
+            // Verifica se é um tipo de erro conhecido:
+            if (e.code === "P2002") {
+                // Define a mensagem e o erro conhecido:
+                result.message = "Falha na criação";
+                result.error = 43;
+            } else {
+                // Define a mensagem e o erro de conexão:
+                result.message = "Erro na conexão com o banco de dados";
+                result.error = 4;
+            }
+        }
+
+        //? Retorna o resultado:
+        return result;
+    }
+
+    /**
+     * Visualiza um funcionário do banco de dados por meio do seu identificador.
+     * @param {number} id - O identificador do funcionário.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (funcionário encontrado).
+     */
+    async view(uniqueValues) {
+        //? Objeto com o resultado da pesquisa:
+        let result = {
+            message: "Funcionário encontrado",
+            error: 0,
+            data: null,
+        };
+
+        //? Tenta fazer a visualização do funcionário:
+        try {
+            // Executa a visualização do funcionário
+            const employee = await this.prisma.employee.findFirst({
+                where: uniqueValues,
+            });
+
+            // Verifica se não foi encontrado um funcionário:
+            if (employee === null) {
+                // Define a mensagem que não foi encontrado:
+                result.message = "Funcionário não encontrado";
+                result.error = 14;
+            } else {
+                // Define a mensagem e os dados que foram encontrados:
+                result.data = employee;
+            }
+        } catch (e) {
+            // Define a mensagem e o erro:
+            result.message = "Erro na conexão com o banco de dados";
+            result.error = 4;
+        }
+
+        //? Retorna o resultado da pesquisa:
+        return result;
+    }
+
+    
+    /**
+     * Visualiza todos os funcionários do banco de dados.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (todos os funcionários encontrados).
+     */
+    async viewAll() {
+        //? Objeto com o resultado da pesquisa:
+        let result = {
+            message: "Funcionários encontrados",
+            error: 0,
+            data: null,
+        };
+
+        //? Tenta fazer a pesquisa por meio do prisma:
+        try {
+            // Recebe os dados de todos os funcionários:
+            const employees = await this.prisma.employee.findMany();
+
+            // Salva os funcionários nos dados do resultado:
+            result.data = employees;
+        } catch (e) {
+            // Define a mensagem e o erro:
+            result.message = "Erro na conexão com o banco de dados";
+            result.error = 4;
+        }
+
+        //? Retorna o resultado da pesquisa:
+        return result;
+    }
+
+    /**
+     * Atualiza um funcionário do banco de dados.
+     * @param {Employee} employee - O funcionário.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (funcionário atualizado).
+     */
+    async update(employee) {
+        //? Objeto JSON com dados do resultado:
+        let result = {
+            message: "Atualizado com sucesso",
+            error: 0,
+            data: null,
+        };
+
+        //? Verifica se a senha foi modificada e faz a criptografia:
+        if (!(employee.password === "")) {
+            employee.password = bcrypt.hashSync(employee.password, this.salts);
+        }
+
+        //? Recebe os dados que foram modificados:
+        let data = employee.partialData();
+
+        //? Testa a atualização do funcionário:
+        try {
+            // Executa o comando de atualizar o funcionario:
+            let updateEmployee = await this.prisma.employee.update({
+                data: data,
+                where: { id: employee.id },
+            });
+
+            // Dá os dados atualizados:
+            result.data = updateEmployee;
+        } catch (e) {
+            // Verifica se é um tipo de erro conhecido:
+            if (e.code === "P2002") {
+                // Define a mensagem e o erro conhecido:
+                result.message = "Falha na criação";
+                result.error = 43;
+            } else {
+                // Define a mensagem e o erro de conexão:
+                result.message = "Erro na conexão com o banco de dados";
+                result.error = 4;
+            }
+        }
+
+        //? Retorna o resultado:
+        return result;
+    }
+
+    /**
+     * Deleta um funcionário do banco de dados por meio do seu identificador.
+     * @param {number} id - O identificador do funcionário.
+     * @return {json} O resultado da execução com mensagem, código de erro e dados (funcionário deletado).
+     */
+    async delete(uniqueValues) {
+        //? Objeto com o resultado da pesquisa:
+        let result = {
+            message: "Deletado com sucesso",
+            error: 0,
+            data: null,
+        };
+
+        //? Tenta fazer a deletação do funcionário:
+        try {
+            // Executa a deletação do funcionário
+            const deleteEmployee = await this.prisma.employee.deleteMany({
+                where: uniqueValues,
+            });
+
+            // Define a mensagem que foi deletado e os dados:
+            result.data = deleteEmployee;
+        } catch (e) {
+            // Define a mensagem e o erro:
+            result.message = "Erro na conexão com o banco de dados";
+            result.error = 4;
+        }
+
+        //? Retorna o resultado da pesquisa:
+        return result;
+    }
+}
+
+//! Exporta a classe instanciada de serviços:
+export default new EmployeeService();
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Address.html">Address</a></li><li><a href="AddressController.html">AddressController</a></li><li><a href="AddressMiddleware.html">AddressMiddleware</a></li><li><a href="AddressService.html">AddressService</a></li><li><a href="Client.html">Client</a></li><li><a href="ClientController.html">ClientController</a></li><li><a href="ClientMiddleware.html">ClientMiddleware</a></li><li><a href="ClientService.html">ClientService</a></li><li><a href="Employee.html">Employee</a></li><li><a href="EmployeeController.html">EmployeeController</a></li><li><a href="EmployeeMiddleware.html">EmployeeMiddleware</a></li><li><a href="EmployeeService.html">EmployeeService</a></li><li><a href="Order.html">Order</a></li><li><a href="OrderController.html">OrderController</a></li><li><a href="OrderMiddleware.html">OrderMiddleware</a></li><li><a href="OrderService.html">OrderService</a></li><li><a href="Product.html">Product</a></li><li><a href="ProductController.html">ProductController</a></li><li><a href="ProductMiddleware.html">ProductMiddleware</a></li><li><a href="ProductService.html">ProductService</a></li><li><a href="Sale.html">Sale</a></li><li><a href="SaleController.html">SaleController</a></li><li><a href="SaleMiddleware.html">SaleMiddleware</a></li><li><a href="SaleService.html">SaleService</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AuthMiddleware">AuthMiddleware</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Wed Jan 11 2023 18:44:15 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
