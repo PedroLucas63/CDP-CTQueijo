@@ -1,13 +1,13 @@
 //! Importação dos módulos:
 import request from "supertest";
 
-//* Importação do módulo de rotas dos funcionários:
-import EmployeeRouter from "./employee.routes.js";
+//* Importação do módulo de rotas dos endereços:
+import AddressRouter from "./address.routes.js";
 
-describe("Testando rota de mostrar empregado por chave única", () => {
+describe("Testando rota de mostrar endereço por chave única", () => {
     test("Esse teste deverá responder ao método POST em /view", done => {
-        request(EmployeeRouter)
-            .post("/employee/view")
+        request(AddressRouter)
+            .post("/address/view")
             .then(res => {
                 expect(res.statusCode).toBe(200);
                 done();
@@ -15,10 +15,10 @@ describe("Testando rota de mostrar empregado por chave única", () => {
     });
 });
 
-describe("Testando rota de mostrar todos os empregados", () => {
+describe("Testando rota de mostrar todos os endereços", () => {
     test("Esse teste deverá responder ao método GET em /viewAll", done => {
-        request(EmployeeRouter)
-            .get("/employee/viewAll")
+        request(AddressRouter)
+            .get("/address/viewAll")
             .then(res => {
                 expect(res.statusCode).toBe(200);
                 done();
@@ -26,10 +26,10 @@ describe("Testando rota de mostrar todos os empregados", () => {
     });
 });
 
-describe("Testando rota de atualizar empregados", () => {
+describe("Testando rota de atualizar endereços", () => {
     test("Esse teste deverá responder ao método UPDATE em /update", done => {
-        request(EmployeeRouter)
-            .update("/employee/update")
+        request(AddressRouter)
+            .update("/address/update")
             .then(res => {
                 expect(res.statusCode).toBe(200);
                 done();
@@ -37,10 +37,10 @@ describe("Testando rota de atualizar empregados", () => {
     });
 });
 
-describe("Testando rota de excluir empregado", () => {
+describe("Testando rota de excluir endereços", () => {
     test("Esse teste deverá responder ao método DELETE em /delete", done => {
-        request(EmployeeRouter)
-            .delete("/employee/delete")
+        request(AddressRouter)
+            .delete("/address/delete")
             .then(res => {
                 expect(res.statusCode).toBe(200);
                 done();

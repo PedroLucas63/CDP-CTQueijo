@@ -19,8 +19,6 @@ router.post("/create", ProductMiddleware.create(), ProductController.create);
 //? Rota de visualização por chave unica:
 router.post("/view", ProductController.view);
 
-
-
 //? Rota de atualizar um produto:
 router.put("/update", ProductMiddleware.update(), ProductController.update);
 

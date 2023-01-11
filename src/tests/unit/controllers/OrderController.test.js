@@ -1,12 +1,12 @@
 //! Importação dos módulos:
 import request from "supertest";
 
-//* Importação do módulo de rotas dos funcionários:
-import EmployeeRouter from "./employee.routes.js";
+//* Importação do módulo de rotas dos pedidos:
+import OrderRouter from "./order.routes.js";
 
-describe("Testando rota de mostrar empregado por chave única", () => {
+describe("Testando rota de mostrar ordem por chave única", () => {
     test("Esse teste deverá responder ao método POST em /view", done => {
-        request(EmployeeRouter)
+        request(OrderRouter)
             .post("/employee/view")
             .then(res => {
                 expect(res.statusCode).toBe(200);
@@ -15,9 +15,9 @@ describe("Testando rota de mostrar empregado por chave única", () => {
     });
 });
 
-describe("Testando rota de mostrar todos os empregados", () => {
+describe("Testando rota de mostrar todos as ordens", () => {
     test("Esse teste deverá responder ao método GET em /viewAll", done => {
-        request(EmployeeRouter)
+        request(OrderRouter)
             .get("/employee/viewAll")
             .then(res => {
                 expect(res.statusCode).toBe(200);
@@ -26,9 +26,9 @@ describe("Testando rota de mostrar todos os empregados", () => {
     });
 });
 
-describe("Testando rota de atualizar empregados", () => {
+describe("Testando rota de atualizar ordem", () => {
     test("Esse teste deverá responder ao método UPDATE em /update", done => {
-        request(EmployeeRouter)
+        request(OrderRouter)
             .update("/employee/update")
             .then(res => {
                 expect(res.statusCode).toBe(200);
@@ -37,9 +37,9 @@ describe("Testando rota de atualizar empregados", () => {
     });
 });
 
-describe("Testando rota de excluir empregado", () => {
+describe("Testando rota de excluir ordem", () => {
     test("Esse teste deverá responder ao método DELETE em /delete", done => {
-        request(EmployeeRouter)
+        request(OrderRouter)
             .delete("/employee/delete")
             .then(res => {
                 expect(res.statusCode).toBe(200);
