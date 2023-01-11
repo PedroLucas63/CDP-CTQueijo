@@ -4,14 +4,14 @@ import express from "express";
 import session from "express-session";
 import upload from "express-fileupload";
 
-//* Importação da função de interfaces da rede:
-import { networkInterfaces } from "os";
-
 //* Importação do módulo dotenv:
 import dotenv from "dotenv";
 
 //* Importação do módulo de criar o adminstrador padrão:
 import createAdmin from "./utils/EmployeeDefault.js";
+
+//* Importação do módulo de criar os produtos padrão:
+import createProducts from "./utils/ProductsDefault.js";
 
 //* Importação de módulos locais:
 import router from "./routes/router.js";
@@ -62,7 +62,8 @@ app.use(
 //* Define o uso das rotas:
 app.use(router);
 
-//! Criação do adminstrador padrão:
+//! Criação dos dados padrões
+//* Adminstrador:
 await createAdmin(
     process.env.ADMIN_ID,
     process.env.ADMIN_NAME,
@@ -72,12 +73,12 @@ await createAdmin(
     process.env.ADMIN_IMAGE
 );
 
-//! Iniciação do servidor:
-//* Recebe as informações da rede:
-const networkInfo = networkInterfaces();
+//* Produtos:
+await createProducts();
 
+//! Iniciação do servidor:
 //* Definindo dados do servidor:
-const hostname = networkInfo["Wi-Fi"][1].address;
+const hostname = "localhost";
 const port = process.env.PORT || 3000;
 
 //* Abertura do servidor:
