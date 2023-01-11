@@ -48,7 +48,7 @@ npm run migrate-db
 ```shell
 nodemon server.js
 #or
-#node app.js
+#node server.js
 ```
 
 Feito esses passos, o usuário será capaz de visualizar a interface gráfica no endereço e porta determinados ([padrão](localhost:3000)).
