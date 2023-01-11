@@ -46,7 +46,7 @@ npm run migrate-db
 
 6. Por fim, o sistema pode ser rodado através do node ou nodemon (recomendado):
 ```shell
-nodemon app.js
+nodemon server.js
 #or
 #node app.js
 ```
