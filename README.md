@@ -72,6 +72,19 @@ As tecnologias empregadas no seguinte software se baseiam principalmente em mód
 | [prisma](https://www.prisma.io/)          | Sistema de gerenciamento de conexões com banco de dados                  |
 | [tailwindcss](https://tailwindcss.com/)     | Framework do CSS para personalização por meio de classes pré-construídas |
 
+## Views
+
+![Alt text]('/src/public/assets/views/index.png')
+
+![Alt text](/src/public/assets/views/produtos.png)
+
+![Alt text](/src/public/assets/views/carrinho.png)
+
+![Alt text](/src/public/assets/views/login.png)
+
+![Alt text](/src/public/assets/views/dashboard.png)
+
+
 ## Fase de Desenvolvimento
 
 A seguinte versão do projeto do Controle de Pedidos do CTq está na fase de desenvolvimento: 0.75 - Em unificação (front e back) 🔀.
