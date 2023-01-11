@@ -53,12 +53,16 @@ router.get("/dashboard", AuthMiddleware, (req, res) => {
 
 //? Rota Pedidos do Dashboard:
 router.get("/dashboard/pedidos", AuthMiddleware, (req, res) => {
-    res.render("pages/dashboard/requests.ejs");
+    return res.render("pages/dashboard/requests.ejs", {
+        user: req.session.user
+    });
 });
 
 //? Rota Edição do Dashboard:
 router.get("/dashboard/alterar", AuthMiddleware, (req, res) => {
-    res.render("pages/dashboard/edition.ejs");
+    return res.render("pages/dashboard/edition.ejs", {
+        user: req.session.user
+    });
 });
 
 //? Uso das rotas dos funcionários:
