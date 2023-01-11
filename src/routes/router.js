@@ -26,6 +26,9 @@ import SaleRouter from "./sale.routes.js";
 //* Importação do módulo de rotas de Login:
 import LoginRouter from "./login.routes.js";
 
+//* Importação do módulo de controle dos dados do produto:
+import ProductController from "../controllers/ProductController.js";
+
 //! Configuração do Router:
 //* Construção do objeto Router:
 const router = new Router();
@@ -34,11 +37,6 @@ const router = new Router();
 //? Rota inicial:
 router.get("/", (req, res) => {
     res.render("pages/index");
-});
-
-//? Rota Produtos:
-router.get("/produtos", (req, res) => {
-    res.render("pages/products");
 });
 
 //? Rota Carrinho:
@@ -66,8 +64,11 @@ router.get("/dashboard/alterar", AuthMiddleware, (req, res) => {
 //? Uso das rotas dos funcionários:
 router.use("/employee", AuthMiddleware, EmployeeRouter);
 
+//? Rota de visualização de todos os produtos:
+router.get("/produtos", ProductController.viewAll);
+
 //? Uso das rotas dos produtos:
-router.use("/product", AuthMiddleware, ProductRouter);
+router.use("/product", ProductRouter);
 
 //? Uso das rotas de endereços:
 router.use("/address", AddressRouter);

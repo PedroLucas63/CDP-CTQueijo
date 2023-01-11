@@ -166,7 +166,9 @@ class ProductController {
         }
 
         //? Retorna o resultado:
-        return res.status(status).json(result);
+        return res.render('pages/products', {
+            products: result.data
+        })
     }
 
     /**

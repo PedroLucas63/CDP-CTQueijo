@@ -39,35 +39,42 @@
         <!-- Marketplace -->
         <div class="p-6 m-10">
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
-                <div class="overflow-hidden rounded-2xl bg-gray-50">
-                    <div class="flex items-center h-60 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1626957341926-98752fc2ba90?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                            alt="Cappucino" />
-                    </div>
-
-                    <div class="p-6">
-                        <div class="flex flex-col items-start
-                                        justify-between sm:flex-row
-                                        sm:items-center">
-                            <div>
-                                <p class="text-gray-400">Laticínios •
-                                    Queijos</p>
-                                <h2 class="mt-2 text-lg
-                                                font-semibold text-gray-800">Queijo Minas</h2>
+                <% for( let i=0; i < products.length; i++ ) { %>
+                    <div>
+                        <div class="overflow-hidden rounded-2xl bg-gray-50">
+                            <div class="flex items-center h-60 overflow-hidden">
+                                <img src="<%= products[i].image %> " alt="<%= products[i].name %>" />
                             </div>
-                            <button class="flex items-center px-3 py-1 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-cyan-900 rounded-full hover:bg-cyan-800 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
-                                <img
-                                src="\assets\add_cart.svg"
-                                class="h-3 sm:h-7 p-1 align-middle"
-                                alt="Add shopping cart"/>
-                                <span>Adicionar</span>
-                            </button>
+                            <div class="p-6">
+                                <div class="flex flex-col items-start
+                                            justify-between sm:flex-row
+                                            sm:items-center">
+                                    <div>
+                                        <p class="text-gray-400"></p>
+                                        <h2 class="mt-2 text-lg font-semibold text-gray-800">
+                                            <%= products[i].name %>
+                                        </h2>
+                                        <p class="mt-1">R$ <%= products[i].price %>
+                                        </p>
+
+                                    </div>
+                                    <button
+                                        class="flex items-center px-3 py-1 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-cyan-900 rounded-full hover:bg-cyan-800 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                                        <img src="\assets\add_cart.svg" class="h-3 sm:h-7 p-1 align-middle"
+                                            alt="Add shopping cart" />
+                                        <span>Adicionar</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <% } %>
             </div>
         </div>
-        <!-- Marketplace -->
+        
+
+            <!-- Marketplace -->
+
     </main>
 
     <footer>
