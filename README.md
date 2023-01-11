@@ -74,15 +74,15 @@ As tecnologias empregadas no seguinte software se baseiam principalmente em mód
 
 ## Views
 
-![Alt text]('/src/public/assets/views/index.png')
+![Página Inicial](/src/public/assets/views/index.png)
 
-![Alt text](/src/public/assets/views/produtos.png)
+![Página de Produtos](/src/public/assets/views/produtos.png)
 
-![Alt text](/src/public/assets/views/carrinho.png)
+![Página de Carrinho](/src/public/assets/views/carrinho.png)
 
-![Alt text](/src/public/assets/views/login.png)
+![Página de login](/src/public/assets/views/login.png)
 
-![Alt text](/src/public/assets/views/dashboard.png)
+![Página de Dashboard](/src/public/assets/views/dashboard.png)
 
 
 ## Fase de Desenvolvimento
@@ -91,4 +91,4 @@ A seguinte versão do projeto do Controle de Pedidos do CTq está na fase de des
 
 ## Direitos
 
-Todos os direitos reservados © Eyshila Buriti, Fernanda Dantas, Jônatas Felipe, Pedro Lucas 2022.
+Todos os direitos reservados © Eyshila Buriti, Fernanda Dantas, Jônatas Felipe, Pedro Lucas 2023.
