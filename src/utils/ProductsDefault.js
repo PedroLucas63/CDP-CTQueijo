@@ -39,13 +39,13 @@ async function createProducts() {
     //* Percorre todos os produtos:
     for (let i = 0; i < names.length; i++) {
         //? Procura o produto no banco de dados:
-        let result = await ProductService.view({ id: i + 1 });
+        let result = await ProductService.view({ name: names[i] });
 
         //? Verficia se foi encontrado:
         if (result.error === 14) {
             //? Cria o produto:
             let product = new Product(
-                i + 1,
+                null,
                 names[i],
                 prices[i],
                 `/assets/products/${images[i]}`
